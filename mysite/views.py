@@ -4,7 +4,7 @@ from django.shortcuts import render, HttpResponse
 
 def index(request):
     """First view function."""
-    return render(request, 'index.html')
+    return render(request, 'indextwo.html')
 
 def details(request, id): 
     return HttpResponse(f"Testing {id}")
