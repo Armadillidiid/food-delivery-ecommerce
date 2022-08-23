@@ -1,332 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}
+Rumble | Food Delivery & Takeout
+{% endblock %}
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+{% load static %}
+{% block main %}
 
-    <!-- Bootstrap Icons-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css" />
 
-    <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/a21d387cd5.js" crossorigin="anonymous"></script>
-
-    <!-- Imported Font-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cantarell&display=swap" rel="stylesheet">
-
-    <!-- Link external Stylesheet-->
-    <link rel="stylesheet" href="styles.css">
-    <title>Frequently Asked Questions | Rumble</title>
-</head>
-
-<body>
-    <header>
-        <nav class="navbar bg-light p-2 p-md-3 px-4 px-md-4 fixed-top autohide">
-            <div class="container-fluid p-0">
-                <div class="continar-fluid d-flex">
-                    <button class="btn" id="nav-btn" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvas">
-                        <i class="bi bi-list text-black"></i>
+<section>
+    <div class="container p-2 px-4 p-md-3">
+        <div class="container-fluid p-0" style="height: 40px;"></div>
+    </div>
+    <div class="container-fluid light-coral py-6 fs-1 d-flex justify-content-center align-items-center">
+        <span class="fw-bold text-black text-center"> Frequently Asked Questions</span>
+    </div>
+    <div class="container p-3 p-md-5">
+        <div class="container-fluid input-group mb-2">
+            <input type="text" class="form-control shadow-sm" id="searchBar" placeholder="Search">
+        </div>
+        <div class="accordion accordion-flush">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold one" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne">What is Rumble?
                     </button>
-                    <a class="navbar-brand" href="index.html">
-                        <span class="custom-font fw-bold text-black">Rumble</span>
-                    </a>
-                </div>
-                <div class="offcanvas offcanvas-start p-4" tabindex="-1" id="offcanvas">
-                    <div class="container-fluid p-0 m-0 d-flex flex-column justify-content-between"
-                        style="height: 100vh;">
-                        <div class="offcanvas-header row gap-1 p-0 m-0">
-                            <!-- <h5 class="offcanvas-title">Offcanvas</h5> -->
-                            <!-- <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button> -->
-                            <a href="" class="p-0 offcanvas-link">
-                                <div
-                                    class="col-12 bg-black text-white p-3 mb-1 text-center custom-font fw-bold offcanvas-font offcanvas-btn-custom">
-                                    Sign up</div>
-                            </a>
-                            <a href="" class="p-0 offcanvas-link">
-                                <div
-                                    class="col-12 p-3 text-black text-center custom-font fw-bold offcanvas-font light-gray offcanvas-font offcanvas-btn-custom-1">
-                                    Log in</div>
-                            </a>
-                            <div class="col-12 mt-3">
-                                <div class="custom-font fw-bold fs-6 py-2"> <a href=""
-                                        class="offcanvas-link text-black">Create a business account</a></div>
-                                <div class="custom-font fw-bold fs-6 py-2"> <a href=""
-                                        class="offcanvas-link text-black">Add
-                                        your restaurant</a></div>
-                                <div class="custom-font fw-bold fs-6 py-2"> <a href=""
-                                        class="offcanvas-link text-black">Sign up to deliver</a></div>
-                            </div>
-                        </div>
-                        <div class="offcanvas-body row flex-grow-0 p-0 m-0 mb-0 mb-md-4">
-                            <div class="row p-0 m-0 mb-3">
-                                <div class="col-3 rounded d-flex justify-content-center align-items-center"
-                                    id="logo-placeholder">
-                                    <span class="custom-font fw-bold">Logo</span>
-                                </div>
-                                <div class="col-9"><span class="custom-font fw-bold">There's more to love in the
-                                        app.</span></div>
-                            </div>
-                            <div class="row p-0 m-0">
-                                <button class="btn light-gray col-5 p-0 p-2 rounded-pill text-black">
-                                    <i class="fa-brands fa-android pe-1"></i>
-                                    <span class="custom-font fw-bold ps-1" style="font-size: 0.85rem;">Android</span>
-                                </button>
-                                <div class="col-1"></div>
-                                <button class="btn light-gray col-5 p-0 p-2 rounded-pill text-black">
-                                    <i class="bi bi-apple pe-1"></i>
-                                    <span class="custom-font fw-bold ps-1" style="font-size: 0.85rem;">Apple</span>
-                                    <div class="col-1"></div>
-                                </button>
-                            </div>
-                        </div>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <span>Rumble is an online food delivery service which simplifies food ordering for
+                            people. Simply choose the food you want on our online menus and be
+                            delivered at home.</span>
                     </div>
-                </div>
-                <div class="d-flex justify-content-end gap-2 gap-md-3">
-                    <button class="btn custom-font fw-bold text-danger rounded-pill" type="button">Sign
-                        up</button>
-                    <button class="btn custom-font fw-bold text-danger rounded-pill" type="button">Log
-                        in</button>
                 </div>
             </div>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <div class="container p-2 px-4 p-md-3">
-                <div class="container-fluid p-0" style="height: 40px;"></div>
-            </div>
-            <div class="container-fluid light-coral py-6 fs-1 d-flex justify-content-center align-items-center">
-                <span class="fw-bold text-black text-center"> Frequently Asked Questions</span>
-            </div>
-            <div class="container p-3 p-md-5">
-                <div class="container-fluid input-group mb-2">
-                    <input type="text" class="form-control shadow-sm" id="searchBar" placeholder="Search">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo">How can I sell on Rumble Food?</button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <span>We are constantly expanding and welcome new vendors every time. For how to sell on
+                            Rumble Food please <a href="">click here</a></span>
+                    </div>
                 </div>
-                <div class="accordion accordion-flush">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold one" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne">What is Rumble?
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <span>Rumble is an online food delivery service which simplifies food ordering for
-                                    people. Simply choose the food you want on our online menus and be
-                                    delivered at home.</span>
-                            </div>
-                        </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree">Do I have to create an account to place an
+                        order?</button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <span>Yes you need to create an account on the Jumia Food App or website to be able to
+                            place an order but you can do so at the end of your ordering process.
+                        </span>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo">How can I sell on Rumble Food?</button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <span>We are constantly expanding and welcome new vendors every time. For how to sell on
-                                    Rumble Food please <a href="">click here</a></span>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour">How to place an order?</button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <p>1. Login and select your delivery location <br>
+                            2. Choose your preferred restaurant/vendor (You can search by name cuisine type dish
+                            name or by keyword) <br>
+                            3. Add your selected menu to cart and proceed to checkout <br>
+                            4. Choose your payment method. Always make sure that you enter the correct phone
+                            number to help us contact you regarding your order if needed. <br>
+                        </p>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree">Do I have to create an account to place an
-                                order?</button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <span>Yes you need to create an account on the Jumia Food App or website to be able to
-                                    place an order but you can do so at the end of your ordering process.
-                                </span>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold type=" button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive">Why am I getting a message that a restaurant does not
+                        deliver to me?</button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <p>It is possibly because your delivery area is not covered by the restaurant and
+                            Rumble is constantly working to add more locations/vendors to it's network. If
+                            you enter your delivery address on the homepage then you can browse through all the
+                            restaurants available in your location.</p>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseFour">How to place an order?</button>
-                        </h2>
-                        <div id="collapseFour" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <p>1. Login and select your delivery location <br>
-                                    2. Choose your preferred restaurant/vendor (You can search by name cuisine type dish
-                                    name or by keyword) <br>
-                                    3. Add your selected menu to cart and proceed to checkout <br>
-                                    4. Choose your payment method. Always make sure that you enter the correct phone
-                                    number to help us contact you regarding your order if needed. <br>
-                                </p>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSix">Do you support bulk orders?</button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <span>Yes we can cater to your orders regardless of the size and quantity.</span>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold type=" button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseFive">Why am I getting a message that a restaurant does not
-                                deliver to me?</button>
-                        </h2>
-                        <div id="collapseFive" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <p>It is possibly because your delivery area is not covered by the restaurant and
-                                    Rumble is constantly working to add more locations/vendors to it's network. If
-                                    you enter your delivery address on the homepage then you can browse through all the
-                                    restaurants available in your location.</p>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSeven">Is there a minimum order value?</button>
+                </h2>
+                <div id="collapseSeven" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <span>The minimum order value is on the information section once you click on your
+                            preferred vendor on the Rumble.
+                        </span>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseSix">Do you support bulk orders?</button>
-                        </h2>
-                        <div id="collapseSix" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <span>Yes we can cater to your orders regardless of the size and quantity.</span>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseEight">Do you charge for delivery?</button>
+                </h2>
+                <div id="collapseEight" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <span>Yes, a minimal fee is charged. However to enjoy free delivery kindly subscribe to
+                            Rumble Prime for free delivery.
+                        </span>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseSeven">Is there a minimum order value?</button>
-                        </h2>
-                        <div id="collapseSeven" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <span>The minimum order value is on the information section once you click on your
-                                    preferred vendor on the Rumble.
-                                </span>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseNine">I have a voucher code. How can I use it?</button>
+                </h2>
+                <div id="collapseNine" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <span>If you have a Rumble voucher, you can use it by simply inputting
+                            the voucher code at checkout and order.
+                        </span>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseEight">Do you charge for delivery?</button>
-                        </h2>
-                        <div id="collapseEight" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <span>Yes, a minimal fee is charged. However to enjoy free delivery kindly subscribe to
-                                    Rumble Prime for free delivery.
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseNine">I have a voucher code. How can I use it?</button>
-                        </h2>
-                        <div id="collapseNine" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <span>If you have a Rumble voucher, you can use it by simply inputting
-                                    the voucher code at checkout and order.
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTen">How can I cancel my order?</button>
-                        </h2>
-                        <div id="collapseTen" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                <p>Your order can only be cancelled when it is yet to be confirmed or if the order
-                                    has not been accepted by the vendor. <br><br>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTen">How can I cancel my order?</button>
+                </h2>
+                <div id="collapseTen" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <p>Your order can only be cancelled when it is yet to be confirmed or if the order
+                            has not been accepted by the vendor. <br><br>
 
-                                    If the order has already been accepted by the vendor or picked up by the delivery
-                                    agent you are no longer able to cancel. Kindly note that you will be charged the
-                                    full value of the order if you still want to go ahead with the cancelation</p>
-                            </div>
-                        </div>
+                            If the order has already been accepted by the vendor or picked up by the delivery
+                            agent you are no longer able to cancel. Kindly note that you will be charged the
+                            full value of the order if you still want to go ahead with the cancelation</p>
                     </div>
                 </div>
             </div>
-        </section>
-        <footer>
-            <div class="container-fluid bg-dark p-0">
-                <div class="container pb-2 p-md-5 pt-5">
-                    <div class="row container-fluid m-0 d-flex justify-content-center">
-                        <div class="row row-cols-auto custom-font">
-                            <div
-                                class="col-12 col-md-3 mb-3 mb-md-0 d-flex flex-column align-items-md-start align-items-center">
-                                <h2 class="text-footer-header fs-6 fw-bold mb-1 mb-md-4">Get to know us</h2>
-                                <ul class="text-center text-md-start">
-                                    <li class="my-2"> <a href="about.html" class="text-footer ">About Us</a></li>
-                                    <li class="my-2"> <a href="contact.html" class="text-footer ">Contact Us</a></li>
-                                    <li class="my-2"> <a href="#" class="text-footer ">Company Blog</a></li>
-                                    <li class="my-2"> <a href="#" class="text-footer ">Careers</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-12 col-md-3 d-flex flex-column align-items-md-start align-items-center">
-                                <h2 class="text-footer-header fs-6 fw-bold mb-1 mb-md-4">Let Us Help You</h2>
-                                <ul class="text-center text-md-start">
-                                    <li class="my-2"> <a href="#" class="text-footer">Help</a></li>
-                                    <li class="my-2"> <a href="#" class="text-footer ">Order History</a></li>
-                                    <li class="my-2"> <a href="faqs.html" class="text-footer">FAQs</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-12 col-md-3 d-flex flex-column align-items-md-start align-items-center">
-                                <h2 class="text-footer-header fs-6 fw-bold mb-1 mb-md-4">Doing Business</h2>
-                                <ul class="text-center text-md-start">
-                                    <li class="my-2"> <a href="#" class="text-footer">Become a rider</a></li>
-                                    <li class="my-2"> <a href="#" class="text-footer">Be a partner restaurant</a></li>
-                                    <li class="my-2"> <a href="#" class="text-footer ">Vendors</a></li>
-
-                                </ul>
-                            </div>
-                            <div class="col-12 col-md-3 d-flex flex-column align-items-md-start align-items-center">
-                                <h2 class="text-footer-header fs-6 fw-bold mb-1 mb-md-4">Contact us</h2>
-                                <ul class="d-flex gap-3 p-md-1">
-                                    <li class="my-2">
-                                        <a href="" class="text-footer">
-                                            <i class="bi bi-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li class="my-2">
-                                        <a href="" class="text-footer">
-                                            <i class="bi bi-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li class="my-2">
-                                        <a href="" class="text-footer">
-                                            <i class="bi bi-instagram"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="row my-4 my-md-0">
-                            <div
-                                class="col px-0 m-0 d-flex justify-content-center justify-content-md-end align-items-center">
-                                <a href="" class=""><img src="/images/apple-appstore-badge.svg" alt="" height="40"></a>
-                                <a href="" class=""><img src="/images/google-play-badge.png" alt="" height="60"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-fluid row m-0">
-                        <ul class="d-flex m-0 d-flex justify-content-center justify-content-md-start">
-                            <li class="me-3 tos"><a class="text-footer tos" href="">Terms of Service</a></li>
-                            <li class="me-3 tos"><a class="text-footer tos" href="">Privacy</a></li>
-                            <li class="text-footer tos" style="text-decoration: none; color: lightgray;">© 2022 Rumble
-                            </li>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-            crossorigin="anonymous"></script>
-        <script src="./script.js"></script>
-    </main>
-</body>
-
-</html>
+        </div>
+    </div>
+</section>
+{% endblock %}

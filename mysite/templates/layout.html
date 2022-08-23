@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+{% load static %}
 <html lang="en">
 
 <head>
@@ -23,8 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cantarell&display=swap" rel="stylesheet">
 
     <!-- Link external Stylesheet-->
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
     <title>{% block title %}{% endblock %}</title>
 </head>
