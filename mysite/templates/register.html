@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Testing Registration
+{% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block main %}
+<div class="container p-2 px-4 p-md-3">
+    <div class="container-fluid p-0" style="height: 40px;"></div>
+</div>
+<div class="container">
+    <div class="">
+        <form method="POST" action="/register/">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <input type="submit" value="Submit" class="btn btn-primary mb-3">
+        </form>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
+                <use xlink:href="#exclamation-triangle-fill" />
+            </svg>
+            <div>
+                {{ message }}
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

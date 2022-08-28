@@ -5,7 +5,7 @@
                 <button class="btn" id="nav-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
                     <i class="bi bi-list text-black"></i>
                 </button>
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{% url 'index' %}">
                     <span class="custom-font fw-bold text-black">Rumble</span>
                 </a>
             </div>
@@ -14,7 +14,7 @@
                     <div class="offcanvas-header row gap-1 p-0 m-0">
                         <!-- <h5 class="offcanvas-title">Offcanvas</h5> -->
                         <!-- <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button> -->
-                        <a href="" class="p-0 offcanvas-link">
+                        <a href="{% url 'register' %}" class="p-0 offcanvas-link">
                             <div
                                 class="col-12 bg-black text-white p-3 mb-1 text-center custom-font fw-bold offcanvas-font offcanvas-btn-custom">
                                 Sign up</div>
@@ -58,8 +58,9 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end gap-2 gap-md-3">
-                <button class="btn custom-font fw-bold text-danger rounded-pill" id="nav-btn-1" type="button">Sign
-                    up</button>
+                <a href="{% url 'register' %}">
+                    <button class="btn custom-font fw-bold text-danger rounded-pill" id="nav-btn-1" type="button">Sign
+                        up</button></a>
                 <button class="btn bg-danger custom-font fw-bold text-white rounded-pill" type="button">Log
                     in</button>
             </div>
