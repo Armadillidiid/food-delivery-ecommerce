@@ -8,37 +8,39 @@ Testing Registration
 {% load crispy_forms_tags %}
 
 {% block main %}
-<div class="container p-2 px-4 p-md-3">
-    <div class="container-fluid p-0" style="height: 40px;"></div>
-</div>
-<div class="container">
-    <div class="">
-        <form method="POST" action="/register/">
-            {% csrf_token %}
-            {{ form | crispy }}
-            <input type="submit" value="Submit" class="btn btn-primary mb-3">
-        </form>
-        {% if messages %}
-        {% for message in messages %}
-        {% if message.tags == "error" %}
-        <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
-            <div>
-              {{ message }}
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        </div>
-        {% else %}
-        <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
-            <div>
-              {{ message }}
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
+<div class="container main-wrapper d-flex flex-column align-items-center">
+  <div class="d-flex justify-content-center align-items-center">
+    <span class="fw-bold fs-2 text-center my-3">Sign up</span>
+  </div>
+  <div>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "error" %}
+    <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+      <div>
+        {{ message }}
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    {% else %}
+    <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+      <div>
+        {{ message }}
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div>
+    <form method="POST" action="/register/">
+      {% csrf_token %}
+      {{ form | crispy }}
+      <div class="container d-flex justify-content-center">
+        <input type="submit" value="Submit" class="btn btn-danger mb-3">
+      </div>
+    </form>
+  </div>
 </div>
 {% endblock %}

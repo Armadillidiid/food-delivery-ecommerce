@@ -1,11 +1,13 @@
+from re import A
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect, redirect
 from django.contrib import messages
 from django.contrib.messages import get_messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import MyUserCreationForm
 import bcrypt
 from .models import User
 from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -14,30 +16,31 @@ def loginPage(request):
     if request.method == 'POST':
         # Get user login credentails
         email = request.POST.get("email").lower()
-        password = request.POST.get("password").encode('utf-8')
-        print(isinstance(password, bytes))
+        password = request.POST.get("password")
+
         # Clone user model if it exists
         try:
             user = User.objects.get(email=email)
         except:
+            print('User does not exist')
             messages.error(request, "User does not exist")
-            print("User does not exist")
 
-        # Decrypt user password
-        hash = user.password
-        print(hash, isinstance(hash, str))
-        hash = user.password.encode('utf-8')
-        print(hash, isinstance(hash, bytes))
-        decryptedPw = bcrypt.checkpw(password, hash)
-        print(decryptedPw)
+        # Validate inputted password
+        decryptedPw = check_password(password, user.password)
 
-        # Validate user
+        # Validate user 
         user = authenticate(request, email=email)
         if decryptedPw is not False:
             login(request, user)
             return redirect('index')
+        else:
+            messages.error(request, 'Passowrd is invalid')
 
     return render(request, 'login.html')
+
+def logoutUser(request):
+    logout(request)
+    return redirect('index')
 
 
 def index(request):
@@ -69,24 +72,12 @@ def register(request):
             # Clone form model
             user = form.save(commit=False)
 
-            
-
-            # Validate password length
-            # if len(user.password) > 25:
-            #     messages.error(
-            #         request, "PASSWORD MUST BE LESS THAN OR EQUAL TO 25 CHARACTER LENGTH")
-
             # Hash user password
-            # bytes = user.password.encode('utf-8')
-            # salt = bcrypt.gensalt()
-            # hash = bcrypt.hashpw(bytes, salt).decode('utf-8')
-
-            # Save modified form to database
-            # user.password = hash
             user.password = make_password(user.password)
+
+            # Add user to database
             user.save()
             messages.success(request, "ACCOUNT WAS CREATED SUCCESSFULLY")
-
             return redirect('register')
     # Create empty form
     form = MyUserCreationForm()

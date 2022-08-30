@@ -208,6 +208,10 @@
     text-decoration: inherit;
   }
   
+
+  .main-wrapper {
+    height: 100vh;
+  }
   /* .custom-link {
       text-decoration: underline;
       text-decoration-color: black;

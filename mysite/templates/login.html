@@ -12,6 +12,27 @@ Testing Registration
     <div class="d-flex justify-content-center">
         <span class="fw-bold fs-2 text-center my-4">Login</span>
     </div>
+    <div>
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "error" %}
+        <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+            <div>
+                {{ message }}
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% else %}
+        <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+            <div>
+                {{ message }}
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
     <div class="mb-4">
         <form action="/login/" method="post">
             {% csrf_token %}
@@ -32,4 +53,3 @@ Testing Registration
     </div>
 </div>
 {% endblock %}
-
