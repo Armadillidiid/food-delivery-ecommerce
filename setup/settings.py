@@ -150,6 +150,8 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.ScryptPasswordHasher',
 ]
 
+
+AUTH_USER_MODEL = 'mysite.User'
 # MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 # try:

@@ -11,4 +11,4 @@ class MyUserCreationForm(ModelForm):
             'password' : forms.PasswordInput(),
             'phone_number' : PhoneNumberPrefixWidget(initial='NG')
         }
-        fields = '__all__'
+        fields = ['first_name', 'last_name', 'email', 'phone_number', 'password']

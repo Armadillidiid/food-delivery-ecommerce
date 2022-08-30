@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar bg-light p-2 p-md-3 px-4 px-md-4 fixed-top autohide">
+    <nav class="navbar bg-white p-2 p-md-3 px-4 px-md-4 fixed-top autohide">
         <div class="container-fluid p-0">
             <div class="continar-fluid d-flex">
                 <button class="btn" id="nav-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
@@ -19,7 +19,7 @@
                                 class="col-12 bg-black text-white p-3 mb-1 text-center custom-font fw-bold offcanvas-font offcanvas-btn-custom">
                                 Sign up</div>
                         </a>
-                        <a href="" class="p-0 offcanvas-link">
+                        <a href="{% url 'login' %}" class="p-0 offcanvas-link">
                             <div
                                 class="col-12 p-3 text-black text-center custom-font fw-bold offcanvas-font light-gray offcanvas-font offcanvas-btn-custom-1">
                                 Log in</div>
@@ -61,8 +61,10 @@
                 <a href="{% url 'register' %}">
                     <button class="btn custom-font fw-bold text-danger rounded-pill" id="nav-btn-1" type="button">Sign
                         up</button></a>
-                <button class="btn bg-danger custom-font fw-bold text-white rounded-pill" type="button">Log
-                    in</button>
+                <a href="{% url 'login' %}">
+                    <button class="btn bg-danger custom-font fw-bold text-white rounded-pill" type="button">Log
+                        in</button>
+                </a>
             </div>
         </div>
     </nav>
