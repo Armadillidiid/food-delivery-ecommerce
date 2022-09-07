@@ -21,7 +21,32 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
 
+class Vendor(models.Model):
+    CATEGORY_CHOICES = [
+        ('african', 'African'),
+        ('alcoholic drinks', 'Alcoholic Drinks'),
+        ('bakery and cakes', 'Bakery and Cakes'),
+        ('breakfast', 'Breakfast'),
+        ('chinese', 'Chinese'),
+        ('fast food', 'Fast Food'),
+        ('grills', 'Grills'),
+        ('ice cream', 'Ice Cream'),
+        ('pizza', 'Pizza'),
+        ('vegan', 'Vegan'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    ratings = models.FloatField(default=0)
+    location = models.CharField(max_length=200)
+    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     price = models.FloatField()
     description = models.TextField()
@@ -59,24 +84,6 @@ class ShippingAddress(models.Model):
     date_added = models.DateField(auto_now_add=True)
 
 
-class Vendor(models.Model):
-    CATEGORY_CHOICES = [
-        ('african', 'African'),
-        ('alcoholic drinks', 'Alcoholic Drinks'),
-        ('bakery and cakes', 'Bakery and Cakes'),
-        ('breakfast', 'Breakfast'),
-        ('chinese', 'Chinese'),
-        ('fast food', 'Fast Food'),
-        ('grills', 'Grills'),
-        ('ice cream', 'Ice Cream'),
-        ('pizza', 'Pizza'),
-        ('vegan', 'Vegan'),
-    ]
-
-    name = models.CharField(max_length=200)
-    ratings = models.FloatField(default=0)
-    location = models.CharField(max_length=200)
-    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
      
 
 class OpenHour(models.Model):

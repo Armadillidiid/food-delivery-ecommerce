@@ -11,6 +11,8 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+def home(request):
+    return render(request, 'home.html')
 
 def loginPage(request):
     if request.method == 'POST':
@@ -78,7 +80,7 @@ def register(request):
             # Add user to database
             user.save()
             messages.success(request, "ACCOUNT WAS CREATED SUCCESSFULLY")
-            return redirect('register')
+            
     # Create empty form
     form = MyUserCreationForm()
     return render(request, 'register.html', {'form': form})
