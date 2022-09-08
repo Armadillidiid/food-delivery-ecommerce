@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar bg-white p-2 p-md-3 px-4 px-md-4 fixed-top">
+    <nav class="navbar bg-white p-2 p-md-3 px-4 px-md-4">
         <div class="container-fluid p-0">
             <div class="offcanvas offcanvas-start p-4" tabindex="-1" id="offcanvas">
                 <div class="container-fluid p-0 m-0 d-flex flex-column justify-content-between" style="height: 100vh;">
@@ -57,15 +57,27 @@
                     <span class="custom-font fw-bold text-black">Rumble</span>
                 </a>
             </div>
-            <form action="" class="d-flex" role="search">
+            <!-- <form action="" class="d-flex" role="search">
                 <div class="input-group rounded-pill">
                     <span class="input-group-text light-gray border-0 text-secondary">@</span>
                     <input type="text" class="form-control light-gray border-0" name="search" placeholder="Search"
                         aria-label="Search" autocomplete="off">
                 </div>
-            </form>
+            </form> -->
+            <div class="light-gray d-flex justify-content-between rounded-pill align-items-center search-bar">
+                    <span class="border-0 text-secondary ps-3">
+                        <i class="bi bi-search"></i>
+                    </span>
+                <input type="text" class="form-control col-10 bg-transparent border-0" placeholder="Search">
+            </div>
             <div class="d-flex justify-content-end gap-2 gap-md-3">
                 {% if request.user.is_authenticated %}
+                <a href="">
+                    <button class="btn bg-black custom-font fw-bold text-white rounded-pill ">
+                        <i class="bi bi-cart-fill"></i>
+                        <span>Cart</span>
+                    </button>
+                </a>
                 <a href="{% url 'logout' %}">
                     <button class="btn bg-danger custom-font fw-bold text-white rounded-pill" type="button">
                         Log out

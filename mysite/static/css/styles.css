@@ -212,6 +212,12 @@
   .main-wrapper {
     height: 100vh;
   }
+
+.search-bar {
+  /* min-width: clamp(20rem, 50rem, 80rem) */
+
+}
+  
   /* .custom-link {
       text-decoration: underline;
       text-decoration-color: black;

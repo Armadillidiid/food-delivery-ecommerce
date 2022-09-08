@@ -5,14 +5,19 @@ from django.contrib.messages import get_messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import MyUserCreationForm
 import bcrypt
-from .models import User
+from .models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html')
+    if request.method == "POST":
+        pass
+    vendors = Vendor.objects.all()
+    context = {'vendors': vendors}
+    return render(request, 'home.html', context)
+
 
 def loginPage(request):
     if request.method == 'POST':
