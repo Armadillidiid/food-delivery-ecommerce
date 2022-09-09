@@ -7,17 +7,22 @@ Home page | Rumble
 {% load static %}
 
 {% block main %}
-    <div class="container my-3">
-        <h2 class="fs-2 fw-bold">Popular near you</h2>
-        <span class="">Here’s some vendors near your location</span>
-        <div class="row my-3 gap-5">
-            {% for vendor in vendors %}
-            <div class="col-md-3 p-0">
+<div class="container my-3">
+    <h2 class="fs-2 fw-bold">Popular near you</h2>
+    <span class="">Here’s some vendors near your location</span>
+    <div class="row my-3 gap-5">
+        {% for vendor in vendors %}
+        <div class="col-md-3 p-0">
+            <a href="" class="remove-link-style">
                 <div class="row">
                     <div class="col p-0">
-                        <div class="bg-secondary d-flex justify-content-center align-items-center" style="height: 200px;">
+                        <!-- <div class="bg-secondary d-flex justify-content-center align-items-center"
+                            style="height: 200px;">
                             <span>TEST</span>
-                        </div>
+                        </div> -->
+                        {% if vendor.image %}
+                        <img src="{{ vendor.image.url }}" alt="">
+                        {% endif %}
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -26,16 +31,17 @@ Home page | Rumble
                     </div>
                     <div class="col-4 col-md-3 bg-secondary rounded-pill fw-bold">
                         <i class="bi bi-star"></i>
-                        <span>{{ vendor.ratings | floatformat:2  }}</span>
+                        <span>{{ vendor.ratings | floatformat:2 }}</span>
                     </div>
                 </div>
                 <div class="d-flex">
-                        <span>20-30 min</span>
-                        <span class="mx-1"><b>|</b></span>
-                        <span class="">{{ vendor.category | capfirst}}</span>
+                    <span>{{ vendor.min_delivery_time }}-{{ vendor.max_delivery_time }} min</span>
+                    <span class="mx-1"><b>|</b></span>
+                    <span class="">{{ vendor.category | capfirst}}</span>
                 </div>
-            </div>
-            {% endfor %}
+            </a>
         </div>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}

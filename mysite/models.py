@@ -1,4 +1,5 @@
 from calendar import c
+from contextlib import nullcontext
 from email.policy import default
 from enum import unique
 from random import choices
@@ -9,6 +10,8 @@ from django.db import models
 from django import forms
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator, MinValueValidator
+from PIL import Image
 
 # Create your models here.
 
@@ -39,10 +42,23 @@ class Vendor(models.Model):
     name = models.CharField(max_length=200)
     ratings = models.FloatField(default=0)
     location = models.CharField(max_length=200)
+    min_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
+    max_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
+    image = models.ImageField(null=True, blank=True, default='anonymous-avatar.png')
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+         if self.image:
+            super().save(*args, **kwargs)
+            img = Image.open(self.image.path)
+            if img.width > 200 or img.height > 360:
+                output_size = (360, 200)
+                img.thumbnail(output_size)
+                img.save(self.image.path)
+
 
 
 class Product(models.Model):
