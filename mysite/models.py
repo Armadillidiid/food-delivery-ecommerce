@@ -6,6 +6,7 @@ from random import choices
 from statistics import mode
 from tkinter import CASCADE
 from tkinter.ttk import Widget
+from unicodedata import category
 from django.db import models
 from django import forms
 from phonenumber_field.modelfields import PhoneNumberField
@@ -39,7 +40,7 @@ class Vendor(models.Model):
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True) 
     ratings = models.FloatField(default=0)
     location = models.CharField(max_length=200)
     min_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
@@ -60,10 +61,14 @@ class Vendor(models.Model):
                 img.save(self.image.path)
 
 
+class ProductCategory(models.Model):
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
 
 class Product(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)  
     price = models.FloatField()
     description = models.TextField()
 
@@ -107,5 +112,9 @@ class OpenHour(models.Model):
     open_time = models.TimeField()
     close_time = models.TimeField()
     weekday = models.IntegerField()
+
+
+
+
 
 

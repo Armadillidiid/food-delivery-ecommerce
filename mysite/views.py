@@ -91,5 +91,13 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
+def store(request,  name):
+    vendor = Vendor.objects.get(name=name)
+    products = Product.objects.filter(vendor=vendor.id)
+    categories = ProductCategory.objects.filter(vendor=vendor.id)
+    context = {'vendor': vendor, 'products': products, 'categories': categories}
+    return render(request, 'store.html', context)
+
+
 def details(request, id):
     return HttpResponse(f"Testing {id}")
