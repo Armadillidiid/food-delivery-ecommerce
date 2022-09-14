@@ -13,16 +13,16 @@ Home page | Rumble
     <div class="row my-3 gap-5">
         {% for vendor in vendors %}
         <div class="col-md-3 p-0">
-            <a href="" class="remove-link-style">
+            <a href="{% url 'store' vendor.name %}" class="remove-link-style">
                 <div class="row">
                     <div class="col p-0">
                         <!-- <div class="bg-secondary d-flex justify-content-center align-items-center"
                             style="height: 200px;">
                             <span>TEST</span>
                         </div> -->
-                        {% if vendor.image %}
-                        <img src="{{ vendor.image.url }}" alt="">
-                        {% endif %}
+                        <!-- {% if vendor.image %} -->
+                        <img src="{{ vendor.imageURL }}" alt="">
+                        <!-- {% endif %} -->
                     </div>
                 </div>
                 <div class="row mt-2">

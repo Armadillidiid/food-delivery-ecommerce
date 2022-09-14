@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "phonenumber_field",
 ]
 
+AUTH_USER_MODEL = 'mysite.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -155,7 +157,7 @@ PASSWORD_HASHERS = [
 ]
 
 
-AUTH_USER_MODEL = 'mysite.User'
+
 # MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 # try:

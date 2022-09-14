@@ -45,20 +45,37 @@ class Vendor(models.Model):
     location = models.CharField(max_length=200)
     min_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
     max_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
-    image = models.ImageField(null=True, blank=True, default='anonymous-avatar.png')
+    image = models.ImageField(null=True, blank=True)
+    banner_image = models.ImageField(null=True, blank=True)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
 
     def __str__(self):
         return self.name
 
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
+    @property
+    def bannerURL(self):
+        try:
+            url = self.banner_image.url
+        except:
+            url = ''
+        return url
+
     def save(self, *args, **kwargs):
          if self.image:
             super().save(*args, **kwargs)
             img = Image.open(self.image.path)
-            if img.width > 200 or img.height > 360:
-                output_size = (360, 200)
-                img.thumbnail(output_size)
-                img.save(self.image.path)
+            # if img.width > 200 or img.height > 360:
+            output_size = (360, 200)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
 
 
 class ProductCategory(models.Model):
@@ -70,10 +87,28 @@ class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)  
     price = models.FloatField()
+    image = models.ImageField(null=True, blank=True)
     description = models.TextField()
 
     def __str__(self):
         return self.name
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            super().save(*args, **kwargs)
+            img = Image.open(self.image.path)
+            if img.width > 200 or img.height > 360:
+                output_size = (360, 200)
+                img.thumbnail(output_size)
+                img.save(self.image.path)
 
 
 class Order(models.Model):
@@ -108,10 +143,20 @@ class ShippingAddress(models.Model):
      
 
 class OpenHour(models.Model):
+    CATEGORY_CHOICES = [
+        ('Sun', 'Sunday'),
+        ('Mon', 'Monday'),
+        ('Tue', 'Tuesday'),
+        ('Wed', 'Wednesday'),
+        ('Thu', 'Thursday'),
+        ('Fri', 'Friday'),
+        ('Sat', 'Saturday')
+    ]
+
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     open_time = models.TimeField()
     close_time = models.TimeField()
-    weekday = models.IntegerField()
+    weekday = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
 
 
 

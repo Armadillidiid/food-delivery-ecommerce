@@ -7,5 +7,28 @@ Store Page | Rumble
 {% load static %}
 
 {% block main %}
-
-{% endblock% }
+<div class="container-fluid bg-secondary" style="height: 250px;"></div>
+<div class="container p-3">
+    <h2 class="fs-2 fw-bold">{{ vendor.name }}</h2>
+    <div>
+        <div class="row">
+            <span><b>
+                <i class="bi bi-star-fill"></i>
+                {{ vendor.ratings }} . {{ vendor.category | capfirst }} . $. <a href="">More info</a>
+            </b></span>
+        </div>
+        <div class="row">
+            <span class="text-secondary">Open until
+                {% for open_hour in open_hours %}
+                {% if open_hour.weekday == current_day %}
+                {{ open_hour.close_time | date:"g:i A"}}
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+        <div class="row">
+            <a href="" class="remove-link-style text-secondary"><span>Tap for hours , info and more</span></a>
+        </div>
+    </div>
+</div>
+{% endblock %}
