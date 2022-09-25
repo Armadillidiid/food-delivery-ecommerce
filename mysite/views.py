@@ -106,11 +106,27 @@ def store(request,  name):
     products = Product.objects.filter(vendor=vendor.id)
     categories = ProductCategory.objects.filter(vendor=vendor.id)
     open_hours = OpenHour.objects.filter(vendor=vendor.id)
-    # Current date
+    # Get current date and time
     e = datetime.datetime.now()
     current_day =  e.strftime("%a")
+    current_time = e.strftime("%H:%M:%S")
 
-    context = {'vendor': vendor, 'products': products, 'categories': categories, 'open_hours': open_hours,'current_day': current_day}
+    is_open = False
+    for open_hour in open_hours:
+        if current_day == open_hour.weekday:
+            is_open = True
+            break
+
+    context = {
+        'vendor': vendor,
+        'products': products,
+        'categories': categories,
+        'open_hours': open_hours,
+        'current_day': current_day,
+        'current_time': current_time,
+        'is_open': is_open,
+        'iterator': range(1,26)
+        }
 
 
     return render(request, 'store.html', context)

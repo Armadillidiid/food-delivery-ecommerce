@@ -7,8 +7,22 @@ Store Page | Rumble
 {% load static %}
 
 {% block main %}
-<div class="container-fluid bg-secondary" style="height: 250px;"></div>
-<div class="container p-3">
+<div class="container-fluid bg-secondary" style="height: 250px;">
+    <div class="d-flex justify-content-center align-items-center text-center">
+    {% for open_hour in open_hours %}
+        {% if open_hour.weekday == current_day %}
+            {{ current_day }}{{ open_hour.weekday }}
+            {% if not current_time > open_time and not current_time < close_time%}
+                <span class="fs-1 fw-bold">Closed</span>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% if is_open == False %}
+        <span class="fs-1 fw-bold">Closed</span>
+    {% endif %}
+    </div>
+</div>
+<div class="container-fluid p-4">
     <h2 class="fs-2 fw-bold">{{ vendor.name }}</h2>
     <div>
         <div class="row">
@@ -18,10 +32,12 @@ Store Page | Rumble
             </b></span>
         </div>
         <div class="row">
-            <span class="text-secondary">Open until
+            <span class="text-secondary">
                 {% for open_hour in open_hours %}
                 {% if open_hour.weekday == current_day %}
-                {{ open_hour.close_time | date:"g:i A"}}
+                Open until {{ open_hour.close_time | date:"g:i A"}}
+                {% else %}
+                {{ open_hour.vendor.location }}
                 {% endif %}
                 {% endfor %}
             </span>
@@ -31,4 +47,40 @@ Store Page | Rumble
         </div>
     </div>
 </div>
+<section class="container row">
+    <div id="sidenav" class="col-3">
+    {% for category in categories %}
+        <ul class="list-group list-group-flush">
+            <a href="#{{ category.name }}" class="remove-link-style sidenav"><li class="list-group-item border-0 fw-bold my-1">{{ category.name }}</li></a>
+        </ul>        
+    {% endfor %}
+    </div>
+    <div class="col-9">
+    {% for category in categories %}
+        <div class="row mb-3">
+            <span class="fs-3 fw-bold" id="{{ category.name }}">{{ category.name }}</span>
+            <div class="row row-cols-3">
+            {% for product in products %}
+            {% if product.category == category %}
+                <div class="col">
+                    <div class="row" id="productImageContainer">
+                        <img src="{{ product.imageURL }}" alt="">
+                        <button class="btn store-button border-0">
+                            <i class="fs-3 bi bi-plus-circle-fill"></i>
+                        </button>
+                    </div>
+                    <div class="row">
+                        <span class="fw-bold">{{ product.name }}</span>
+                    </div>
+                    <div class="row">
+                        <span>${{ product.price }}</span>
+                    </div>                    
+                </div>
+            {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</section>
 {% endblock %}
