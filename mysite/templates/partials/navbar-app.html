@@ -87,35 +87,51 @@
                             <i class="bi bi-x-lg"></i>
                         </button>
                     </div>
-                    <div class="offcanvas-body">
-                        <div class="row">
-                            <span class="fs-3 fw-bold">{{ vendor.name }}</span>
-                        </div>
-                        <div class="row">
-                            <span class="fs-6">Deliver to Obio/Akpor</span>
-                        </div>
-                        {% for product in products %}
-                        <div class="row my-4">
-                            <div class="col-2">
-                                <select name="quantity" id="" class="btn btn-cart rounded-pill border-0 ">
-                                    {% for i in iterator %}
-                                    <option value="{{ i }}">{{ i }}</option>
-                                    {% endfor %}
-                                </select>
+                    <div class="offcanvas-body d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="row">
+                                <span class="fs-3 fw-bold">{{ vendor.name }}</span>
                             </div>
-                            <div class="col-6 ps-3">
-                                <div class="row">
-                                    <span class="fs-7 fw-bold">{{ product.name }}</span>
+                            <div class="row">
+                                <span class="fs-6 mb-3">Deliver to Obio/Akpor</span>
+                            </div>
+                            {% for item in items %}
+                            <div class="row py-3 custom-border-cart">
+                                <div class="col-2">
+                                    <select name="quantity" id="" class="btn btn-cart rounded-pill border-0 ">
+                                        <option value="{{ item.quantity }}">{{ item.quantity }}</option>
+                                        {% for i in iterator %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
-                                <div class="row">
-                                    <span class="fs-7">${{ product.price }}</span>
+                                <div class="col-6 ps-3">
+                                    <div class="row">
+                                        <span class="fs-7 fw-bold">{{ item.product.name }}</span>
+                                    </div>
+                                    <div class="row">
+                                        <span class="fs-7">${{ item.product.price }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <img class="image-cart" src="{{ item.product.imageURL }}" alt="">
                                 </div>
                             </div>
-                            <div class="col-4">
-
+                            {% endfor %}
+                            <div class="pe-3 d-flex justify-content-between py-3 custom-border-cart fw-bold fs-5">
+                                <span>Subtotal</span>
+                                <span>${{ order.get_cart_price }}</span>
                             </div>
                         </div>
-                        {% endfor %}
+                        <div class="d-grid gap-2">
+                            {% if vendor.name %}
+                            <a href="{% url 'checkout' vendor.name %}" class="p-0 offcanvas-link">
+                                <button
+                                    class="btn col-12 bg-black text-white p-3 text-center fw-bold offcanvas-btn-custom offcanvas-font"
+                                    type="button">Head to checkout</button>
+                            </a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
 

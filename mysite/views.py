@@ -3,7 +3,7 @@ from django.shortcuts import render, HttpResponse, HttpResponseRedirect, redirec
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import MyUserCreationForm
+from .forms import MyUserCreationForm, ShippingAddressForm
 from .models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
@@ -102,21 +102,26 @@ def register(request):
 
 
 def store(request,  name):
+    customer = request.user
     vendor = Vendor.objects.get(name=name)
     products = Product.objects.filter(vendor=vendor.id)
     categories = ProductCategory.objects.filter(vendor=vendor.id)
     open_hours = OpenHour.objects.filter(vendor=vendor.id)
+    order, created = Order.objects.get_or_create(customer=customer, vendor=vendor, is_complete=False)
+    items = order.orderitem_set.all()
+
     # Get current date and time
     e = datetime.datetime.now()
     current_day =  e.strftime("%a")
     current_time = e.strftime("%H:%M:%S")
 
+    # Check if store is open
     is_open = False
     for open_hour in open_hours:
         if current_day == open_hour.weekday:
             is_open = True
             break
-
+    
     context = {
         'vendor': vendor,
         'products': products,
@@ -125,12 +130,48 @@ def store(request,  name):
         'current_day': current_day,
         'current_time': current_time,
         'is_open': is_open,
+        'order': order,
+        'items': items,
         'iterator': range(1,26)
         }
-
 
     return render(request, 'store.html', context)
 
 
+def checkout(request, name):
+    if request.method == 'POST':
+        pass
+    
+    form = ShippingAddressForm()
+    context = {
+        'details': get_details(request, name),
+        'form': form
+    }
+    return render(request, 'checkout.html', context)
+
+
+def get_details(request, name):
+    customer = request.user
+    vendor = Vendor.objects.get(name=name)
+    products = Product.objects.filter(vendor=vendor.id)
+    categories = ProductCategory.objects.filter(vendor=vendor.id)
+    open_hours = OpenHour.objects.filter(vendor=vendor.id)
+    order, created = Order.objects.get_or_create(customer=customer, vendor=vendor, is_complete=False)
+    items = order.orderitem_set.all()
+
+    context = {
+        'vendor': vendor,
+        'products': products,
+        'categories': categories,
+        'open_hours': open_hours,
+        'order': order,
+        'items': items,
+        }
+    
+    return context
+
 def details(request, id):
     return HttpResponse(f"Testing {id}")
+
+
+

@@ -239,7 +239,8 @@ ul li {
 }
 
 .sidenav {
-
+  /* does nothing */
+  color: black;
 }
 
 #productImageContainer {
@@ -270,6 +271,15 @@ ul li {
 
 }
 
+.image-cart {
+  height: 75px;
+  width: 75px;
+}
+
+.custom-border-cart {                    
+
+  border-top: 1px solid #E2E2E2;
+}
 
 
 /* .custom-link {

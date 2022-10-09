@@ -1,0 +1,22 @@
+{% extends 'layout-app.html' %}
+
+{% block title %}
+Store Page | Rumble
+{% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block main %}
+<div class="container">
+    <div class="row-col-7 mt-3">
+        <span class="fw-bold fs-3">{{ details.vendor.name }}</span>
+        <form action="" method="post">
+            {%  csrf_token %}
+            <label for="">Address</label>
+            {{ form.address }}
+        </form>
+    </div>
+    <div class="row-col-5"></div>
+</div>
+{% endblock %}

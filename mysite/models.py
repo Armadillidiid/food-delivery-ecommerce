@@ -13,6 +13,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from PIL import Image
+from sqlalchemy import null
 
 # Create your models here.
 
@@ -110,12 +111,42 @@ class Product(models.Model):
                 img.thumbnail(output_size)
                 img.save(self.image.path)
 
+                
+class ShippingAddress(models.Model):
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    # order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
+    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=200)
+    state = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    number = PhoneNumberField()
+    date_added = models.DateField(auto_now_add=True)
+
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, blank=True)
+    shipping_address = models.ForeignKey(ShippingAddress , on_delete=models.SET_NULL, null=True, blank=True)
     date_order = models.DateField(auto_now_add=True)
     is_complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100)
+
+    @property
+    def get_cart_price(self):
+        items = self.orderitem_set.all()
+        total = 0
+        for item in items:
+            total += item.product.price * item.quantity
+        return total
+
+    @property
+    def get_cart_quantity(self):
+        items = self.orderitem_set.all()
+        total = 0
+        for item in items:
+            total += item.quantity
+        return total
+
 
     def __str__(self):
         return str(self.id)
@@ -127,18 +158,6 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return self.product.name
-
-
-class ShippingAddress(models.Model):
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
-    address = models.CharField(max_length=200)
-    city = models.CharField(max_length=200)
-    state = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
-    number = PhoneNumberField()
-    date_added = models.DateField(auto_now_add=True)
-
 
      
 
