@@ -1,4 +1,4 @@
-{% extends 'layout-app.html' %}
+{% extends 'layout-checkout.html' %}
 
 {% block title %}
 Store Page | Rumble
@@ -6,17 +6,71 @@ Store Page | Rumble
 
 {% load static %}
 {% load crispy_forms_tags %}
+{% load mathfilters %}
 
 {% block main %}
 <div class="container">
-    <div class="row-col-7 mt-3">
-        <span class="fw-bold fs-3">{{ details.vendor.name }}</span>
-        <form action="" method="post">
-            {%  csrf_token %}
-            <label for="">Address</label>
-            {{ form.address }}
-        </form>
+    <div class="row my-3">
+        <div class="col-6 p-2 me-2 rounded checkout-card-background">
+            <span class="fw-bold fs-3">Shipping Information</span>
+            <form action="{% url 'checkout' details.vendor.name %}" method="post">
+                {% csrf_token %}
+                <div class="row mt-3 p-1">
+                    <div class="col-6 text-secondary">
+                        <label for="address" class="">Address *</label>
+                        {{ form.address }}
+                    </div>
+                    <div class="col-6 text-secondary">
+                        <label for="city" class="">City *</label>
+                        {{ form.city }}
+                    </div>
+                </div>
+                <div class="row mt-3 p-1">
+                    <div class="col-6 text-secondary">
+                        <label for="state">State *</label>
+                        {{ form.state }}
+                    </div>
+                    <div class="col-6 text-secondary">
+                        <label for="number">Number *</label>
+                        {{ form.number }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-danger fw-bold w-100 mt-5">Continue</button>
+            </form>
+        </div>
+        <div class="col-5 p-2 rounded checkout-card-background">
+            <div class="row">
+                <span class="fw-bold fs-3">Order Summary - {{details.vendor.name }}</span>
+            </div>
+            {% for item in details.items %}
+            <div class="row my-3">
+                <div class="col-4">
+                    <img class="image-cart" src="{{ item.product.imageURL }}" alt="">
+                </div>
+                <div class="col-4">
+                    <span>{{ item.product.name }}</span>
+                </div>
+                <div class="col-2">
+                    <span>x{{ item.quantity }}</span>
+                </div>
+                <div class="col-2">
+                    <span>${{ item.product.price | mul:item.quantity }}</span>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="row mt-3 p-1">
+                <span class="w-50 custom-border-cart pt-2">Subtotal</span>
+                <span class="w-50 text-end custom-border-cart pt-2">${{ details.order.get_cart_price }}</span>
+            </div>
+            <div class="row p-1">
+                <span class="w-50">Delivery Fee</span>
+                <span class="w-50 text-end">$1.0</span>
+            </div>
+            <div class="row p-1 mt-1">
+                <span class="w-50 fs-5 fw-bold custom-border-cart">Total</span>
+                <span class="w-50 fs-5 text-end fw-bold custom-border-cart">${{ details.order.get_cart_price | add:1 }}</span>
+            </div>
+        </div>
     </div>
-    <div class="row-col-5"></div>
 </div>
 {% endblock %}

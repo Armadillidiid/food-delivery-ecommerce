@@ -118,7 +118,6 @@ class ShippingAddress(models.Model):
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
     number = PhoneNumberField()
     date_added = models.DateField(auto_now_add=True)
 
