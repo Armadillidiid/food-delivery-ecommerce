@@ -1,6 +1,73 @@
 <header>
     <nav class="navbar bg-white p-2 p-md-3 px-4 px-md-4">
         <div class="container-fluid p-0">
+            {% if user.is_authenticated %}
+            <div class="offcanvas offcanvas-start p-4" tabindex="-1" id="offcanvas">
+                <div class="container-fluid p-0 m-0 d-flex flex-column justify-content-between" style="height: 100vh;">
+                    <div class="offcanvas-header row gap-1 p-0 m-0">
+                        <i class="bi bi-person-circle fs-1 opacity-50 w-auto ps-0"></i>
+                        <div class="col d-flex flex-column justify-content-center ">
+                            <div class="row">
+                                <span class="fs-6">{{ user.first_name }} {{ user.last_name }}</span>
+                            </div>
+                            <div class="row">
+                                <a href="" class="remove-link-style">
+                                    <span class="fw-bold text-danger fs-6">View account</span>
+                                </a>
+                            </div>
+                        </div>
+                        <a href="" class="remove-link-style p-0 mt-3">
+                            <i class="bi bi-clipboard-minus-fill fs-6 p-0"></i>
+                            <span class="fw-bold fs-6 px-3">Orders</span>
+                        </a>
+                        <a href="" class="remove-link-style p-0 mt-3">
+                            <i class="bi bi-suit-heart-fill"></i>
+                            <span class="fw-bold fs-6 px-3">Favourites</span>
+                        </a>
+                        <a href="" class="remove-link-style p-0 mt-3">
+                            <i class="bi bi-ticket-detailed-fill"></i>
+                            <span class="fw-bold fs-6 px-3">Vouchers</span>
+                        </a>
+                        <a href="" class="remove-link-style p-0 mt-3">
+                            <i class="bi bi-question-octagon-fill"></i>
+                            <span class="fw-bold fs-6 px-3">Help</span>
+                        </a>
+                        <a href="" class="remove-link-style p-0 my-4">
+                            <span class="text-danger fw-bold fs-6">Sign out</span>
+                        </a>
+                        <div class="custom-font fw-bold fs-6 py-2 px-0"> <a href="" class="offcanvas-link text-black">Create
+                            a business account</a></div>
+                    <div class="custom-font fw-bold fs-6 py-2 px-0"> <a href="" class="offcanvas-link text-black">Add
+                            your restaurant</a></div>
+                    <div class="custom-font fw-bold fs-6 py-2 px-0"> <a href="" class="offcanvas-link text-black">Sign up
+                            to deliver</a></div>
+                            <hr class="text-black my-3" style="height: 1px;">
+                    </div>
+                    <div class="offcanvas-body row flex-grow-0 p-0 m-0 mb-0 mb-md-4">
+                        <div class="row p-0 m-0 mb-3 mt-5">
+                            <div class="col-3 rounded d-flex justify-content-center align-items-center"
+                                id="logo-placeholder">
+                                <span class="custom-font fw-bold">Logo</span>
+                            </div>
+                            <div class="col-9"><span class="custom-font fw-bold">There's more to love in the
+                                    app.</span></div>
+                        </div>
+                        <div class="row p-0 m-0">
+                            <button class="btn light-gray col-5 p-0 p-2 rounded-pill text-black">
+                                <i class="fa-brands fa-android pe-1 text-black"></i>
+                                <span class="custom-font fw-bold ps-1" style="font-size: 0.85rem;">Android</span>
+                            </button>
+                            <div class="col-1"></div>
+                            <button class="btn light-gray col-5 p-0 p-2 rounded-pill text-black">
+                                <i class="bi bi-apple pe-1"></i>
+                                <span class="custom-font fw-bold ps-1" style="font-size: 0.85rem;">Apple</span>
+                                <div class="col-1"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
             <div class="offcanvas offcanvas-start p-4" tabindex="-1" id="offcanvas">
                 <div class="container-fluid p-0 m-0 d-flex flex-column justify-content-between" style="height: 100vh;">
                     <div class="offcanvas-header row gap-1 p-0 m-0">
@@ -49,6 +116,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             <div class="continar-fluid d-flex">
                 <button class="btn" id="nav-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
                     <i class="bi bi-list text-black"></i>

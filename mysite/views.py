@@ -160,6 +160,7 @@ def get_details(request, name):
     items = order.orderitem_set.all()
 
     context = {
+        'customer': customer,
         'vendor': vendor,
         'products': products,
         'categories': categories,

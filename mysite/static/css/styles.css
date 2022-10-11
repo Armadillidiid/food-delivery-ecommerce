@@ -162,7 +162,7 @@ ul li {
 }
 
 .offcanvas {
-  max-width: 22vw;
+  max-width: 18vw;
 }
 
 .offcanvas-font {
@@ -291,6 +291,12 @@ ul li {
       text-decoration-color: black;
   } */
 
+  @media only screen and (max-width: 1270px) {
+    .offcanvas {
+      max-width: 30vw;
+    }
+  }
+
 @media only screen and (max-width: 768px) {
   .mb-custom {
     margin-bottom: calc(1rem * 1) !important;
@@ -312,3 +318,4 @@ ul li {
     display: block !important;
   }
 }
+
