@@ -10,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 from PIL import Image
 import datetime
 
-# Create your views here.
 
+@login_required(login_url='login')
 def home(request):
     if request.method == "POST":
         pass
@@ -101,14 +101,21 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
+@login_required(login_url='login')
 def store(request,  name):
     customer = request.user
     vendor = Vendor.objects.get(name=name)
     products = Product.objects.filter(vendor=vendor.id)
     categories = ProductCategory.objects.filter(vendor=vendor.id)
     open_hours = OpenHour.objects.filter(vendor=vendor.id)
-    order, created = Order.objects.get_or_create(customer=customer, vendor=vendor, is_complete=False)
-    items = order.orderitem_set.all()
+    orders = Order.objects.filter(customer=customer, is_complete=False)
+    print(f"Count is {orders}")
+    for value in orders:
+        print(value)
+
+    items = {}
+    for order in orders:
+        items[order] = order.orderitem_set.all()
 
     # Get current date and time
     e = datetime.datetime.now()
@@ -121,6 +128,7 @@ def store(request,  name):
         if current_day == open_hour.weekday:
             is_open = True
             break
+
     
     context = {
         'vendor': vendor,
@@ -130,7 +138,7 @@ def store(request,  name):
         'current_day': current_day,
         'current_time': current_time,
         'is_open': is_open,
-        'order': order,
+        'orders': orders,
         'items': items,
         'iterator': range(1,26)
         }
@@ -138,6 +146,7 @@ def store(request,  name):
     return render(request, 'store.html', context)
 
 
+@login_required(login_url='login')
 def checkout(request, name):
     if request.method == 'POST':
         pass
@@ -156,8 +165,8 @@ def get_details(request, name):
     products = Product.objects.filter(vendor=vendor.id)
     categories = ProductCategory.objects.filter(vendor=vendor.id)
     open_hours = OpenHour.objects.filter(vendor=vendor.id)
-    order, created = Order.objects.get_or_create(customer=customer, vendor=vendor, is_complete=False)
-    items = order.orderitem_set.all()
+    orders, created = Order.objects.filter(customer=customer, is_complete=False)
+    items = orders.orderitem_set.all()
 
     context = {
         'customer': customer,
@@ -165,7 +174,7 @@ def get_details(request, name):
         'products': products,
         'categories': categories,
         'open_hours': open_hours,
-        'order': order,
+        'orders': orders,
         'items': items,
         }
     

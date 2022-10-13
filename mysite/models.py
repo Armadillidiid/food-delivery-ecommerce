@@ -146,7 +146,6 @@ class Order(models.Model):
             total += item.quantity
         return total
 
-
     def __str__(self):
         return str(self.id)
 
