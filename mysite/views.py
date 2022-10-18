@@ -109,9 +109,6 @@ def store(request,  name):
     categories = ProductCategory.objects.filter(vendor=vendor.id)
     open_hours = OpenHour.objects.filter(vendor=vendor.id)
     orders = Order.objects.filter(customer=customer, is_complete=False)
-    print(f"Count is {orders}")
-    for value in orders:
-        print(value)
 
     items = {}
     for order in orders:
@@ -152,8 +149,18 @@ def checkout(request, name):
         pass
     
     form = ShippingAddressForm()
+    details = get_details(request, name)
+    orders = Order.objects.filter(customer=details['customer'], is_complete=False)
+    items = {}
+    for order in orders:
+        items[order] = order.orderitem_set.all()
+
+   
+
     context = {
-        'details': get_details(request, name),
+        'details': details,
+        'orders': orders,
+        'items': items,
         'form': form
     }
     return render(request, 'checkout.html', context)
@@ -165,8 +172,11 @@ def get_details(request, name):
     products = Product.objects.filter(vendor=vendor.id)
     categories = ProductCategory.objects.filter(vendor=vendor.id)
     open_hours = OpenHour.objects.filter(vendor=vendor.id)
-    orders, created = Order.objects.filter(customer=customer, is_complete=False)
-    items = orders.orderitem_set.all()
+    orders = Order.objects.filter(customer=customer, is_complete=False)
+
+    items = {}
+    for order in orders:
+        items[order] = order.orderitem_set.all()
 
     context = {
         'customer': customer,

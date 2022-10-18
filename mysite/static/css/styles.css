@@ -165,6 +165,10 @@ ul li {
   max-width: 18vw;
 }
 
+.offcanvas-cart {
+  max-width: 22vw;
+}
+
 .offcanvas-font {
   font-size: 1.15rem;
 }
@@ -286,10 +290,25 @@ ul li {
 }
 
 
-/* .custom-link {
-      text-decoration: underline;
-      text-decoration-color: black;
-  } */
+.dropdown-position {
+  position: absolute !important;
+  top: 53px !important;
+  left: -205px !important;
+  width: 400px;
+}
+
+.dropdown-cart {
+  height: 92px !important;
+}
+
+.rounded-dot {
+  width: 25px !important;
+  height: 25px !important;
+}
+
+/* .dropdown li a {
+  height: fit-content;
+} */
 
   @media only screen and (max-width: 1270px) {
     .offcanvas {
@@ -311,6 +330,10 @@ ul li {
   }
 
   .offcanvas {
+    max-width: 75vw;
+  }
+
+  .offcanvas-cart {
     max-width: 75vw;
   }
 

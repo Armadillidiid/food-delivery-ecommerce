@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar bg-white p-2 p-md-3 px-4 px-md-4">
+    <nav class="navbar bg-white p-2 p-md-3 px-4 px-md-4 fixed-top">
         <div class="container-fluid p-0">
             {% if user.is_authenticated %}
             <div class="offcanvas offcanvas-start p-4" tabindex="-1" id="offcanvas">
@@ -35,13 +35,16 @@
                         <a href="" class="remove-link-style p-0 my-4">
                             <span class="text-danger fw-bold fs-6">Sign out</span>
                         </a>
-                        <div class="custom-font fw-bold fs-6 py-2 px-0"> <a href="" class="offcanvas-link text-black">Create
-                            a business account</a></div>
-                    <div class="custom-font fw-bold fs-6 py-2 px-0"> <a href="" class="offcanvas-link text-black">Add
-                            your restaurant</a></div>
-                    <div class="custom-font fw-bold fs-6 py-2 px-0"> <a href="" class="offcanvas-link text-black">Sign up
-                            to deliver</a></div>
-                            <hr class="text-black my-3" style="height: 1px;">
+                        <div class="custom-font fw-bold fs-6 py-2 px-0"> <a href=""
+                                class="offcanvas-link text-black">Create
+                                a business account</a></div>
+                        <div class="custom-font fw-bold fs-6 py-2 px-0"> <a href=""
+                                class="offcanvas-link text-black">Add
+                                your restaurant</a></div>
+                        <div class="custom-font fw-bold fs-6 py-2 px-0"> <a href=""
+                                class="offcanvas-link text-black">Sign up
+                                to deliver</a></div>
+                        <hr class="text-black my-3" style="height: 1px;">
                     </div>
                     <div class="offcanvas-body row flex-grow-0 p-0 m-0 mb-0 mb-md-4">
                         <div class="row p-0 m-0 mb-3 mt-5">
@@ -147,23 +150,50 @@
                 </button> -->
 
 
-                <div class="dropdown">  
-                    <button class="btn bg-black custom-font fw-bold text-white rounded-pill" type="button">
+                <div class="dropdown">
+                    <button class="btn bg-black custom-font fw-bold text-white rounded-pill" type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-cart-fill"></i>
-                        {% if orders == 0 or orders == 1 %}
+                        {% if orders|length_is:0 or orders|length_is:1 %}
                         <span>Cart</span>
                         {% else %}
-                        <span>{{ orders }} Cart</span>
+                        <span>{{ orders|length }} Cart</span>
                         {% endif %}
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-position p-0 border-0 rounded-1 shadow">
                         {% for order in orders %}
-                        <li><a href="" class="dropdown-item">Hello</a></li>
+                        <li class="border-bottom"><a
+                                class="dropdown-item p-3 m-0 dropdown-cart row d-flex justify-content-between flex-row"
+                                href="#offcanvasRight{{ order }}" data-bs-toggle="offcanvas">
+                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                    <i class="fa-solid fa-burger text-black"></i>
+                                </div>
+                                <div class="col-7">
+                                    <div class="row">
+                                        <span class="fs-7 fw-bold">{{ order.vendor.name }}</span>
+                                    </div>
+                                    <div class="row">
+                                        <span class="fs-7">Subtotal ${{ order.get_cart_price }}</span>
+                                    </div>
+                                    <div class="row">
+                                        <span class="fs-7">Deliver to obio/akpor</span>
+                                    </div>
+                                </div>
+                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                    <div class=" rounded-circle rounded-dot bg-black text-white text-center">
+                                        <span>{{ order.get_cart_quantity }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-1 d-flex justify-content-center align-items-center fw-bold">
+                                    <i class="bi bi-chevron-right"></i>
+                                </div>
+                            </a></li>
                         {% endfor %}
                     </ul>
                 </div>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                {% for order in orders %}
+                <div class="offcanvas offcanvas-cart offcanvas-end" tabindex="-1" id="offcanvasRight{{ order }}"
                     aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header">
                         <!-- <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5> -->
@@ -175,12 +205,14 @@
                     <div class="offcanvas-body d-flex flex-column justify-content-between">
                         <div>
                             <div class="row">
-                                <span class="fs-3 fw-bold">{{ vendor.name }}</span>
+                                <span class="fs-3 fw-bold">{{ order.vendor.name }}</span>
                             </div>
                             <div class="row">
                                 <span class="fs-6 mb-3">Deliver to Obio/Akpor</span>
                             </div>
-                            {% for item in items %}
+                            {% for key, order_items in items.items %}
+                            {% if key == order %}
+                            {% for item in order_items %}
                             <div class="row py-3 custom-border-cart">
                                 <div class="col-2">
                                     <select name="quantity" id="" class="btn btn-cart rounded-pill border-0 ">
@@ -203,14 +235,16 @@
                                 </div>
                             </div>
                             {% endfor %}
+                            {% endif %}
+                            {% endfor %}
                             <div class="pe-3 d-flex justify-content-between py-3 custom-border-cart fw-bold fs-5">
                                 <span>Subtotal</span>
                                 <span>${{ order.get_cart_price }}</span>
                             </div>
                         </div>
                         <div class="d-grid gap-2">
-                            {% if vendor.name %}
-                            <a href="{% url 'checkout' vendor.name %}" class="p-0 offcanvas-link">
+                            {% if order.vendor.name %}
+                            <a href="{% url 'checkout' order.vendor.name %}" class="p-0 offcanvas-link">
                                 <button
                                     class="btn col-12 bg-black text-white p-3 text-center fw-bold offcanvas-btn-custom offcanvas-font"
                                     type="button">Head to checkout</button>
@@ -219,6 +253,7 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
 
                 <a href="{% url 'logout' %}">
                     <button class="btn bg-danger custom-font fw-bold text-white rounded-pill" type="button">

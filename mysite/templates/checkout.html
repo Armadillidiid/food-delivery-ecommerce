@@ -11,7 +11,7 @@ Store Page | Rumble
 {% block main %}
 <div class="container">
     <div class="row my-3">
-        <div class="col-6 p-2 me-2 rounded checkout-card-background">
+        <div class="col-6 p-2 me-2 rounded checkout-card-background shadow">
             <span class="fw-bold fs-3">Shipping Information</span>
             <form action="{% url 'checkout' details.vendor.name %}" method="post">
                 {% csrf_token %}
@@ -38,17 +38,21 @@ Store Page | Rumble
                 <button type="submit" class="btn btn-danger fw-bold w-100 mt-5">Continue</button>
             </form>
         </div>
-        <div class="col-5 p-2 rounded checkout-card-background">
+        <div class="col-5 p-2 rounded checkout-card-background shadow">
+            {% for order in details.orders %}
+            {% if order.vendor.name == details.vendor.name %}
             <div class="row">
-                <span class="fw-bold fs-3">Order Summary - {{details.vendor.name }}</span>
+                <span class="fw-bold fs-3">Order Summary - {{ details.vendor.name }}</span>
             </div>
-            {% for item in details.items %}
+            {% for key, order_items in details.items.items %}
+            {% if key == order %}
+            {% for item in order_items %}
             <div class="row my-3">
                 <div class="col-4">
                     <img class="image-cart" src="{{ item.product.imageURL }}" alt="">
                 </div>
                 <div class="col-4">
-                    <span>{{ item.product.name }}</span>
+                    <span>{{ item.product.name }} {{ name }}</span>
                 </div>
                 <div class="col-2">
                     <span>x{{ item.quantity }}</span>
@@ -58,9 +62,11 @@ Store Page | Rumble
                 </div>
             </div>
             {% endfor %}
+            {% endif %}
+            {% endfor %}
             <div class="row mt-3 p-1">
                 <span class="w-50 custom-border-cart pt-2">Subtotal</span>
-                <span class="w-50 text-end custom-border-cart pt-2">${{ details.order.get_cart_price }}</span>
+                <span class="w-50 text-end custom-border-cart pt-2">${{ order.get_cart_price }}</span>
             </div>
             <div class="row p-1">
                 <span class="w-50">Delivery Fee</span>
@@ -68,8 +74,10 @@ Store Page | Rumble
             </div>
             <div class="row p-1 mt-1">
                 <span class="w-50 fs-5 fw-bold custom-border-cart">Total</span>
-                <span class="w-50 fs-5 text-end fw-bold custom-border-cart">${{ details.order.get_cart_price | add:1 }}</span>
+                <span class="w-50 fs-5 text-end fw-bold custom-border-cart">${{ order.get_cart_price | add:1 }}</span>
             </div>
+            {% endif %}
+            {% endfor %}
         </div>
     </div>
 </div>
