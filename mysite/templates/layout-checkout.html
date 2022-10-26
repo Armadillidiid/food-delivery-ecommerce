@@ -26,8 +26,6 @@
     <!-- Link external Stylesheet-->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
-    {% block script %}{% endblock %}
-
     <title>{% block title %}{% endblock %}</title>
 </head>
 
@@ -43,6 +41,9 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
     <script src="{% static 'js/script.js' %}"></script>
+    {% block script %}{% endblock %}
+    
+
 </body>
 
 </html>

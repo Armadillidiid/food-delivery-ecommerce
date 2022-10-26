@@ -8,6 +8,11 @@ Store Page | Rumble
 {% load crispy_forms_tags %}
 {% load mathfilters %}
 
+{% block script %}
+{% csrf_token %}
+<script src="{% static 'js/cart.js' %}"></script>
+{% endblock %}
+
 {% block main %}
 <div class="container">
     <div class="row my-3">

@@ -215,8 +215,10 @@
                             {% for item in order_items %}
                             <div class="row py-3 custom-border-cart">
                                 <div class="col-2">
-                                    <select name="quantity" id="" class="btn btn-cart rounded-pill border-0 ">
-                                        <option value="{{ item.quantity }}">{{ item.quantity }}</option>
+                                    <select name="quantity"
+                                        class="btn btn-cart rounded-pill border-0 offcanvasCartQuantity"
+                                        data-quantity="{{ item.quantity }}" data-product="{{ item.product.id }}"
+                                        data-vendor="{{ details.vendor.id }}" data-action="select">
                                         {% for i in iterator %}
                                         <option value="{{ i }}">{{ i }}</option>
                                         {% endfor %}

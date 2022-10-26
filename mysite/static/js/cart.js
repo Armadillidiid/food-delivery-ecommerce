@@ -1,3 +1,4 @@
+// Get cookie
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
@@ -15,19 +16,9 @@ function getCookie(name) {
 }
 const csrftoken = getCookie("csrftoken");
 
-// Add to cart button
-const addToCartBtn = document.getElementsByClassName("add-to-cart");
 
-for (btn of addToCartBtn) {
-  btn.addEventListener("click", function () {
-    let productId = this.dataset.product;
-    let action = this.dataset.action;
-    console.log("ProductId:", productId, "Action:", action);
-    updateUserCart();
-  });
-}
-
-async function updateUserCart(productId, action) {
+// Main fucntion
+async function updateUserCart(productId, action, vendor, quantity) {  
   console.log("Processing request");
 
   let url = "/update-cart/";
@@ -43,7 +34,8 @@ async function updateUserCart(productId, action) {
     body: JSON.stringify({
       productId: productId,
       action: action,
-      test: "Hello",
+      vendor: vendor,
+      quantity: quantity
     }),
   });
 
@@ -51,7 +43,40 @@ async function updateUserCart(productId, action) {
   try {
     let data = await response.json();
     console.log(data);
+    location.reload()
   } catch (e) {
     console.log(e);
   }
+}
+
+
+// Add to cart button
+const addToCartBtn = document.getElementsByClassName("add-to-cart");
+
+for (btn of addToCartBtn) {
+  btn.addEventListener("click", function () {
+    let productId = this.dataset.product;
+    let action = this.dataset.action;
+    let vendor = this.dataset.vendor
+    console.log("ProductId:", productId, "Action:", action, "Vendor:", vendor);
+    updateUserCart(productId, action, vendor);
+  });
+}
+
+
+// Offcanvas default select option according to quantity
+const selectOption = document.getElementsByClassName("offcanvasCartQuantity");
+for (option of selectOption) {
+  let quantity = option.dataset.quantity - 1;
+  option.getElementsByTagName('option')[quantity].selected = 'selected'
+
+  // Submit form on change 
+  option.addEventListener("click", function() {
+    let productId = this.dataset.product;
+    let action = this.dataset.action;
+    let vendor = this.dataset.vendor;
+    selectedQuantity =  option.options[option.selectedIndex].value;
+    console.log("ProductId:", productId, "Action:", action, "Vendor:", vendor, "Quantity:", selectedQuantity);
+    updateUserCart(productId, action, vendor, selectedQuantity);
+  })
 }

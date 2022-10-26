@@ -1,3 +1,4 @@
+from itertools import product
 from re import A
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect, redirect
@@ -172,7 +173,8 @@ def checkout(request, name):
         'details': details,
         'orders': orders,
         'items': items,
-        'form': form
+        'form': form,
+        'iterator': range(1,26)
     }
     return render(request, 'checkout.html', context)
 
@@ -203,7 +205,29 @@ def get_details(request, name):
 
 def updateCart(request):
     data = json.loads(request.body)
-    print(data)
+    productId = data['productId']
+    action = data['action']
+    vendor = data['vendor']
+    quantity = int(data['quantity'])
+    print(action)
+    customer = request.user
+    product = Product.objects.get(id=productId)
+    order, created = Order.objects.get_or_create(customer=customer, vendor=vendor, is_complete=False)
+    orderItem , created = OrderItem.objects.get_or_create(product=product, order=order)
+
+    if action == "add":
+        orderItem.quantity += 1
+    elif action == "remove":
+        orderItem.quantity -= 1
+    elif action == "select":
+        orderItem.quantity = quantity
+        print(orderItem.quantity)
+    
+    orderItem.save()
+
+    if order.get_cart_quantity <= 0:
+        orderItem.delete()
+
     return JsonResponse("Item added to cart", safe=False)
 
 
