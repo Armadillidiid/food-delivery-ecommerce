@@ -1,4 +1,5 @@
 from re import A
+from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect, redirect
 from django.contrib import messages
 from django.contrib.messages import get_messages
@@ -8,7 +9,7 @@ from .models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from PIL import Image
-import datetime
+import datetime, json
 
 
 @login_required(login_url='login')
@@ -25,7 +26,17 @@ def home(request):
     #     image.thumbnail(size)
     #     image.save(vendor.image.path)
 
-    context = {'vendors': vendors}
+    customer = request.user
+    orders = Order.objects.filter(customer=customer, is_complete=False)
+    items = {}
+    for order in orders:
+        items[order] = order.orderitem_set.all()
+
+    context = {
+        'vendors': vendors,
+        'orders': orders,
+        'items': items,
+        }
     return render(request, 'home.html', context)
 
 
@@ -190,8 +201,10 @@ def get_details(request, name):
     
     return context
 
-def details(request, id):
-    return HttpResponse(f"Testing {id}")
+def updateCart(request):
+    data = json.loads(request.body)
+    print(data)
+    return JsonResponse("Item added to cart", safe=False)
 
 
 

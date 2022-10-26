@@ -1,4 +1,4 @@
-{% extends 'layout-app.html' %}
+{% extends 'layout-checkout.html' %}
 
 {% block title %}
 Store Page | Rumble
@@ -6,19 +6,25 @@ Store Page | Rumble
 
 {% load static %}
 
+{% block script %}
+{% csrf_token %}
+<script src="{% static 'js/cart.js' %}"></script>
+{% endblock %}
+
+{% load static %}
+
 {% block main %}
 <div class="container-fluid bg-secondary" style="height: 250px;">
     <div class="d-flex justify-content-center align-items-center text-center">
-    {% for open_hour in open_hours %}
+        {% for open_hour in open_hours %}
         {% if open_hour.weekday == current_day %}
-            {% if not current_time > open_time and current_time < close_time %}
-                <span class="fs-1 fw-bold">Closed</span>
+        {% if not current_time > open_time and current_time < close_time %} <span class="fs-1 fw-bold">Closed</span>
             {% endif %}
-        {% endif %}
-    {% endfor %}
-    {% if is_open == False %}
-        <span class="fs-1 fw-bold">Closed</span>
-    {% endif %}
+            {% endif %}
+            {% endfor %}
+            {% if is_open == False %}
+            <span class="fs-1 fw-bold">Closed</span>
+            {% endif %}
     </div>
 </div>
 <div class="container-fluid p-4">
@@ -26,9 +32,9 @@ Store Page | Rumble
     <div>
         <div class="row">
             <span><b>
-                <i class="bi bi-star-fill"></i>
-                {{ vendor.ratings }} . {{ vendor.category | capfirst }} . $. <a href="">More info</a>
-            </b></span>
+                    <i class="bi bi-star-fill"></i>
+                    {{ vendor.ratings }} . {{ vendor.category | capfirst }} . $. <a href="">More info</a>
+                </b></span>
         </div>
         <div class="row">
             <span class="text-secondary">
@@ -48,24 +54,27 @@ Store Page | Rumble
 </div>
 <section class="container row">
     <div id="sidenav" class="col-3">
-    {% for category in categories %}
+        {% for category in categories %}
         <ul class="list-group list-group-flush">
-            <a href="#{{ category.name }}" class="remove-link-style sidenav"><li class="list-group-item border-0 fw-bold my-1">{{ category.name }}</li></a>
-        </ul>        
-    {% endfor %}
+            <a href="#{{ category.name }}" class="remove-link-style sidenav">
+                <li class="list-group-item border-0 fw-bold my-1">{{ category.name }}</li>
+            </a>
+        </ul>
+        {% endfor %}
     </div>
     <div class="col-9">
-    {% for category in categories %}
+        {% for category in categories %}
         <div class="row mb-3">
             <span class="fs-3 fw-bold" id="{{ category.name }}">{{ category.name }}</span>
             <div class="row row-cols-3">
-            {% for product in products %}
-            {% if product.category == category %}
+                {% for product in products %}
+                {% if product.category == category %}
                 <div class="col">
                     <div class="row" id="productImageContainer">
                         <img src="{{ product.imageURL }}" alt="">
                         <button class="btn store-button border-0">
-                            <i class="fs-3 bi bi-plus-circle-fill"></i>
+                            <i class="fs-3 bi bi-plus-circle-fill add-to-cart" data-product="{{ product.id }}"
+                                data-action="add"></i>
                         </button>
                     </div>
                     <div class="row">
@@ -73,13 +82,13 @@ Store Page | Rumble
                     </div>
                     <div class="row">
                         <span>${{ product.price }}</span>
-                    </div>                    
+                    </div>
                 </div>
-            {% endif %}
-            {% endfor %}
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
-    {% endfor %}
+        {% endfor %}
     </div>
 </section>
 {% endblock %}
