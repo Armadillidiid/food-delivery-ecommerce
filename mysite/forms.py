@@ -18,10 +18,13 @@ class ShippingAddressForm(ModelForm):
     class Meta:
         model = ShippingAddress
         widgets = {
+            'contact_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Bill Cosby'}),
             'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Street Name / Building / Apartment No'}),
             'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ikeja'}),
             'state': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Lagos'}),
-            'number': PhoneNumberPrefixWidget(initial='NG', attrs={'class': 'form-control w-auto', 'placeholder': '8008008000'})
+            'zip_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '902100'}),
+            'number': PhoneNumberPrefixWidget(initial='NG', attrs={'class': 'form-control w-auto', 'placeholder': '8008008000'}),
+            'db_id': forms.TextInput()
         }
         fields = '__all__'
         exclude = ['customer']

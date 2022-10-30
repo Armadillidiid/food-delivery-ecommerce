@@ -2,11 +2,14 @@ from calendar import c
 from contextlib import nullcontext
 from email.policy import default
 from enum import unique
+from hashlib import blake2b
 from random import choices
 from statistics import mode
 from tkinter import CASCADE
 from tkinter.ttk import Widget
 from unicodedata import category
+from unittest.util import _MAX_LENGTH
+from wsgiref.validate import validator
 from django.db import models
 from django import forms
 from phonenumber_field.modelfields import PhoneNumberField
@@ -113,11 +116,26 @@ class Product(models.Model):
 
                 
 class ShippingAddress(models.Model):
+    db_id = models.PositiveIntegerField(null=True, blank=True)
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     # order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
+    contact_name = models.CharField(max_length=200, null=True, blank=True)
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
+    zip_code = models.PositiveIntegerField(null=True, blank=True, validators=[MaxValueValidator(999999)])
+    number = PhoneNumberField()
+    date_added = models.DateField(auto_now_add=True)
+
+
+class ShippingAddressOrder(models.Model):
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    # order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
+    contact_name = models.CharField(max_length=200, null=True, blank=True)
+    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=200)
+    state = models.CharField(max_length=200)
+    zip_code = models.PositiveIntegerField(null=True, blank=True, validators=[MaxValueValidator(999999999999)])
     number = PhoneNumberField()
     date_added = models.DateField(auto_now_add=True)
 
@@ -125,7 +143,7 @@ class ShippingAddress(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, blank=True)
-    shipping_address = models.ForeignKey(ShippingAddress , on_delete=models.SET_NULL, null=True, blank=True)
+    shipping_address = models.ForeignKey(ShippingAddressOrder , on_delete=models.SET_NULL, null=True, blank=True)
     date_order = models.DateField(auto_now_add=True)
     is_complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100)

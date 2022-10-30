@@ -10,7 +10,8 @@ from .models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from PIL import Image
-import datetime, json
+import datetime
+import json
 
 
 @login_required(login_url='login')
@@ -37,7 +38,7 @@ def home(request):
         'vendors': vendors,
         'orders': orders,
         'items': items,
-        }
+    }
     return render(request, 'home.html', context)
 
 
@@ -55,11 +56,10 @@ def loginPage(request):
             messages.error(request, "User does not exist")
             return render(request, 'login.html')
 
-
         # Validate inputted password
         decryptedPw = check_password(password, user.password)
 
-        # Validate user 
+        # Validate user
         user = authenticate(request, email=email, password=password)
         if decryptedPw is not False:
             login(request, user)
@@ -107,7 +107,7 @@ def register(request):
             # Add user to database
             user.save()
             messages.success(request, "ACCOUNT WAS CREATED SUCCESSFULLY")
-            
+
     # Create empty form
     form = MyUserCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -128,7 +128,7 @@ def store(request,  name):
 
     # Get current date and time
     e = datetime.datetime.now()
-    current_day =  e.strftime("%a")
+    current_day = e.strftime("%a")
     current_time = e.strftime("%H:%M:%S")
 
     # Check if store is open
@@ -138,7 +138,6 @@ def store(request,  name):
             is_open = True
             break
 
-    
     context = {
         'vendor': vendor,
         'products': products,
@@ -149,8 +148,8 @@ def store(request,  name):
         'is_open': is_open,
         'orders': orders,
         'items': items,
-        'iterator': range(1,26)
-        }
+        'iterator': range(1, 26)
+    }
 
     return render(request, 'store.html', context)
 
@@ -158,23 +157,45 @@ def store(request,  name):
 @login_required(login_url='login')
 def checkout(request, name):
     if request.method == 'POST':
-        pass
-    
+        form = ShippingAddressForm(request.POST)
+        messages.error(request, form.errors)
+        if form.is_valid():
+            raw_form = form.save(commit=False)
+            
+            # Update or create new address 
+            obj, created = ShippingAddress.objects.update_or_create(
+                id=raw_form.db_id,
+                defaults={
+                    'customer': request.user,
+                    'contact_name': raw_form.contact_name,
+                    'address': raw_form.address,
+                    'state': raw_form.state,
+                    'city': raw_form.city,
+                    'zip_code': raw_form.zip_code,
+                    'number': raw_form.number
+                }
+            )
+            obj.save()
+ 
+
+            messages.success(request, "Address created successfully")
+
     form = ShippingAddressForm()
     details = get_details(request, name)
-    orders = Order.objects.filter(customer=details['customer'], is_complete=False)
+    orders = Order.objects.filter(
+        customer=details['customer'], is_complete=False)
     items = {}
     for order in orders:
         items[order] = order.orderitem_set.all()
-
-   
+    shippingAddresses = ShippingAddress.objects.filter(customer=request.user)
 
     context = {
         'details': details,
         'orders': orders,
         'items': items,
         'form': form,
-        'iterator': range(1,26)
+        'shippingAddresses': shippingAddresses,
+        'iterator': range(1, 26)
     }
     return render(request, 'checkout.html', context)
 
@@ -199,9 +220,10 @@ def get_details(request, name):
         'open_hours': open_hours,
         'orders': orders,
         'items': items,
-        }
-    
+    }
+
     return context
+
 
 def updateCart(request):
     data = json.loads(request.body)
@@ -212,8 +234,10 @@ def updateCart(request):
     print(action)
     customer = request.user
     product = Product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(customer=customer, vendor=vendor, is_complete=False)
-    orderItem , created = OrderItem.objects.get_or_create(product=product, order=order)
+    order, created = Order.objects.get_or_create(
+        customer=customer, vendor=vendor, is_complete=False)
+    orderItem, created = OrderItem.objects.get_or_create(
+        product=product, order=order)
 
     if action == "add":
         orderItem.quantity += 1
@@ -222,13 +246,10 @@ def updateCart(request):
     elif action == "select":
         orderItem.quantity = quantity
         print(orderItem.quantity)
-    
+
     orderItem.save()
 
-    if order.get_cart_quantity <= 0:
+    if orderItem.quantity <= 0:
         orderItem.delete()
 
     return JsonResponse("Item added to cart", safe=False)
-
-
-

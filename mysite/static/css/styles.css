@@ -284,9 +284,8 @@ ul li {
   border-top: 1px solid #E2E2E2;
 }
 
-
 .checkout-card-background {
-  background-color: #f5f5f5 !important;
+  background-color: white !important;
 }
 
 
@@ -309,6 +308,20 @@ ul li {
 /* .dropdown li a {
   height: fit-content;
 } */
+
+.offcanvasCartQuantity {
+  box-sizing: content-box;
+  width: 40px !important;
+}
+
+.checkout-page-background {
+  background-color: #f1f1f1 !important;
+  height: 100vh;
+}
+
+.remove-border {
+  border: none !important;
+}
 
   @media only screen and (max-width: 1270px) {
     .offcanvas {
