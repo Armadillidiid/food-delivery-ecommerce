@@ -11,13 +11,63 @@ Store Page | Rumble
 {% block script %}
 {% csrf_token %}
 <script src="{% static 'js/cart.js' %}"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AQuvAAQKSqMs6DaQlLZ0R13xXTukx5BUO5SJlXVu14sWLjsUsFa9iZEKoDAQY2fWetWs2q2MOcdZrLb1&currency=USD&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
+<script>
+    const paypalButtonsComponent = paypal.Buttons({
+        // optional styling for buttons
+        // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
+        style: {
+        color: "blue",
+        shape: "rect",
+        layout: "vertical"
+        },
+
+        // set up the transaction
+        createOrder: (data, actions) => {
+            // pass in any options from the v2 orders create call:
+            // https://developer.paypal.com/api/orders/v2/#orders-create-request-body
+            const createOrderPayload = {
+                purchase_units: [
+                    {
+                        amount: {
+                            value: "{{ order.get_cart_price | add:1 }}"
+                        }
+                    }
+                ]
+            };
+
+            return actions.order.create(createOrderPayload);
+        },
+
+        // finalize the transaction
+        onApprove: (data, actions) => {
+            const captureOrderHandler = (details) => {
+                const payerName = details.payer.name.given_name;
+                console.log('Transaction completed');
+            };
+
+            return actions.order.capture().then(captureOrderHandler);
+        },
+
+        // handle unrecoverable errors
+        onError: (err) => {
+            console.error('An error prevented the buyer from checking out with PayPal');
+        }
+    });
+
+    paypalButtonsComponent
+        .render("#paypal-button-container")
+        .catch((err) => {
+            console.error('PayPal Buttons failed to render');
+        });
+</script>
 {% endblock %}
 
 {% block main %}
 <div class="container-fluid checkout-page-background p-0">
     <div class="container">
         <div class="row mb-3 p-3">
-            <div class="col-6 p-3 me-2 rounded checkout-card-background shadow">
+            <div class="col-6 p-3 me-2 rounded checkout-card-background shadow d-flex flex-column justify-content-between">
                 <div class="rounded checkout-card-background">
                     <div class="d-flex justify-content-between mb-2">
                         <span class="fw-bold fs-4">Shipping Information</span>
@@ -137,14 +187,11 @@ Store Page | Rumble
                     data-city="{{ address.city }}" data-state="{{ address.state }}" data-zip_code="{{ address.zip_code }}" data-number="{{ address.number }}"
                     data-id="{{ address.id }}">
                         <div class="row">
-                            <span class="text-secondary">{{ address.contact_name }} {{ address.id }}</span>
+                            <span class="text-secondary">{{ address.contact_name }}</span>
                         </div>
                         <div class="row">
                             <span class="text-secondary">{{ address.address }}, {{ address.city }}, {{ address.state }}, {{ address.zip_code}}</span>
                         </div>
-                        <!-- <div class="row">
-                            <span class="text-secondary"></span>
-                        </div> -->
                         <div class="row">
                             <span class="text-secondary">{{ address.number }}</span>
                         </div>
@@ -152,7 +199,10 @@ Store Page | Rumble
                     {% endfor %}
                     <hr>
                 </div>
-                <div></div>
+                <div class="mt-3">
+                    <button type="button" class="btn btn-danger fw-bold w-100" id="continuePayment">Continue</button>
+                    <div id="paypal-button-container" class="visually-hidden"></div>
+                </div>
             </div>
             <div class="col-5 p-3 rounded checkout-card-background shadow">
                 {% for order in details.orders %}
@@ -197,6 +247,9 @@ Store Page | Rumble
                 {% endif %}
                 {% endfor %}
             </div>
+        </div>
+        <div class="row mb-3 p-3">
+            
         </div>
     </div>
 </div>

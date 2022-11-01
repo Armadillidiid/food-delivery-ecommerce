@@ -97,15 +97,6 @@ shippingAddressEditBtn.forEach(function (btn, i) {
   })
 })
 
-// for ( address of shippingAddressDisplay ){
-//   for (let i = 0; i < addNewAddressInput.length; i++) {
-//     if (i == 0) {
-//       continue
-//     }
-//     console.log(addNewAddressInput[i])
-//     // addNewAddressInput[i].value = address.dataset
-//   }
-// }
 
 // Select first radio button in shipping address list
 const addressButtonRadio = document.querySelectorAll("input[name='shippingAddresses']")
@@ -133,5 +124,17 @@ addressButtonRadio.forEach(function (radio, i) {
       }
     }
   })
+})
+
+// Continue paymnet
+const continuePaymentBtn = document.querySelector("#continuePayment");
+const paypalBtn = document.querySelector("#paypal-button-container")
+continuePaymentBtn.addEventListener("click", function() {
+  for (radio of addressButtonRadio) {
+    if (radio.checked = true) {
+      paypalBtn.classList.remove("visually-hidden");
+      continuePaymentBtn.classList.add("visually-hidden");
+    }
+  }
 })
 
