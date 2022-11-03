@@ -76,6 +76,7 @@ for (option of selectOption) {
     let action = this.dataset.action;
     let vendor = this.dataset.vendor;
     selectedQuantity =  this.options[this.selectedIndex].value;
+    console.log(selectedQuantity)
     console.log("ProductId:", productId, "Action:", action, "Vendor:", vendor, "Quantity:", selectedQuantity);
     updateUserCart(productId, action, vendor, selectedQuantity);
   })

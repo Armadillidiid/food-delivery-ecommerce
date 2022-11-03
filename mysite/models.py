@@ -116,7 +116,6 @@ class Product(models.Model):
 
                 
 class ShippingAddress(models.Model):
-    db_id = models.PositiveIntegerField(null=True, blank=True)
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     # order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
     contact_name = models.CharField(max_length=200, null=True, blank=True)

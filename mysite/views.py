@@ -1,3 +1,4 @@
+from dataclasses import asdict
 from itertools import product
 from re import A
 from django.http import JsonResponse
@@ -12,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from PIL import Image
 import datetime
 import json
+import uuid
 
 
 @login_required(login_url='login')
@@ -121,6 +123,7 @@ def store(request,  name):
     categories = ProductCategory.objects.filter(vendor=vendor.id)
     open_hours = OpenHour.objects.filter(vendor=vendor.id)
     orders = Order.objects.filter(customer=customer, is_complete=False)
+    details = get_details(request, name)
 
     items = {}
     for order in orders:
@@ -148,6 +151,7 @@ def store(request,  name):
         'is_open': is_open,
         'orders': orders,
         'items': items,
+        'details': details,
         'iterator': range(1, 26)
     }
 
@@ -187,11 +191,13 @@ def checkout(request, name):
     items = {}
     for order in orders:
         items[order] = order.orderitem_set.all()
+    paymentOrder = Order.objects.get(customer=details['customer'], vendor=details['vendor'], is_complete=False)
     shippingAddresses = ShippingAddress.objects.filter(customer=request.user)
 
     context = {
         'details': details,
         'orders': orders,
+        'paymentOrder': paymentOrder,
         'items': items,
         'form': form,
         'shippingAddresses': shippingAddresses,
@@ -229,9 +235,12 @@ def updateCart(request):
     data = json.loads(request.body)
     productId = data['productId']
     action = data['action']
-    vendor = data['vendor']
-    quantity = int(data['quantity'])
-    print(action)
+    vendor_id = data['vendor']
+    vendor = Vendor.objects.get(pk=vendor_id)
+    try:
+        quantity = int(data['quantity'])
+    except:
+        print("No quantity was submitted")
     customer = request.user
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(
@@ -253,3 +262,35 @@ def updateCart(request):
         orderItem.delete()
 
     return JsonResponse("Item added to cart", safe=False)
+
+def processOrder(request):
+    transaction_id = uuid.uuid4()
+    data = json.loads(request.body)
+
+    vendor = data['shippingInfo']['vendor']
+    details = get_details(request, vendor)
+    total = float(data['paymentInfo']['total'])
+    order = Order.objects.get(customer=details['customer'], vendor=details['vendor'], is_complete=False)
+    shippingAddress = ShippingAddress.objects.get(pk=data['shippingInfo']['id'])
+
+    order.transaction_id = transaction_id
+
+    if total == order.get_cart_price + 1:
+        shippingAddressOrder = ShippingAddressOrder.objects.create(
+        customer=shippingAddress.customer,
+        contact_name= shippingAddress.contact_name,
+        address = shippingAddress.address,
+        city = shippingAddress.city,
+        state = shippingAddress.state,
+        zip_code= shippingAddress.zip_code,
+        number= shippingAddress.number
+        )
+
+        order.is_complete = True
+        order.shipping_address = shippingAddressOrder
+
+
+    order.save()
+    
+
+    return JsonResponse("Order completed", safe=False)

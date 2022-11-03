@@ -13,6 +13,11 @@ Store Page | Rumble
 <script src="{% static 'js/cart.js' %}"></script>
 <script src="https://www.paypal.com/sdk/js?client-id=AQuvAAQKSqMs6DaQlLZ0R13xXTukx5BUO5SJlXVu14sWLjsUsFa9iZEKoDAQY2fWetWs2q2MOcdZrLb1&currency=USD&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
 <script>
+    // let totalPrice = ""
+    let totalPrice = parseFloat(" {{ paymentOrder.get_cart_price }} ") + 1
+    totalPrice = totalPrice.toFixed(2)
+
+ 
     const paypalButtonsComponent = paypal.Buttons({
         // optional styling for buttons
         // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
@@ -30,7 +35,7 @@ Store Page | Rumble
                 purchase_units: [
                     {
                         amount: {
-                            value: "{{ order.get_cart_price | add:1 }}"
+                            value: totalPrice
                         }
                     }
                 ]
@@ -43,7 +48,7 @@ Store Page | Rumble
         onApprove: (data, actions) => {
             const captureOrderHandler = (details) => {
                 const payerName = details.payer.name.given_name;
-                console.log('Transaction completed');
+                validatePayment()
             };
 
             return actions.order.capture().then(captureOrderHandler);
@@ -60,6 +65,58 @@ Store Page | Rumble
         .catch((err) => {
             console.error('PayPal Buttons failed to render');
         });
+</script>
+<script>
+    async function validatePayment() {
+        let shippingAddressInfo = undefined
+        for (addr of shippingAddressDisplay) {
+            if (addr.classList.contains('visually-hidden') == false) {
+                shippingAddressInfo = addr
+            }
+        }
+
+        let paymentInfo = {
+            "first_name": "{{ user.first_name }}",
+            "last_name": "{{ user.last_name }}",
+            "email": "{{ details.customer.email }}",
+            "total": totalPrice
+        }
+
+        let shippingInfo = {
+            "vendor": "{{ paymentOrder.vendor.name }}",
+            "id": shippingAddressInfo.dataset.id,
+            "address": shippingAddressInfo.dataset.address,
+            "state": shippingAddressInfo.dataset.state,
+            "city": shippingAddressInfo.dataset.city,
+            "zip_code": shippingAddressInfo.dataset.zip_code
+        }
+
+        let url = '/process-order/'
+
+        let reponse = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken,
+            },
+            mode: "same-origin",
+            body: JSON.stringify({
+                'paymentInfo': paymentInfo,
+                'shippingInfo': shippingInfo
+            })
+        })
+
+        try {
+            let data = await reponse.json()
+            alert(data)
+            window.location.href = "{% url 'home' %}"
+        }
+        catch(err) {
+            console.log(err)
+        }
+
+        
+    }
 </script>
 {% endblock %}
 
@@ -185,7 +242,7 @@ Store Page | Rumble
                     {% for address in shippingAddresses %}
                     <div class="shippingAddressDisplay" data-contact_name="{{ address.contact_name }}" data-address="{{ address.address }}"
                     data-city="{{ address.city }}" data-state="{{ address.state }}" data-zip_code="{{ address.zip_code }}" data-number="{{ address.number }}"
-                    data-id="{{ address.id }}">
+                    data-id="{{ address.pk }}">
                         <div class="row">
                             <span class="text-secondary">{{ address.contact_name }}</span>
                         </div>

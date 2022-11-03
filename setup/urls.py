@@ -31,7 +31,8 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('store/<str:name>/', views.store, name='store'),
     path('checkout/<str:name>/', views.checkout, name='checkout'),
-    path('update-cart/', views.updateCart, name='update-cart')
+    path('update-cart/', views.updateCart, name='update-cart'),
+    path('process-order/', views.processOrder, name='process-order')
 
 ]
 
