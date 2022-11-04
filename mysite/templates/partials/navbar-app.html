@@ -124,7 +124,7 @@
                 <button class="btn" id="nav-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
                     <i class="bi bi-list text-black"></i>
                 </button>
-                <a class="navbar-brand" href="{% url 'index' %}">
+                <a class="navbar-brand" href="{% url 'home' %}">
                     <span class="custom-font fw-bold text-black">Rumble</span>
                 </a>
             </div>
@@ -219,7 +219,7 @@
                                     <select name="quantity"
                                         class="btn btn-cart rounded-pill border-0 offcanvasCartQuantity"
                                         data-quantity="{{ item.quantity }}" data-product="{{ item.product.id }}"
-                                        data-vendor="{{ details.vendor.id }}" data-action="select">
+                                        data-vendor="{{ item.order.vendor.id }}" data-action="select">
                                         <option value="0">Remove</option>
                                         {% for i in iterator %}
                                         <option value="{{ i }}">{{ i }}</option>

@@ -11,6 +11,7 @@ Store Page | Rumble
 {% block script %}
 {% csrf_token %}
 <script src="{% static 'js/cart.js' %}"></script>
+<script src="{% static 'js/checkout.js' %}"></script>
 <script src="https://www.paypal.com/sdk/js?client-id=AQuvAAQKSqMs6DaQlLZ0R13xXTukx5BUO5SJlXVu14sWLjsUsFa9iZEKoDAQY2fWetWs2q2MOcdZrLb1&currency=USD&intent=capture&enable-funding=venmo" data-sdk-integration-source="integrationbuilder"></script>
 <script>
     // let totalPrice = ""

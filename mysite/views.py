@@ -40,6 +40,8 @@ def home(request):
         'vendors': vendors,
         'orders': orders,
         'items': items,
+        'iterator': range(1, 26)
+
     }
     return render(request, 'home.html', context)
 
@@ -186,6 +188,7 @@ def checkout(request, name):
 
     form = ShippingAddressForm()
     details = get_details(request, name)
+    vendor = Vendor.objects.get(name=name)
     orders = Order.objects.filter(
         customer=details['customer'], is_complete=False)
     items = {}
@@ -196,6 +199,7 @@ def checkout(request, name):
 
     context = {
         'details': details,
+        'vendor': vendor,
         'orders': orders,
         'paymentOrder': paymentOrder,
         'items': items,

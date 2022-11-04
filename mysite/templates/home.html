@@ -6,6 +6,10 @@ Home page | Rumble
 
 {% load static %}
 
+{% block script %}
+<script src="{% static 'js/cart.js' %}"></script>
+{% endblock %}
+
 {% block main %}
 <div class="container my-3">
     <h2 class="fs-2 fw-bold">Popular near you</h2>

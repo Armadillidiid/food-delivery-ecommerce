@@ -67,7 +67,7 @@ for (btn of addToCartBtn) {
 // Offcanvas default select option according to quantity
 const selectOption = document.getElementsByClassName("offcanvasCartQuantity");
 for (option of selectOption) {
-  let quantity = option.dataset.quantity ;
+  quantity = option.dataset.quantity;
   option.getElementsByTagName('option')[quantity].selected = 'selected'
 
   // Submit form on change 
