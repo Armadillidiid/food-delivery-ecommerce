@@ -295,6 +295,21 @@ def processOrder(request):
 
 
     order.save()
-    
 
     return JsonResponse("Order completed", safe=False)
+
+
+def deleteOrder(request):
+    data = json.loads(request.body)
+    vendor = data['vendor']
+    orderId = data['orderId']
+    customer = request.user
+    vendor = Vendor.objects.get(id=vendor)
+    Order.objects.get(id=orderId, customer=customer, vendor=vendor, is_complete=False).delete()
+
+    return JsonResponse("Order deleted", safe=False)
+
+
+
+def profile(request):
+    pass

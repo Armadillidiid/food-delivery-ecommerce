@@ -201,6 +201,9 @@
                         <button class="btn border-0 p-0" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
                             <i class="bi bi-x-lg"></i>
                         </button>
+                       <button class="btn btn-outline-danger" id="deleteCartBtn" data-orderid="{{ order.id }}" data-vendor="{{ order.vendor.id }}">
+                            <i class="bi bi-trash3-fill"></i>
+                       </button>
                     </div>
                     <div class="offcanvas-body d-flex flex-column justify-content-between">
                         <div>
@@ -245,6 +248,9 @@
                                 <span>Subtotal</span>
                                 <span>${{ order.get_cart_price }}</span>
                             </div>
+                            <!-- <div class="row ">
+                                <i class="bi bi-trash3-fill"></i>
+                            </div> -->
                         </div>
                         <div class="d-grid gap-2">
                             {% if order.vendor.name %}

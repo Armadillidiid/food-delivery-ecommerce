@@ -16,12 +16,16 @@ function getCookie(name) {
 }
 const csrftoken = getCookie("csrftoken");
 
-
-// Main fucntion
-async function updateUserCart(productId, action, vendor, quantity) {  
+// Update cart item quantity fucntion
+async function updateUserCart(
+  url,
+  productId,
+  action,
+  vendor,
+  quantity,
+  orderId
+) {
   console.log("Processing request");
-
-  let url = "/update-cart/";
 
   // Send request to server
   let response = await fetch(url, {
@@ -35,7 +39,8 @@ async function updateUserCart(productId, action, vendor, quantity) {
       productId: productId,
       action: action,
       vendor: vendor,
-      quantity: quantity
+      quantity: quantity,
+      orderId: orderId,
     }),
   });
 
@@ -49,35 +54,61 @@ async function updateUserCart(productId, action, vendor, quantity) {
   }
 }
 
-
 // Add to cart button
 const addToCartBtn = document.getElementsByClassName("add-to-cart");
 
 for (btn of addToCartBtn) {
   btn.addEventListener("click", function () {
+    let url = "/update-cart/";
     let productId = this.dataset.product;
     let action = this.dataset.action;
-    let vendor = this.dataset.vendor
+    let vendor = this.dataset.vendor;
     console.log("ProductId:", productId, "Action:", action, "Vendor:", vendor);
-    updateUserCart(productId, action, vendor);
+    updateUserCart(url, productId, action, vendor);
   });
 }
-
 
 // Offcanvas default select option according to quantity
 const selectOption = document.getElementsByClassName("offcanvasCartQuantity");
 for (option of selectOption) {
   quantity = option.dataset.quantity;
-  option.getElementsByTagName('option')[quantity].selected = 'selected'
+  option.getElementsByTagName("option")[quantity].selected = "selected";
 
-  // Submit form on change 
-  option.addEventListener("change", function() {
+  // Submit form on change
+  option.addEventListener("change", function () {
+    let url = "/update-cart/";
     let productId = this.dataset.product;
     let action = this.dataset.action;
     let vendor = this.dataset.vendor;
-    selectedQuantity =  this.options[this.selectedIndex].value;
-    console.log(selectedQuantity)
-    console.log("ProductId:", productId, "Action:", action, "Vendor:", vendor, "Quantity:", selectedQuantity);
-    updateUserCart(productId, action, vendor, selectedQuantity);
-  })
+    let orderId = null;
+    selectedQuantity = this.options[this.selectedIndex].value;
+    console.log(selectedQuantity);
+    console.log(
+      "ProductId:",
+      productId,
+      "Action:",
+      action,
+      "Vendor:",
+      vendor,
+      "Quantity:",
+      selectedQuantity
+    );
+    updateUserCart(url, productId, action, vendor, selectedQuantity, orderId);
+  });
+}
+
+// Delete cart
+const deleteCartBtn = document.querySelector("#deleteCartBtn");
+try {
+  deleteCartBtn.addEventListener("click", function () {
+    let url = "/delete-order/";
+    let productId = null;
+    let action = null;
+    let vendor = this.dataset.vendor;
+    let quantity = null;
+    let orderId = this.dataset.orderid;
+    updateUserCart(url, productId, action, vendor, quantity, orderId);
+  });
+} catch (err) {
+  console.log("No cart exist to delete\n", err)
 }
