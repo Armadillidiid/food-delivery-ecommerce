@@ -1,0 +1,65 @@
+{% extends 'layout-checkout.html' %}
+
+{% block title %}
+Home page | Rumble
+{% endblock %}
+
+{% load static %}
+
+{% block script %}
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid p-0 gray-page-background">
+    <div class="container d-flex pt-3 px-0 gap-4">
+        <div class="w-25" id="profile-sidenav" data-route="{{ route }}">
+            <div class="row py-3 bg-white" id="overview">
+                <span class="fw-bold">Account Overview</span>
+            </div>
+            <div class="row py-3 bg-white" id="orders">
+                <a href="{% url 'profile-order' %}" class="remove-link-style">
+                    <span class="fw-bold">Orders</span>
+                </a>
+            </div>
+            <div class="row py-3 bg-white" id="vouchers">
+                <span class="fw-bold">Vouchers</span>
+            </div>
+            <div class="row py-3 bg-white" id="favourites">
+                <span class="fw-bold">Favourites</span>
+            </div>
+        </div>
+        <div class="p-3 bg-white w-100">
+            <form action="{% url 'profile-overview' %}" method="post">
+                {% csrf_token %}
+                <input class="visually-hidden" type="text" name="id" value="{{ customer.id }}">
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="first_name" class="fw-bold ps-1 mb-2">First Name</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="last_name" class="fw-bold ps-1 mb-2">Last Name</label>
+                    {{ form.last_name }}
+                </div>
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="email" class="fw-bold ps-1 mb-2">Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="phone_number_0" class="fw-bold ps-1 mb-2">Phone Number</label>
+                    {{ form.phone_number }}
+                </div>
+                <div class="row ms-0 mb-5 fs-7">
+                    <label for="password" class="fw-bold ps-1 mb-2">Password</label>
+                    {{ form.password }}
+                </div>
+                <div class="row ms-0 gap-2">
+                    <button type="submit" class="btn light-gray text-danger border-0 fw-bold w-auto">Save
+                        changes</button>
+                    <!-- <button class="btn light-gray text-danger border-0 fw-bold w-auto">Logout</button> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

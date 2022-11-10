@@ -23,7 +23,7 @@ from sqlalchemy import null
 class User(AbstractUser):
     username = models.CharField(max_length=50, null=True, blank=True)
     email = models.EmailField(unique=True)
-    phone_number = PhoneNumberField(null=True)
+    phone_number = PhoneNumberField(unique=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

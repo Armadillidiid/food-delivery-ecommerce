@@ -28,3 +28,16 @@ class ShippingAddressForm(ModelForm):
         }
         fields = '__all__'
         exclude = ['customer']
+    
+
+class UserUpdateForm(ModelForm):
+    class Meta:
+        model = User
+        widgets = { 
+            'first_name': forms.TextInput(attrs={'class': 'form-control w-25'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control w-25'}),
+            'email': forms.TextInput(attrs={'class': 'form-control w-25'}),
+            'phone_number' : PhoneNumberPrefixWidget(initial='NG', attrs={'class': 'form-control w-auto'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control w-25'}),
+        }
+        fields = ['first_name', 'last_name', 'email', 'phone_number', 'password']

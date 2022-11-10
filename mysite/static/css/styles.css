@@ -1,5 +1,13 @@
 .light-gray {
-  background-color: rgb(234, 234, 234);
+  background-color: #eaeaea !important;
+}
+
+.text-light-gray {
+  color: #eaeaea !important;
+}
+
+.text-dark-gray {
+  color: #cccccc !important;
 }
 
 .light-coral {
@@ -314,13 +322,17 @@ ul li {
   width: 40px !important;
 }
 
-.checkout-page-background {
+.gray-page-background {
   background-color: #f1f1f1 !important;
   height: 100vh;
 }
 
 .remove-border {
   border: none !important;
+}
+
+#profile-sidenav div:hover {
+  background-color: #eaeaea !important;
 }
 
   @media only screen and (max-width: 1270px) {

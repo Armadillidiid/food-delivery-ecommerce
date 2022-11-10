@@ -6,7 +6,7 @@ from django.shortcuts import render, HttpResponse, HttpResponseRedirect, redirec
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import MyUserCreationForm, ShippingAddressForm
+from .forms import MyUserCreationForm, ShippingAddressForm, UserUpdateForm
 from .models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
@@ -14,6 +14,7 @@ from PIL import Image
 import datetime
 import json
 import uuid
+import sys
 
 
 @login_required(login_url='login')
@@ -311,5 +312,39 @@ def deleteOrder(request):
 
 
 
-def profile(request):
-    pass
+def profileOverview(request):
+    if request.method == "POST":
+        customer = request.user
+        form = UserUpdateForm(request.POST, instance=customer)
+        if form.is_valid():
+            unclean_form = form.save(commit=False)
+
+            # Encrypt password 
+            unclean_form.password = make_password(unclean_form.password)
+
+            # Update existing instance of 'User'
+            try:
+                unclean_form.save()
+                messages.success(request, "Update Successful")
+            except:
+                messages.error(request, form.errors)
+
+            return redirect('profile-overview')
+
+    customer = request.user
+    form = UserUpdateForm(instance=customer)
+    context = {
+        'route': 'overview',
+        'form': form,
+        'customer': customer
+    }
+    return render(request, 'profile-overview.html', context)
+
+
+def profileOrder(request):
+    customer = request.user
+    context = {
+        'route': 'orders',
+        'customer': customer
+    }
+    return render(request, "profile-order.html", context)

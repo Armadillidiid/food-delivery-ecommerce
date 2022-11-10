@@ -34,7 +34,8 @@ urlpatterns = [
     path('update-cart/', views.updateCart, name='update-cart'),
     path('process-order/', views.processOrder, name='process-order'),
     path('delete-order/', views.deleteOrder, name='delete-order'),
-    path('profile/', views.profile, name='profile')
+    path('profile/overview/', views.profileOverview, name='profile-overview'),
+    path('profile/order/', views.profileOrder, name='profile-order')
 
 ]
 
