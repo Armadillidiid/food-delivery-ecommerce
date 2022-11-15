@@ -35,7 +35,9 @@ urlpatterns = [
     path('process-order/', views.processOrder, name='process-order'),
     path('delete-order/', views.deleteOrder, name='delete-order'),
     path('profile/overview/', views.profileOverview, name='profile-overview'),
-    path('profile/order/', views.profileOrder, name='profile-order')
+    path('profile/order/', views.profileOrder, name='profile-order'),
+    path('profile/voucher/', views.profileVoucher, name="profile-voucher"),
+    path('profile/favourite/', views.profileFavourite, name='profile-favourite')
 
 ]
 

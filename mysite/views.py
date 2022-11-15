@@ -321,7 +321,6 @@ def profileOrder(request):
     orders = Order.objects.filter(customer=customer, is_complete=True).order_by('-date_order')
     items = {}
     for order in orders:
-        # order.save()
         items[order] = order.orderitem_set.all()
 
     context = {
@@ -331,3 +330,17 @@ def profileOrder(request):
         'items': items
     }
     return render(request, "profile-order.html", context)
+
+
+def profileVoucher(request):
+    context = {
+        'route': 'vouchers',
+    }
+    return render(request, 'profile-voucher.html', context)
+
+
+def profileFavourite(request):
+    context = {
+        'route': 'favourites'
+    }
+    return render(request, 'profile-favourite', context)
