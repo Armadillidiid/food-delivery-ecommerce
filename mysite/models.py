@@ -143,7 +143,7 @@ class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, blank=True)
     shipping_address = models.ForeignKey(ShippingAddressOrder , on_delete=models.SET_NULL, null=True, blank=True)
-    date_order = models.DateField(auto_now_add=True)
+    date_order = models.DateTimeField(auto_now=True)
     is_complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100)
 

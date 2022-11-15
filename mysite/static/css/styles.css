@@ -288,6 +288,11 @@ ul li {
   width: 75px;
 }
 
+.image-cart-lg {
+  height: 125px;
+  width: 125px;
+}
+
 .custom-border-cart {                    
   border-top: 1px solid #E2E2E2;
 }
