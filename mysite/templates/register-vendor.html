@@ -9,10 +9,7 @@ Store Page | Rumble
 
 {% block script %}
 <script>
-    // Change footer background to black
-    const footer = document.querySelector("footer div");
-    footer.classList.remove('bg-dark');
-    footer.classList.add('bg-black');
+    changeFooterBackground()
 </script>
 {% endblock %}
 
@@ -105,7 +102,7 @@ Store Page | Rumble
             </div>
         </div>
         <div class="py-6">
-            <div class="mb-3">
+            <div class="mb-4">
                 <span class="fw-bold fs-2">Questions? We've got answers.</span>
             </div>
 
@@ -167,7 +164,8 @@ Store Page | Rumble
                     </h2>
                     <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#merchantAccordion">
                         <div class="accordion-body">
-                            This varies from city to city. We can assess delivery coverage and your location to help define
+                            This varies from city to city. We can assess delivery coverage and your location to help
+                            define
                             the right area for your restaurant.
                         </div>
                     </div>
