@@ -1,0 +1,179 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Store Page | Rumble
+{% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block script %}
+<script>
+    // Change footer background to black
+    const footer = document.querySelector("footer div");
+    footer.classList.remove('bg-dark');
+    footer.classList.add('bg-black');
+</script>
+{% endblock %}
+
+{% block main %}
+<section>
+    <div class="container-fluid merchant-background">
+        <div class="container px-0 h-100 d-flex justify-content-between align-items-center gap-5">
+            <div id="merchant-left-panel" class="">
+                <span class="row mb-4 fw-bold text-white lh-sm">Unleash a new income stream</span>
+                <span class="row text-white">You can connect with more consumers thanks to the flexibility, visibility,
+                    and
+                    customer data provided by the global Rumble platform. Join our partnership today</span>
+            </div>
+            <div id="merchant-right-panel" class="bg-white w-100 h-auto p-4 rounded">
+                <span class="fs-3 fw-bold">Get started</span>
+                {{ form | crispy }}
+                <button type="submit" class="btn btn-dark fw-bold w-100 mt-2">Submit</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="p-5 pt-6 d-flex flex-column">
+            <span class="fw-bold fs-3 mb-4">Why Rumble?</span>
+            <div class="row">
+                <div class="d-flex justify-content-between gap-5">
+                    <div class="w-33">
+                        <span class="fw-bold 6">Deliver your way</span>
+                        <p class="mt-2">Our offerings are flexible so you can customize them to your needs. Get started
+                            with your
+                            delivery people or connect with delivery people through the Rumble platform.</p>
+                    </div>
+                    <div class="w-33">
+                        <span class="fw-bold 6">Boost your visibility</span>
+                        <p class="mt-2">Stand out with in-app marketing to reach even more customers and increase sales.
+                        </p>
+                    </div>
+                    <div class="w-33">
+                        <span class="fw-bold fs-6">Connect with customers</span>
+                        <p class="mt-2">Turn customers into regulars with actionable data insights, respond to reviews
+                            or offer a loyalty program.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-5 pb-6 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center gap-5">
+                <div class="w-33">
+                    <span class="fw-bold">Unlock new growth</span>
+                    <p class="mt-2">Thousands of Uber Eats app users may be searching for food in your area. By
+                        partnering with Uber Eats and adding your restaurant to the platform, we can help you reach
+                        those users.</p>
+                </div>
+                <div class="w-50">
+                    <img src="{% static 'images/pexels-helena-lopes-693267-edited.jpg' %}" class="img-fluid" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container-fluid bg-black">
+        <div class="container d-flex justify-content-between align-items-center py-6 gap-5">
+            <div class="w-33">
+                <p class="fw-bold fs-2 text-white">"Rumble extends our brand awareness to neighborhoods that wouldn't
+                    normally be exposed to us."</p>
+                <span class="row mx-0 my-3 text-white fst-italic">- Tiana Russ</span>
+                <span class="row mx-0  text-white">Owner, New Creed, Ikeja</span>
+            </div>
+            <div class="w-50 order-first">
+                <img src="{% static 'images/pexels-andrea-piacquadio-733872.jpg' %}" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-6 gap-5">
+            <div class="w-33">
+                <span class="fw-bold fs-2">Get started in just 3 steps</span>
+                <ol class="mt-3">
+                    <li class="fw-bold"><span class="fw-normal">Tell us about your restaurant.</span></li>
+                    <li class="fw-bold"><span class="fw-normal">Upload your menu.</span></li>
+                    <li class="fw-bold"><span class="fw-normal">Access Restaurant Dashboard and go live!</span></li>
+                </ol>
+            </div>
+            <div class="w-50">
+                <img src="{% static 'images/pexels-christina-morillo-1181386.jpg' %}" alt="" class="img-fluid">
+            </div>
+        </div>
+        <div class="py-6">
+            <div class="mb-3">
+                <span class="fw-bold fs-2">Questions? We've got answers.</span>
+            </div>
+
+            <div class="accordion accordion-flush" id="merchantAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne">
+                            How long does it take to become a partner?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#merchantAccordion">
+                        <div class="accordion-body">
+                            Depending on how many locations you have, it’s possible to become an Rumble restaurant
+                            partner and start accepting orders in just a few days! You can begin the process by signing
+                            up here. We’re excited to hear from you!
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo">
+                            How does pricing work?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#merchantAccordion">
+                        <div class="accordion-body">
+                            Rumble pricing has two parts. A one-time activation fee sets restaurants up with a
+                            welcome kit, tablet, restaurant software, and professional photo shoot. A service fee is
+                            calculated as a percentage of each restaurant order made through Rumble. Want more
+                            details? Email restaurants@uber.com and we’ll get back to you.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree">
+                            Who handles each delivery?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#merchantAccordion">
+                        <div class="accordion-body">
+                            The Rumble platform can connect you with independent drivers, bike and scooter riders, and
+                            walkers who deliver to your customers. Because of the network of delivery people using the
+                            Rumble platform, restaurants don’t have to keep their own delivery staff. But if you do have
+                            your own staff, we’re flexible—you can use them too. Reach out to restaurants@Rumble.com or
+                            directly to your Rumble Eats contact to see if this option is now available in your city.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour">
+                            What is the delivery radius?
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#merchantAccordion">
+                        <div class="accordion-body">
+                            This varies from city to city. We can assess delivery coverage and your location to help define
+                            the right area for your restaurant.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

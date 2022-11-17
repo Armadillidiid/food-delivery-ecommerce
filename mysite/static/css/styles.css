@@ -31,17 +31,33 @@
   margin-right: calc(1rem * 10) !important;
 }
 
-.py-6 {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
+.p-6 {
+  padding: 5rem 5rem !important;
+}
+
+.pt-6 {
+  padding-top: 5rem !important;
 }
 
 .pb-6 {
-  padding-bottom: 5rem;
+  padding-bottom: 5rem !important;
+}
+
+.py-6 {
+  padding-top: 5rem !important;
+  padding-bottom: 5rem !important;
+}
+
+.pb-6 {
+  padding-bottom: 5rem !important;
 }
 
 .fs-7 {
   font-size: 14px;
+}
+
+.w-33 {
+  max-width: 33.3%;
 }
 
 #nav-btn {
@@ -338,6 +354,40 @@ ul li {
 
 #profile-sidenav div:hover {
   background-color: #eaeaea !important;
+}
+
+.merchant-background {
+  background: url(../images/pexels-andrea-piacquadio-927451-edited.jpg);
+  /* filter: brightness(80%); */
+  background-size: cover;
+  height: 80vh;
+}
+
+#merchant-left-panel span:first-child{
+  font-size: 54px;
+}
+
+#merchant-left-panel {
+  max-width: 30%;
+}
+
+#merchant-right-panel {
+  max-width: 50%;
+}
+
+
+.merchant-panel-form {
+  background-color: rgb(240, 240, 240);
+}
+
+.merchant-panel-form:focus,
+.merchant-panel-form:active {
+  background-color: rgb(245, 244, 244);
+}
+
+.accordion {
+  --bs-accordion-active-color: black !important;
+  --bs-accordion-active-bg: white !important;
 }
 
   @media only screen and (max-width: 1270px) {

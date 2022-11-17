@@ -20,6 +20,11 @@ Home page | Rumble
                     <span class="fw-bold">Account Overview</span>
                 </a>
             </div>
+            <div class="row py-3 bg-white" id="vendor">
+                <a href="{% url 'profile-vendor' %}" class="remove-link-style">
+                    <span class="fw-bold">Vendor Management</span>
+                </a>
+            </div>
             <div class="row py-3 bg-white" id="orders">
                 <a href="{% url 'profile-order' %}" class="remove-link-style">
                     <span class="fw-bold">Orders</span>
@@ -31,7 +36,9 @@ Home page | Rumble
                 </a>
             </div>
             <div class="row py-3 bg-white" id="favourites">
-                <span class="fw-bold">Favourites</span>
+                <a href="{% url 'profile-favourite' %}" class="remove-link-style">
+                    <span class="fw-bold">Favourites</span>
+                </a>
             </div>
         </div>
         <div class="w-100">

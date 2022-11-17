@@ -6,7 +6,7 @@ from django.shortcuts import render, HttpResponse, HttpResponseRedirect, redirec
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import MyUserCreationForm, ShippingAddressForm, UserUpdateForm
+from .forms import *
 from .models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
@@ -211,6 +211,7 @@ def checkout(request, name):
     return render(request, 'checkout.html', context)
 
 
+@login_required(login_url='login')
 def updateCart(request):
     data = json.loads(request.body)
     productId = data['productId']
@@ -243,6 +244,8 @@ def updateCart(request):
 
     return JsonResponse("Item added to cart", safe=False)
 
+
+@login_required(login_url='login')
 def processOrder(request):
     transaction_id = uuid.uuid4()
     data = json.loads(request.body)
@@ -275,6 +278,7 @@ def processOrder(request):
     return JsonResponse("Order completed", safe=False)
 
 
+@login_required(login_url='login')
 def deleteOrder(request):
     data = json.loads(request.body)
     vendor = data['vendor']
@@ -286,7 +290,7 @@ def deleteOrder(request):
     return JsonResponse("Order deleted", safe=False)
 
 
-
+@login_required(login_url='login')
 def profileOverview(request):
     if request.method == "POST":
         customer = request.user
@@ -316,6 +320,7 @@ def profileOverview(request):
     return render(request, 'profile-overview.html', context)
 
 
+@login_required(login_url='login')
 def profileOrder(request):
     customer = request.user
     orders = Order.objects.filter(customer=customer, is_complete=True).order_by('-date_order')
@@ -332,6 +337,7 @@ def profileOrder(request):
     return render(request, "profile-order.html", context)
 
 
+@login_required(login_url='login')
 def profileVoucher(request):
     context = {
         'route': 'vouchers',
@@ -339,8 +345,25 @@ def profileVoucher(request):
     return render(request, 'profile-voucher.html', context)
 
 
+@login_required(login_url='login')
 def profileFavourite(request):
     context = {
         'route': 'favourites'
     }
-    return render(request, 'profile-favourite', context)
+    return render(request, 'profile-favourite.html', context)
+
+
+@login_required(login_url='login')
+def profileVendor(request):
+    context = {
+        'route': 'vendor'
+    }
+    return render(request, 'profile-vendor.html', context)
+
+
+def registerVendor(request):
+    form = registerVendorForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'register-vendor.html', context)

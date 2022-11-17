@@ -36,8 +36,10 @@ urlpatterns = [
     path('delete-order/', views.deleteOrder, name='delete-order'),
     path('profile/overview/', views.profileOverview, name='profile-overview'),
     path('profile/order/', views.profileOrder, name='profile-order'),
-    path('profile/voucher/', views.profileVoucher, name="profile-voucher"),
-    path('profile/favourite/', views.profileFavourite, name='profile-favourite')
+    path('profile/voucher/', views.profileVoucher, name='profile-voucher'),
+    path('profile/favourite/', views.profileFavourite, name='profile-favourite'),
+    path('profile/vendor/', views.profileVendor, name='profile-vendor'),
+    path('merchant/register/', views.registerVendor, name='register-vendor')
 
 ]
 

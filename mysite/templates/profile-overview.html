@@ -15,7 +15,14 @@ Home page | Rumble
     <div class="container d-flex pt-3 px-0 gap-4">
         <div class="w-25" id="profile-sidenav" data-route="{{ route }}">
             <div class="row py-3 bg-white" id="overview">
-                <span class="fw-bold">Account Overview</span>
+                <a href="{% url 'profile-overview' %}" class="remove-link-style">
+                    <span class="fw-bold">Account Overview</span>
+                </a>
+            </div>
+            <div class="row py-3 bg-white" id="vendor">
+                <a href="{% url 'profile-vendor' %}" class="remove-link-style">
+                    <span class="fw-bold">Vendor Management</span>
+                </a>
             </div>
             <div class="row py-3 bg-white" id="orders">
                 <a href="{% url 'profile-order' %}" class="remove-link-style">
