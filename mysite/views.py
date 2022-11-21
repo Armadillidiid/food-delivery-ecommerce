@@ -362,6 +362,38 @@ def profileVendor(request):
 
 
 def registerVendor(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            print('User is auth')
+            form =  registerVendorForm(request.POST)
+            if form.is_valid():
+                print('Form is valid')
+                unsaved_form = form.save(commit=False)
+                unsaved_form.user = request.user
+                try:
+                    # unsaved_form.save()
+                    Vendor.objects.create(
+                        user=unsaved_form.user,
+                        name=unsaved_form.name,
+                        location=unsaved_form.location,
+                        state=unsaved_form.state,
+                        min_delivery_time=unsaved_form.min_delivery_time,
+                        max_delivery_time=unsaved_form.max_delivery_time,
+                        category=unsaved_form.category,
+                        image=unsaved_form.image,
+                        banner_image=unsaved_form.banner_image
+                    )
+                    messages.success(request, 'Vendor profile created successfully')
+                except:
+                    print('Failed to create vendor profile')
+                    print(sys.exc_info()[1])
+                    messages.error(request, form.errors)
+
+                return redirect('register-vendor')
+            else:
+                messages.error(request, form.errors)
+        else:
+            return redirect('login')
     form = registerVendorForm()
     context = {
         'form': form

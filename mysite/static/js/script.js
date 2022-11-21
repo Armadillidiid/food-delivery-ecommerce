@@ -10,11 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
       if (lastScrollY < window.scrollY && lastScrollY > height) {
         autoHide.classList.remove("scrolled-up");
         autoHide.classList.add("scrolled-down");
-        console.log("Scrolling down");
       } else {
         autoHide.classList.remove("scrolled-down");
         autoHide.classList.add("scrolled-up");
-        console.log("Scrolling up");
       }
 
       lastScrollY = window.scrollY;
@@ -43,9 +41,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+
 // Change footer black
 function changeFooterBackground() {
   const footer = document.querySelector("footer div");
     footer.classList.remove('bg-dark');
     footer.classList.add('bg-black');
+}
+
+
+// Hide user select menu form
+function hideUserForeignkey() {
+  const userLabel = document.querySelector('#div_id_user')
+  userLabel.classList.add('visually-hidden')
 }

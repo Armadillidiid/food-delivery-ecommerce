@@ -17,6 +17,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from PIL import Image
 from sqlalchemy import null
+import requests
 
 # Create your models here.
 
@@ -30,6 +31,14 @@ class User(AbstractUser):
 
 
 class Vendor(models.Model):
+    url = "https://nigerian-states-info.herokuapp.com/api/v1/states"
+    res = requests.get(url)
+    data = res.json()
+    STATE_CHOICE = []
+
+    for state in data['data']:
+        STATE_CHOICE.append((state['Name'], state['Name'].capitalize()))
+
     CATEGORY_CHOICES = [
         ('african', 'African'),
         ('alcoholic drinks', 'Alcoholic Drinks'),
@@ -43,15 +52,17 @@ class Vendor(models.Model):
         ('vegan', 'Vegan'),
     ]
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
     name = models.CharField(max_length=200, unique=True) 
     ratings = models.FloatField(default=0)
     location = models.CharField(max_length=200)
+    state = models.CharField(max_length=100, choices=STATE_CHOICE, default='abia')
     min_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
     max_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
     image = models.ImageField(null=True, blank=True)
     banner_image = models.ImageField(null=True, blank=True)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
+
 
     def __str__(self):
         return self.name

@@ -36,16 +36,37 @@
         <div class="container-fluid p-0" style="height: 40px;"></div>
     </div>
 
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "error" %}
+        <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show mx-5" role="alert">
+            <div>
+                {{ message }}
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% elif message.tags == "success" %}
+        <div class="alert alert-success d-flex align-items-center alert-dismissible fade show mx-5" role="alert">
+            <div>
+                {{ message }}
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+
     {% block main %}{% endblock %}
 
     {% include "partials/footer.html" %}
-
-    {% block script %} {% endblock %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
     <script src="{% static 'js/script.js' %}"></script>
+    {% block script %} {% endblock %}
+
 </body>
 
 </html>

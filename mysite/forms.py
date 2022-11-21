@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import EmailField, ModelForm
-from .models import User, ShippingAddress, Vendor
+from .models import *
 from phonenumber_field.modelfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
@@ -49,10 +49,11 @@ class registerVendorForm(ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control merchant-panel-form border-0', 'placeholder': 'Name'}),
             'location': forms.TextInput(attrs={'class': 'form-control merchant-panel-form border-0', 'placeholder': 'Location'}),
-            'min_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0', 'placeholder': 'Minimum delivery time'}),
-            'max_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0', 'placeholder': 'Maximum delivery time'}),
-            'category': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0', 'placeholder': 'Category'}),
-            'image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0', 'placeholder': 'Image'}),
-            'banner_image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0', 'placeholder': 'Banner image'})   
+            'state': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0'}),
+            'min_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0'}),
+            'max_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0'}),
+            'category': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0'}),
+            'image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0'}),
+            'banner_image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0'}),
         }
-        fields = ['name', 'location', 'min_delivery_time', 'max_delivery_time', 'category', 'image', 'banner_image']
+        fields = ['name', 'location', 'state', 'min_delivery_time', 'max_delivery_time', 'category', 'image', 'banner_image', 'user']
