@@ -42,6 +42,48 @@ Home page | Rumble
         </div>
         {% if vendor %}
         <div class="p-3 bg-white w-100">
+            <form action="{% url 'profile-vendor' %}" method="post">
+                {% csrf_token %}
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="name" class="fw-bold ps-1 mb-2">Vendor name</label>
+                    {{ form.name }}
+                </div>
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="location" class="fw-bold ps-1 mb-2">Location</label>
+                    {{ form.location }}
+                </div>
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="state" class="fw-bold ps-1 mb-2">State</label>
+                    {{ form.state }}
+                </div>
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="min_delivery_time" class="fw-bold ps-1 mb-2">Minimum delivery time</label>
+                    {{ form.min_delivery_time }}
+                </div>
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="max_delivery_time" class="fw-bold ps-1 mb-2">Maximum delivery time</label>
+                    {{ form.max_delivery_time }}
+                </div>
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="category" class="fw-bold ps-1 mb-2">Category</label>
+                    {{ form.category }}
+                </div>
+                <div class="row ms-0 mb-4 fs-7">
+                    <label for="image" class="fw-bold ps-1 mb-2">Image</label>
+                    {{ form.image }}
+                </div>
+                <div class="row ms-0 mb-5 fs-7">
+                    <label for="banner_image" class="fw-bold ps-1 mb-2">Banner image</label>
+                    {{ form.banner_image }}
+                </div>
+                <div class="row ms-0 mb-5 fs-7 visually-hidden">
+                    {{ form.user }}
+                </div>
+                <div class="row ms-0 gap-2">
+                    <button type="submit" class="btn light-gray text-danger border-0 fw-bold w-auto">Save
+                        changes</button>
+                </div>
+            </form>
         </div>
         {% else %}
         <div class="p-3 bg-white w-100">

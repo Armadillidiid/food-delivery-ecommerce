@@ -84,8 +84,8 @@ class Vendor(models.Model):
         return url
 
     def save(self, *args, **kwargs):
-         if self.image:
-            super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
+        if self.image:
             img = Image.open(self.image.path)
             # if img.width > 200 or img.height > 360:
             output_size = (360, 200)

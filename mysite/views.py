@@ -306,7 +306,7 @@ def profileOverview(request):
                 unclean_form.save()
                 messages.success(request, "Update Successful")
             except:
-                messages.error(request, form.errors)
+                messages.error(request, sys.exc_info()[1])
 
             return redirect('profile-overview')
 
@@ -355,8 +355,32 @@ def profileFavourite(request):
 
 @login_required(login_url='login')
 def profileVendor(request):
+    if request.method == 'POST':
+        vendor = Vendor.objects.get(user=request.user)
+        form = registerVendorForm(request.POST, instance=vendor)
+        print(form)
+        if form.is_valid():
+            print('Form is valid')
+            try:
+                form.save()
+                messages.success(request, "Vendor profile updated")
+                print('Form updated successfully')
+            except:
+                
+                messages.error(request, sys.exc_info()[1])
+        else:
+            messages.error(request, form.errors)
+        
+        return redirect('profile-vendor')
+
+
+    customer = request.user
+    vendor = Vendor.objects.get(user=customer)
+    form = registerVendorForm(instance=vendor)
     context = {
-        'route': 'vendor'
+        'route': 'vendor',
+        'vendor': vendor,
+        'form': form,
     }
     return render(request, 'profile-vendor.html', context)
 
@@ -371,23 +395,10 @@ def registerVendor(request):
                 unsaved_form = form.save(commit=False)
                 unsaved_form.user = request.user
                 try:
-                    # unsaved_form.save()
-                    Vendor.objects.create(
-                        user=unsaved_form.user,
-                        name=unsaved_form.name,
-                        location=unsaved_form.location,
-                        state=unsaved_form.state,
-                        min_delivery_time=unsaved_form.min_delivery_time,
-                        max_delivery_time=unsaved_form.max_delivery_time,
-                        category=unsaved_form.category,
-                        image=unsaved_form.image,
-                        banner_image=unsaved_form.banner_image
-                    )
+                    unsaved_form.save()
                     messages.success(request, 'Vendor profile created successfully')
                 except:
-                    print('Failed to create vendor profile')
-                    print(sys.exc_info()[1])
-                    messages.error(request, form.errors)
+                    messages.error(request, sys.exc_info()[1])
 
                 return redirect('register-vendor')
             else:

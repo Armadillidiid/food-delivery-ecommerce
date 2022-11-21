@@ -47,13 +47,13 @@ class registerVendorForm(ModelForm):
     class Meta:
         model = Vendor
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control merchant-panel-form border-0', 'placeholder': 'Name'}),
-            'location': forms.TextInput(attrs={'class': 'form-control merchant-panel-form border-0', 'placeholder': 'Location'}),
-            'state': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0'}),
-            'min_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0'}),
-            'max_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0'}),
-            'category': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0'}),
-            'image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0'}),
-            'banner_image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0'}),
+            'name': forms.TextInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25', 'placeholder': 'Name'}),
+            'location': forms.TextInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25', 'placeholder': 'Location'}),
+            'state': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
+            'min_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
+            'max_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
+            'category': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
+            'image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
+            'banner_image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
         }
         fields = ['name', 'location', 'state', 'min_delivery_time', 'max_delivery_time', 'category', 'image', 'banner_image', 'user']
