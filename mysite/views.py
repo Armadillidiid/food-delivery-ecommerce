@@ -11,11 +11,13 @@ from .models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from PIL import Image
+from .helpers import get_details, sort_location
 import datetime
 import json
 import uuid
 import sys
-from .helpers import get_details
+import os
+
 
 @login_required(login_url='login')
 def home(request):
@@ -30,7 +32,12 @@ def home(request):
     #         continue
     #     image.thumbnail(size)
     #     image.save(vendor.image.path)
-
+    map_location = {}
+    try:
+        location = request.GET.get('location')
+        map_location = sort_location(location)
+    except:
+        print(sys.exc_info()[1])
     customer = request.user
     orders = Order.objects.filter(customer=customer, is_complete=False)
     items = {}
@@ -41,6 +48,7 @@ def home(request):
         'vendors': vendors,
         'orders': orders,
         'items': items,
+        'map_location': map_location,
         'iterator': range(1, 26)
 
     }
@@ -168,8 +176,8 @@ def checkout(request, name):
         messages.error(request, form.errors)
         if form.is_valid():
             raw_form = form.save(commit=False)
-            
-            # Update or create new address 
+
+            # Update or create new address
             obj, created = ShippingAddress.objects.update_or_create(
                 id=raw_form.db_id,
                 defaults={
@@ -183,7 +191,6 @@ def checkout(request, name):
                 }
             )
             obj.save()
- 
 
             messages.success(request, "Address created successfully")
 
@@ -195,7 +202,8 @@ def checkout(request, name):
     items = {}
     for order in orders:
         items[order] = order.orderitem_set.all()
-    paymentOrder = Order.objects.get(customer=details['customer'], vendor=details['vendor'], is_complete=False)
+    paymentOrder = Order.objects.get(
+        customer=details['customer'], vendor=details['vendor'], is_complete=False)
     shippingAddresses = ShippingAddress.objects.filter(customer=request.user)
 
     context = {
@@ -253,25 +261,26 @@ def processOrder(request):
     vendor = data['shippingInfo']['vendor']
     details = get_details(request, vendor)
     total = float(data['paymentInfo']['total'])
-    order = Order.objects.get(customer=details['customer'], vendor=details['vendor'], is_complete=False)
-    shippingAddress = ShippingAddress.objects.get(pk=data['shippingInfo']['id'])
+    order = Order.objects.get(
+        customer=details['customer'], vendor=details['vendor'], is_complete=False)
+    shippingAddress = ShippingAddress.objects.get(
+        pk=data['shippingInfo']['id'])
 
     order.transaction_id = transaction_id
 
     if total == order.get_cart_price + 1:
         shippingAddressOrder = ShippingAddressOrder.objects.create(
-        customer=shippingAddress.customer,
-        contact_name= shippingAddress.contact_name,
-        address = shippingAddress.address,
-        city = shippingAddress.city,
-        state = shippingAddress.state,
-        zip_code= shippingAddress.zip_code,
-        number= shippingAddress.number
+            customer=shippingAddress.customer,
+            contact_name=shippingAddress.contact_name,
+            address=shippingAddress.address,
+            city=shippingAddress.city,
+            state=shippingAddress.state,
+            zip_code=shippingAddress.zip_code,
+            number=shippingAddress.number
         )
 
         order.is_complete = True
         order.shipping_address = shippingAddressOrder
-
 
     order.save()
 
@@ -285,7 +294,8 @@ def deleteOrder(request):
     orderId = data['orderId']
     customer = request.user
     vendor = Vendor.objects.get(id=vendor)
-    Order.objects.get(id=orderId, customer=customer, vendor=vendor, is_complete=False).delete()
+    Order.objects.get(id=orderId, customer=customer,
+                      vendor=vendor, is_complete=False).delete()
 
     return JsonResponse("Order deleted", safe=False)
 
@@ -298,7 +308,7 @@ def profileOverview(request):
         if form.is_valid():
             unclean_form = form.save(commit=False)
 
-            # Encrypt password 
+            # Encrypt password
             unclean_form.password = make_password(unclean_form.password)
 
             # Update existing instance of 'User'
@@ -323,7 +333,8 @@ def profileOverview(request):
 @login_required(login_url='login')
 def profileOrder(request):
     customer = request.user
-    orders = Order.objects.filter(customer=customer, is_complete=True).order_by('-date_order')
+    orders = Order.objects.filter(
+        customer=customer, is_complete=True).order_by('-date_order')
     items = {}
     for order in orders:
         items[order] = order.orderitem_set.all()
@@ -366,16 +377,18 @@ def profileVendor(request):
                 messages.success(request, "Vendor profile updated")
                 print('Form updated successfully')
             except:
-                
+
                 messages.error(request, sys.exc_info()[1])
         else:
             messages.error(request, form.errors)
-        
+
         return redirect('profile-vendor')
 
-
     customer = request.user
-    vendor = Vendor.objects.get(user=customer)
+    try:
+        vendor = Vendor.objects.get(user=customer)
+    except:
+        vendor = None
     form = registerVendorForm(instance=vendor)
     context = {
         'route': 'vendor',
@@ -389,14 +402,15 @@ def registerVendor(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
             print('User is auth')
-            form =  registerVendorForm(request.POST)
+            form = registerVendorForm(request.POST)
             if form.is_valid():
                 print('Form is valid')
                 unsaved_form = form.save(commit=False)
                 unsaved_form.user = request.user
                 try:
                     unsaved_form.save()
-                    messages.success(request, 'Vendor profile created successfully')
+                    messages.success(
+                        request, 'Vendor profile created successfully')
                 except:
                     messages.error(request, sys.exc_info()[1])
 
@@ -410,3 +424,20 @@ def registerVendor(request):
         'form': form
     }
     return render(request, 'register-vendor.html', context)
+
+
+def deleteVendor(request):
+    Vendor.objects.get(user=request.user).delete()
+    return redirect('profile-vendor')
+
+
+def queryGoogleMap(request):
+    data = json.loads(request.body)
+    string = data['string']
+    key = os.environ["MAP_API_KEY"]
+    url = f"https://maps.googleapis.com/maps/api/place/autocomplete/json?input={string}&key={key}&libraries=places&types=geocode&components=country:ng"
+
+    response = requests.request("GET", url)
+    new_data = response.json()
+
+    return JsonResponse(new_data, safe=True)

@@ -23,3 +23,13 @@ def get_details(request, name):
     }
 
     return context
+
+
+def sort_location(location):
+    location_list = location.split(',')
+    location = {
+        'address': location_list[0],
+        'state': location_list[1],
+        'country': location_list[2]
+    }
+    return location

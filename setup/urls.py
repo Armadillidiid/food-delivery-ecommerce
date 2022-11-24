@@ -39,7 +39,9 @@ urlpatterns = [
     path('profile/voucher/', views.profileVoucher, name='profile-voucher'),
     path('profile/favourite/', views.profileFavourite, name='profile-favourite'),
     path('profile/vendor/', views.profileVendor, name='profile-vendor'),
-    path('merchant/register/', views.registerVendor, name='register-vendor')
+    path('merchant/register/', views.registerVendor, name='register-vendor'),
+    path('delete-vendor/', views.deleteVendor, name='delete-order'),
+    path('query-google-map/', views.queryGoogleMap, name='query-google-map')
 
 ]
 

@@ -390,6 +390,20 @@ ul li {
   --bs-accordion-active-bg: white !important;
 }
 
+.light-gray-hover:hover {
+  background-color: lightgray !important;
+}
+
+#searchBoxForm {
+  max-width: 35%;
+}
+
+#searchBoxResult {
+  position: absolute;
+  z-index: 500;
+  max-width: 368px;
+}
+
   @media only screen and (max-width: 1270px) {
     .offcanvas {
       max-width: 30vw;

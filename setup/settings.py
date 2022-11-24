@@ -130,7 +130,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-
+    ('node_modules', os.path.join(BASE_DIR, 'node_modules/')),
 ]
 
 MEDIA_URL = '/images/upload/'

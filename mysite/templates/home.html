@@ -8,17 +8,33 @@ Home page | Rumble
 
 {% block script %}
 <script src="{% static 'js/cart.js' %}"></script>
+<script type="module" src="{% static 'node_modules/js-cookie/dist/js.cookie.mjs' %}"></script>
+<script type="module" src="{% static 'js/map.js' %}"></script>
 {% endblock %}
 
 {% block main %}
-<div class="container my-3">
-    <h2 class="fs-2 fw-bold">Popular near you</h2>
+<div class="container my-3 px-0">
+    <div class="p-3 mb-4 bg-danger d-flex">
+        <form action="{% url 'home' %}" method="get" class="d-flex w-100" id="searchBoxForm">
+            {% csrf_token %}
+            <div class="w-100">
+                <input type="text" name="location" id="searchBox" class="form-control border-0 px-3 py-2 rounded-0"
+                    autocomplete="off" placeholder="Enter delivery address" data-url="{% url 'query-google-map' %}"
+                    data-address="{{ map_location.address }}" data-state="{{ map_location.state }}"
+                    data-country="{{ map_location.country }}">
+                <div class="bg-white mt-1" id="searchBoxResult"></div>
+            </div>
+            <button type="submit" class="btn btn-dark ms-1 fw-bold rounded-0">Submit</button>
+        </form>
+    </div>
+
+    <h2 class="fs-2 fw-bold mb-0">Popular near you</h2>
     <span class="">Here’s some vendors near your location</span>
-    <div class="row my-3 gap-5">
+    <div class="row my-3 gap-5 mx-0">
         {% for vendor in vendors %}
         <div class="col-md-3 p-0">
             <a href="{% url 'store' vendor.name %}" class="remove-link-style">
-                <div class="row">
+                <div class="row mx-0">
                     <div class="col p-0">
                         <!-- <div class="bg-secondary d-flex justify-content-center align-items-center"
                             style="height: 200px;">
@@ -29,7 +45,7 @@ Home page | Rumble
                         <!-- {% endif %} -->
                     </div>
                 </div>
-                <div class="row mt-2">
+                <div class="row mx-0 mt-2">
                     <div class="col-8 col-md-9 fw-bold">
                         <span>{{ vendor.name }}</span>
                     </div>

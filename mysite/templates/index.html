@@ -4,25 +4,45 @@
 Rumble | Food Delivery & Takeout
 {% endblock %}
 
+{% block style %}
+<style>
+#searchBoxResult {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+} 
+</style>
+{% endblock %}
+
 {% load static %}
+
+{% block script %}
+<script type="module" src="{% static 'node_modules/js-cookie/dist/js.cookie.mjs' %}"></script>
+<script type="module" src="{% static 'js/map.js' %}"></script>
+{% endblock %}
+
 {% block main %}
 <section>
-    <div class="segment-1 container-fluid d-flex flex-column flex-wrap justify-content-center align-items-center gap-5">
-        <div class="row bg-white rounded mx-1 mx-md-5">
+    <div class="segment-1 container-fluid d-flex flex-column flex-wrap justify-content-center align-items-center">
+        <div class="row bg-white rounded mx-1 mx-md-5 mb-5">
             <span class="custom-font fw-bold text-black text-center fs-1 pt-1">Your favourite food,</span>
             <span class="custom-font fw-bold text-black text-center fs-1 pb-2 "> delivered at your
                 doorstep</span>
         </div>
         <div class="row p-2 mx-4 bg-light rounded " id="searching">
-            <form class="p-0">
+            <form class="p-0" method="get" action="{% url 'home' %}">
+                {% csrf_token %}
                 <div class="input-group">
                     <span class="input-group-text bg-white border-0" id="basic-addon1">
                         <i class="bi bi-geo-alt-fill"></i>
                     </span>
-                    <input type="text" class="form-control border-0 ps-0 " placeholder="Enter delivery address">
-                    <input type="submit" class="btn btn-danger ms-1 fw-bold" value="Find Food">
+                    <input type="text" name="location" id="searchBox" class="form-control border-0 ps-0" autocomplete="off"
+                        placeholder="Enter delivery address" data-url="{% url 'query-google-map' %}">
+                    <button type="submit" class="btn btn-danger ms-1 fw-bold">Find Food</button>
                 </div>
             </form>
+        </div>
+        <div class="row mt-1 mx-4 bg-light w-auto" id="searchBoxResult" style="max-width: 407px;">
         </div>
         <div class="row" id="blank-row" style="display: none;"></div>
     </div>
@@ -32,7 +52,8 @@ Rumble | Food Delivery & Takeout
         <h1 class="custom-font fw-bold lead mb-4 fs-1">How it Works</h1>
         <div class="row">
             <div class="col-12 col-sm-6 col-md-4 mt-md-0 mt-sm-3">
-                <img src="{% static 'images/hospital.png' %}" alt="" class="img-fluid sticker-img" style="max-height: 150px;">
+                <img src="{% static 'images/hospital.png' %}" alt="" class="img-fluid sticker-img"
+                    style="max-height: 150px;">
                 <div class="container sticker mt-1 mt-md-4">
                     <h1 class="custom-font fw-semibold fs-3">Set delivery location</h1>
                     <p class="fs-6 custom-font text-secondary">Select the location of where you want us to
@@ -84,7 +105,8 @@ Rumble | Food Delivery & Takeout
                 </div>
             </div>
             <div class="col-12 col-md-8 order-first order-md-last">
-                <img src="{% static 'images/pexels-kampus-production-8380047.jpg' %}" alt="" class="float-end section3 img-fluid">
+                <img src="{% static 'images/pexels-kampus-production-8380047.jpg' %}" alt=""
+                    class="float-end section3 img-fluid">
             </div>
         </div>
     </div>
@@ -93,7 +115,8 @@ Rumble | Food Delivery & Takeout
     <div class="container mb-custom-1">
         <div class="container row">
             <div class="col-12 col-md-8">
-                <img src="{% static 'images/pexels-polina-tankilevitch-4109084.jpg' %}" alt="" class="float-start section3 img-fluid">
+                <img src="{% static 'images/pexels-polina-tankilevitch-4109084.jpg' %}" alt=""
+                    class="float-start section3 img-fluid">
             </div>
             <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
                 <div>
