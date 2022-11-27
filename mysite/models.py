@@ -18,6 +18,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from PIL import Image
 from sqlalchemy import null
 import requests
+from .helpers import createCategory
 
 # Create your models here.
 
@@ -39,18 +40,7 @@ class Vendor(models.Model):
     for state in data['data']:
         STATE_CHOICE.append((state['Name'], state['Name'].capitalize()))
 
-    CATEGORY_CHOICES = [
-        ('african', 'African'),
-        ('alcoholic drinks', 'Alcoholic Drinks'),
-        ('bakery and cakes', 'Bakery and Cakes'),
-        ('breakfast', 'Breakfast'),
-        ('chinese', 'Chinese'),
-        ('fast food', 'Fast Food'),
-        ('grills', 'Grills'),
-        ('ice cream', 'Ice Cream'),
-        ('pizza', 'Pizza'),
-        ('vegan', 'Vegan'),
-    ]
+    CATEGORY_CHOICES = createCategory()
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
     name = models.CharField(max_length=200, unique=True) 

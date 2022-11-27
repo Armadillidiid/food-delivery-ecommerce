@@ -18,12 +18,27 @@ import uuid
 import sys
 import os
 
+# Make sure API key is set
+if not os.environ.get("MAP_API_KEY"):
+    raise RuntimeError('MAP_API_KEY not exist')
 
 @login_required(login_url='login')
 def home(request):
     if request.method == "POST":
         pass
-    vendors = Vendor.objects.all().order_by('name')
+    form = createCategory()
+    try:
+        category = []
+        for i in form:
+            if (request.GET.get(i[0]) == 'on'):
+                category.append(i[0])
+    except:
+        category = []
+        print(sys.exc_info()[1])
+    if category == []:
+        vendors = Vendor.objects.all().order_by('name')
+    else:
+        vendors = Vendor.objects.filter(category__in=category).order_by('name')
     # size = (360, 200)
     # for vendor in vendors:
     #     try:
@@ -32,12 +47,12 @@ def home(request):
     #         continue
     #     image.thumbnail(size)
     #     image.save(vendor.image.path)
-    map_location = {}
     try:
         location = request.GET.get('location')
         map_location = sort_location(location)
     except:
-        print(sys.exc_info()[1])
+        map_location = {}
+        print("No Map location was detected")
     customer = request.user
     orders = Order.objects.filter(customer=customer, is_complete=False)
     items = {}
@@ -49,6 +64,8 @@ def home(request):
         'orders': orders,
         'items': items,
         'map_location': map_location,
+        'categories': category,
+        'form': form,
         'iterator': range(1, 26)
 
     }

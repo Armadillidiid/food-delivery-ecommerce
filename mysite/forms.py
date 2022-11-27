@@ -57,3 +57,12 @@ class registerVendorForm(ModelForm):
             'banner_image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
         }
         fields = ['name', 'location', 'state', 'min_delivery_time', 'max_delivery_time', 'category', 'image', 'banner_image', 'user']
+
+
+class selectCategory(ModelForm):
+    class Meta:
+        model = Vendor
+        Widgets = {
+            'category': forms.CheckboxInput(attrs={'class': 'form-check-input'})
+        }
+        fields = ['category']

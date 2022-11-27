@@ -21,7 +21,6 @@ def get_details(request, name):
         'orders': orders,   
         'items': items,
     }
-
     return context
 
 
@@ -33,3 +32,19 @@ def sort_location(location):
         'country': location_list[2]
     }
     return location
+
+
+def createCategory():
+    category = [
+        ('african', 'African'),
+        ('alcoholic drinks', 'Alcoholic Drinks'),
+        ('bakery and cakes', 'Bakery and Cakes'),
+        ('breakfast', 'Breakfast'),
+        ('chinese', 'Chinese'),
+        ('fast food', 'Fast Food'),
+        ('grills', 'Grills'),
+        ('ice cream', 'Ice Cream'),
+        ('pizza', 'Pizza'),
+        ('vegan', 'Vegan'),
+    ]
+    return category
