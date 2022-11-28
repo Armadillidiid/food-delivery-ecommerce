@@ -11,7 +11,7 @@ from .models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from PIL import Image
-from .helpers import get_details, sort_location
+from .modules.helpers import get_details, sort_location
 import datetime
 import json
 import uuid
@@ -458,3 +458,4 @@ def queryGoogleMap(request):
     new_data = response.json()
 
     return JsonResponse(new_data, safe=True)
+

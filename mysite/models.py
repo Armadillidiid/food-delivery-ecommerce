@@ -18,7 +18,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from PIL import Image
 from sqlalchemy import null
 import requests
-from .helpers import createCategory
+from .modules.helpers import createCategory
 
 # Create your models here.
 

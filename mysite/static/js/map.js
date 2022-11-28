@@ -83,11 +83,11 @@ function displayLocation(data) {
   })
 } 
 
-// 
+// Insert map location into searchbox
 let map_location = {}
 map_location['address'] = searchBox.dataset.address
 map_location['state'] = searchBox.dataset.state
 map_location['country'] = searchBox.dataset.country
-if (map_location['state'] != ''){
+if (map_location['state'] != undefined){
   searchBox.value = `${map_location['address']},${map_location['state']},${map_location['country']}`
 }

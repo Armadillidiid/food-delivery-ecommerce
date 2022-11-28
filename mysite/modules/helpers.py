@@ -1,12 +1,14 @@
-from .models import *
+import mysite.models
+
 
 def get_details(request, name):
     customer = request.user
-    vendor = Vendor.objects.get(name=name)
-    products = Product.objects.filter(vendor=vendor.id)
-    categories = ProductCategory.objects.filter(vendor=vendor.id)
-    open_hours = OpenHour.objects.filter(vendor=vendor.id)
-    orders = Order.objects.filter(customer=customer, is_complete=False)
+    print(name)
+    vendor = mysite.models.Vendor.objects.get(name=name)
+    products = mysite.models.Product.objects.filter(vendor=vendor.id)
+    categories = mysite.models.ProductCategory.objects.filter(vendor=vendor.id)
+    open_hours = mysite.models.OpenHour.objects.filter(vendor=vendor.id)
+    orders = mysite.models.Order.objects.filter(customer=customer, is_complete=False)
 
     items = {}
     for order in orders:
