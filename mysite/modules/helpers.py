@@ -50,3 +50,24 @@ def createCategory():
         ('vegan', 'Vegan'),
     ]
     return category
+
+
+def getOpenHour(vendor):
+    open_hour = []
+    weekday = [
+        'Sun',
+        'Mon', 
+        'Tue', 
+        'Wed',
+        'Thu',
+        'Fri',
+        'Sat',
+    ]  
+    for day in weekday:
+        try:
+            print(day)
+            open_hour.append(mysite.models.OpenHour.objects.get(vendor=vendor, weekday=day))
+        except:
+            open_hour.append('')
+        
+    return open_hour

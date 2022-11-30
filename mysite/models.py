@@ -32,13 +32,13 @@ class User(AbstractUser):
 
 
 class Vendor(models.Model):
-    url = "https://nigerian-states-info.herokuapp.com/api/v1/states"
+    url = "https://locus.fkkas.com/api/states"
     res = requests.get(url)
     data = res.json()
     STATE_CHOICE = []
 
     for state in data['data']:
-        STATE_CHOICE.append((state['Name'], state['Name'].capitalize()))
+        STATE_CHOICE.append((state['alias'], state['name'].capitalize()))
 
     CATEGORY_CHOICES = createCategory()
 

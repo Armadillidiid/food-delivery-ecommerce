@@ -273,6 +273,7 @@ ul li {
 
 #productImageContainer {
   position: relative;
+  max-width: 220px;
 }
 
 .store-button {
@@ -404,6 +405,7 @@ ul li {
   max-width: 368px;
 }
 
+  
   @media only screen and (max-width: 1270px) {
     .offcanvas {
       max-width: 30vw;

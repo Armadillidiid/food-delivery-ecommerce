@@ -48,8 +48,8 @@ function displayLocation(data) {
     }
   }
 
-  let main_text = [5]
-  let secondary_text = [5]
+  let main_text = [5];
+  let secondary_text = [5];
   // Add new location to row
   for (let i = 0; i < data.length; i++) {
     main_text[i] = data[i]["structured_formatting"]["main_text"];
@@ -63,8 +63,8 @@ function displayLocation(data) {
   locationEntriesEl = document.querySelectorAll("#searchBoxResult button");
   locationEntriesEl.forEach(function (el, index) {
     el.addEventListener("click", function () {
-      searchBox.value = `${main_text[index]}, ${secondary_text[index]}`
-      console.log("hey")
+      searchBox.value = `${main_text[index]}, ${secondary_text[index]}`;
+      console.log("hey");
     });
   });
 
@@ -74,20 +74,20 @@ function displayLocation(data) {
       el.classList.remove("visually-hidden");
     }
   });
-  searchBox.addEventListener('focusout', function() {
-    setTimeout(function() {
+  searchBox.addEventListener("focusout", function () {
+    setTimeout(function () {
       for (let el of locationEntriesEl) {
-        el.classList.add('visually-hidden')
+        el.classList.add("visually-hidden");
       }
-    }, 200)
-  })
-} 
+    }, 200);
+  });
+}
 
 // Insert map location into searchbox
-let map_location = {}
-map_location['address'] = searchBox.dataset.address
-map_location['state'] = searchBox.dataset.state
-map_location['country'] = searchBox.dataset.country
-if (map_location['state'] != undefined){
-  searchBox.value = `${map_location['address']},${map_location['state']},${map_location['country']}`
+let map_location = {};
+map_location["address"] = searchBox.dataset.address;
+map_location["state"] = searchBox.dataset.state;
+map_location["country"] = searchBox.dataset.country;
+if (map_location["state"] != undefined && map_location["state"] != "") {
+  searchBox.value = `${map_location["address"]},${map_location["state"]},${map_location["country"]}`;
 }

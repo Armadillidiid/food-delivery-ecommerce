@@ -8,40 +8,47 @@ Home page | Rumble
 
 {% block script %}
 <script src="{% static 'js/profile.js' %}"></script>
+<script type="module" src="{% static 'js/profile-vendor.js' %}"></script>
 {% endblock %}
 
 {% block main %}
 <div class="container-fluid p-0 gray-page-background">
     <div class="container d-flex pt-3 px-0 gap-4">
         <div class="w-25" id="profile-sidenav" data-route="{{ route }}">
-            <div class="row py-3 bg-white" id="overview">
+            <div class="px-2 py-3 bg-white" id="overview">
                 <a href="{% url 'profile-overview' %}" class="remove-link-style">
                     <span class="fw-bold">Account Overview</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="vendor">
+            <div class="px-2 py-3 bg-white" id="vendor">
                 <a href="{% url 'profile-vendor' %}" class="remove-link-style">
                     <span class="fw-bold">Vendor Management</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="orders">
+            <div class="px-2 py-2 bg-white" id="open-hour">
+                <a href="" class="remove-link-style">
+                    <span class="fw-bold ms-4 fs-7">-- Open Hours</span>
+                </a>
+            </div>
+            <div class="px-2 py-3 bg-white" id="orders">
                 <a href="{% url 'profile-order' %}" class="remove-link-style">
                     <span class="fw-bold">Orders</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="vouchers">
+            <div class="px-2 py-3 bg-white" id="vouchers">
                 <a href="{% url 'profile-voucher' %}" class="remove-link-style">
                     <span class="fw-bold">Vouchers</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="favourites">
+            <div class="px-2 py-3 bg-white" id="favourites">
                 <a href="{% url 'profile-favourite' %}" class="remove-link-style">
                     <span class="fw-bold">Favourites</span>
                 </a>
             </div>
         </div>
         {% if vendor %}
-        <div class="p-3 bg-white w-100">
+
+        <div class="p-3 bg-white w-100" id="page-board">
             <form action="{% url 'profile-vendor' %}" method="post">
                 {% csrf_token %}
                 <div class="row ms-0 mb-4 fs-7">
@@ -90,6 +97,90 @@ Home page | Rumble
                     Delete account
                 </button>
             </form>
+        </div>
+
+        <div class="p-3 bg-white w-100 row mx-0 visually-hidden w-auto" id="page-board-open-hour">
+            <div class="col-6 px-0">
+                <div class="mb-3">
+                    <span class="fw-bold fs-5">Delivery Hours:</span>
+                </div>
+                {% for day in weekday %}
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="w-auto d-flex justify-content-between align-items-center">
+                            <span class="fw-bold fs-7">{{ day.0 }}:</span>
+                            <div>
+                                <button id="selectWeekday{{ day.0 }}" class="selectWeekdayBtn btn btn-secondary w-auto fs-7 fw-bold"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal{{ day.0 }}"
+                                    data-weekday="{{ day.0 }}">Select</button>
+                                {% if day.1.id  %}
+                                <button class="deleteWeekdayBtn btn btn-danger fs-7" data-model_id="{{ day.1.id }}" data-weekday="{{ day.0 }}">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                                {% else %}
+                                <button class="deleteWeekdayBtn btn btn-danger fs-7 disabled" data-model_id="{{ day.1.id }}" data-weekday="{{ day.0 }}">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center" id="showOpenHour{{ day.0 }}">
+                        {% if day.1 == "" %}
+                        <span>None</span>
+                        {% else %}
+                        <span>{{ day.1.open_time }} - {{ day.1.close_time }}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Modal 1 -->
+                    <div class="modal fade" id="exampleModal{{ day.0 }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header d-flex justify-content-between border-0">
+                                    <div style="width: 42px;"></div>
+                                    <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">Select Availability</h1>
+                                    <button type="button" class="btn remove-border" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body d-flex flex-column align-items-center">
+                                    <form action="" method="post" class="openHourForm">
+                                        <div class="row ms-0 mb-4 fs-7">
+                                            <label for="open_time" class="fw-bold ps-1 mb-2">Opening Time</label>
+                                            {{ form_two.open_time }}
+                                        </div>
+                                        <div class="row ms-0 mb-4 fs-7">
+                                            <label for="close_time" class="fw-bold ps-1 mb-2">Closing Time</label>
+                                            {{ form_two.close_time }}
+                                        </div>
+                                        <div class="row ms-0 mb-4 fs-7 visually-hidden">
+                                            <label for="weekday" class="fw-bold ps-1 mb-2">Weekday</label>
+                                            {{ form_two.weekday }}
+                                        </div>
+                                        <div class="row ms-0 mb-5 fs-7 visually-hidden">
+                                            {{ form_two.vendor }}
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer border-0">
+                                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                                    <button type="button" class="weekdaySubmitBtn btn btn-danger w-auto mx-3 fw-bold"
+                                        data-bs-dismiss="modal" data-weekday="{{ day.0 }}" data-vendor="{{ vendor.name }}" data-model_id="{{ day.1.id }}">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-6 px-0">
+
+            </div>
         </div>
         {% else %}
         <div class="p-3 bg-white w-100">

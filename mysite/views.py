@@ -11,7 +11,7 @@ from .models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from PIL import Image
-from .modules.helpers import get_details, sort_location
+from .modules.helpers import get_details, sort_location, getOpenHour
 import datetime
 import json
 import uuid
@@ -406,11 +406,26 @@ def profileVendor(request):
         vendor = Vendor.objects.get(user=customer)
     except:
         vendor = None
+        
+    
+    open_hour = getOpenHour(vendor)
+    weekday = [
+        ('Sunday', open_hour[0]),
+        ('Monday', open_hour[1]),
+        ('Tuesday', open_hour[2]),
+        ('Wednesday', open_hour[3]),
+        ('Thursday', open_hour[4]),
+        ('Friday', open_hour[5]),
+        ('Saturday', open_hour[6]),
+    ]
     form = registerVendorForm(instance=vendor)
+    form_two = OpenHourForm()
     context = {
         'route': 'vendor',
         'vendor': vendor,
         'form': form,
+        'form_two': form_two,
+        'weekday': weekday
     }
     return render(request, 'profile-vendor.html', context)
 
@@ -459,3 +474,52 @@ def queryGoogleMap(request):
 
     return JsonResponse(new_data, safe=True)
 
+
+def createUpdateOpenHours(request):
+    data = json.loads(request.body)
+    try:
+        model_id = data['model_id']
+    except:
+        model_id = None
+    print(model_id)
+    open_time = data['open_time']
+    close_time = data['close_time']
+    weekday = data['weekday'][0:3]
+    vendor_name = data['vendor']
+    vendor = Vendor.objects.get(name=vendor_name)
+
+    if model_id == '':
+        OpenHour.objects.create(
+            open_time=open_time,
+            close_time=close_time,
+            weekday=weekday,
+            vendor=vendor
+            )
+    else:
+        OpenHour.objects.update_or_create(
+            id=model_id,
+            defaults= {
+                'open_time': open_time,
+                'close_time': close_time,
+                'weekday': weekday,
+                'vendor': vendor,
+            }
+        )
+    open_hour = OpenHour.objects.get(vendor=vendor, weekday=weekday)
+    return_data = {}
+    return_data['model_id'] = open_hour.id
+    return_data['weekday'] = data['weekday']
+    return JsonResponse(return_data, safe=True)
+
+
+def deleteOpenHour(request):
+    data = json.loads(request.body)
+    model_id = data['model_id']
+    OpenHour.objects.get(id=model_id).delete()
+    return JsonResponse("Deleted Successfully", safe=False)
+
+
+def deleteUser(request):
+    customer = request.user
+    User.objects.get(id=customer.id).delete()
+    return redirect('index')

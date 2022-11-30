@@ -7,6 +7,12 @@ Testing Registration
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block script %}
+<script>
+  document.querySelector('footer').classList.add('visually-hidden')
+</script>
+{% endblock %}
+
 {% block main %}
 <div class="container main-wrapper d-flex flex-column align-items-center">
   <div class="d-flex justify-content-center align-items-center">
@@ -38,7 +44,7 @@ Testing Registration
       {% csrf_token %}
       {{ form | crispy }}
       <div class="container d-flex justify-content-center">
-        <input type="submit" value="Submit" class="btn btn-danger mb-3">
+        <input type="submit" value="Submit" class="btn btn-danger fw-bold mb-3">
       </div>
     </form>
   </div>

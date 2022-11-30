@@ -62,7 +62,18 @@ class registerVendorForm(ModelForm):
 class selectCategory(ModelForm):
     class Meta:
         model = Vendor
-        Widgets = {
+        widgets = {
             'category': forms.CheckboxInput(attrs={'class': 'form-check-input'})
         }
         fields = ['category']
+
+
+class OpenHourForm(ModelForm):
+    class Meta:
+        model = OpenHour
+        widgets = {
+        'open_time': forms.TimeInput(attrs={'class': 'form-control w-100 merchant-panel-form border-0 openHourOpenTime', 'type': 'time'}),
+        'close_time': forms.TimeInput(attrs={'class': 'form-control w-100 merchant-panel-form border-0 openHourCloseTime', 'type': 'time'}),
+        'weekday': forms.Select(attrs={'class': 'form-control w-100 merchant-panel-form border-0'})
+        }
+        fields = ['open_time', 'close_time', 'weekday', 'vendor']
