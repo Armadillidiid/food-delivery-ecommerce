@@ -59,7 +59,7 @@ Home page | Rumble
     </div>
     <div class="row my-3 gap-5 mx-0">
         {% for vendor in vendors %}
-        <div class="col-md-3 p-0">
+        <div class="col-md-3 p-0 vendors" data-vendor="{{ vendor.name }}">
             <a href="{% url 'store' vendor.name %}" class="remove-link-style">
                 <div class="row mx-0">
                     <div class="col p-0">
