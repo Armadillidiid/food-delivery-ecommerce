@@ -26,8 +26,10 @@ SECRET_KEY = 'django-insecure-)9-rgl0du=62az)siilt%1qgacbtmgxt!ew97t8$&nzd1v)x53
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1'
+    ]
 
 # Application definition
 
@@ -37,12 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'mysite.apps.MysiteConfig',
     'crispy_forms',
     "crispy_bootstrap5",
     "phonenumber_field",
     'mathfilters',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
 ]
 
 AUTH_USER_MODEL = 'mysite.User'
@@ -70,10 +77,19 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'django.template.context_processors.request',
             ],
         },
     },
 ]
+
+# AUTHENTICATION_BACKENDS = [
+#     # Needed to login by username in Django admin, regardless of `allauth`
+#     'django.contrib.auth.backends.ModelBackend',
+
+#     # `allauth` specific authentication methods, such as login by e-mail
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# ]
 
 WSGI_APPLICATION = 'setup.wsgi.application'
 
@@ -172,3 +188,20 @@ PASSWORD_HASHERS = [
 #     }
 # except Exception as e:
 #     pass
+
+SITE_ID = 2
+
+
+# Provider specific settings
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': '897252223845-uq15831lcpv9gpj4b51es9574q9ktbjq.apps.googleusercontent.com',
+#             'secret': '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',
+#             'key': ''
+#         }
+#     }
+# }
