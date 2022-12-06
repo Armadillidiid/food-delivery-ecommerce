@@ -17,7 +17,6 @@ Home page | Rumble
 <div class="container my-3 px-0">
     <div class="p-3 mb-4 bg-danger d-flex justify-content-between">
         <form action="{% url 'home' %}" method="get" class="d-flex w-100" id="searchBoxForm">
-            {% csrf_token %}
             <div class="w-100">
                 <input type="text" name="location" id="searchBox" class="form-control border-0 px-3 py-2 rounded-0"
                     autocomplete="off" placeholder="Enter delivery address" data-url="{% url 'query-google-map' %}"
@@ -25,7 +24,7 @@ Home page | Rumble
                     data-country="{{ map_location.country }}">
                 <div class="bg-white mt-1" id="searchBoxResult"></div>
             </div>
-            <button type="submit" class="btn btn-dark ms-1 fw-bold rounded-0">Submit</button>
+            <button type="submit" class="btn btn-dark ms-1 fw-bold rounded-0 form-btn">Submit</button>
         </form>
         <div class="dropdown">
             <button class="btn bg-white fw-bold text-secondary rounded-0 dropdown-toggle" type="button"
@@ -35,7 +34,7 @@ Home page | Rumble
             <ul class="dropdown-menu p-3 rounded-0" style="min-width: 400px;">
                 <!-- <li><a class="dropdown-item" href="">Action</a></li> -->
                 <span class="fs-6 w-100 text-dark">Categories</span>
-                <form action="{% url 'home' %}" method="get">
+                <form action="{% url 'home' %}" method="get" id="categoryFilter">
                     <div class="row row-cols-2 mt-3">
                         {% for category in form %}
                         <div class="col pb-1">
@@ -46,7 +45,7 @@ Home page | Rumble
                         {% endfor %}
                     </div>
                     <div class="row d-flex justify-content-center m-0 mt-3">
-                        <button type="submit" class="btn btn-dark w-auto fw-bold fs-7 text-white rounded-0 end">Sort</button>
+                        <button type="submit" class="btn btn-dark w-auto fw-bold fs-7 text-white rounded-0 end form-btn">Sort</button>
                     </div>
                 </form>
             </ul>
@@ -57,9 +56,9 @@ Home page | Rumble
         <h2 class="fs-2 fw-bold mb-0">Popular near you</h2>
         <span class="">Here’s some vendors near your location</span>
     </div>
-    <div class="row my-3 gap-5 mx-0">
+    <div class="row my-3 gap-sm gap-5 mx-0">
         {% for vendor in vendors %}
-        <div class="col-md-3 p-0 vendors" data-vendor="{{ vendor.name }}">
+        <div class="col-sm-12 col-md-6 col-lg-3 p-0 vendors" data-vendor="{{ vendor.name }}">
             <a href="{% url 'store' vendor.name %}" class="remove-link-style">
                 <div class="row mx-0">
                     <div class="col p-0">
@@ -68,15 +67,15 @@ Home page | Rumble
                             <span>TEST</span>
                         </div> -->
                         <!-- {% if vendor.image %} -->
-                        <img src="{{ vendor.imageURL }}" alt="" class="shadow-sm">
+                        <img src="{{ vendor.imageURL }}" alt="" class="shadow-sm" class="">
                         <!-- {% endif %} -->
                     </div>
                 </div>
-                <div class="row mx-0 mt-2">
-                    <div class="col-8 col-md-9 px-0 fw-bold">
+                <div class="row mx-0 mt-2 justify-content-between">
+                    <div class="col-8 col-md-9 px-0 fw-bold w-auto">
                         <span>{{ vendor.name }}</span>
                     </div>
-                    <div class="col-4 col-md-3 bg-secondary rounded-pill fw-bold">
+                    <div class="col-4 col-md-3 light-gray rounded-pill fw-bold">
                         <i class="bi bi-star"></i>
                         <span>{{ vendor.ratings | floatformat:2 }}</span>
                     </div>

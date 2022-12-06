@@ -9,7 +9,7 @@ class MyUserCreationForm(ModelForm):
         model = User
         widgets = {
             'password' : forms.PasswordInput(),
-            'phone_number' : PhoneNumberPrefixWidget(initial='NG')
+            'phone_number' : PhoneNumberPrefixWidget()
         }
         fields = ['first_name', 'last_name', 'email', 'phone_number', 'password']
 
@@ -47,14 +47,14 @@ class registerVendorForm(ModelForm):
     class Meta:
         model = Vendor
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25', 'placeholder': 'Name'}),
-            'location': forms.TextInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25', 'placeholder': 'Location'}),
-            'state': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
-            'min_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
-            'max_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
-            'category': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
-            'image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
-            'banner_image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0 w-25'}),
+            'name': forms.TextInput(attrs={'class': 'form-control merchant-panel-form border-0 w-100', 'placeholder': 'Name'}),
+            'location': forms.TextInput(attrs={'class': 'form-control merchant-panel-form border-0 w-100', 'placeholder': 'Location'}),
+            'state': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0 w-100'}),
+            'min_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0 w-100'}),
+            'max_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0 w-100'}),
+            'category': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0 w-100'}),
+            'image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0 w-100'}),
+            'banner_image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0 w-100'}),
         }
         fields = ['name', 'location', 'state', 'min_delivery_time', 'max_delivery_time', 'category', 'image', 'banner_image', 'user']
 

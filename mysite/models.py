@@ -32,13 +32,53 @@ class User(AbstractUser):
 
 
 class Vendor(models.Model):
-    url = "https://locus.fkkas.com/api/states"
-    res = requests.get(url)
-    data = res.json()
-    STATE_CHOICE = []
+    STATE_CHOICE = [
+        ('abia', 'Abia'),
+        ('abuja', 'Abuja'),
+        ('adamawa', 'Adamawa'),
+        ('akwa ibom', 'Akwa Ibom'),
+        ('anambra', 'Anambra'),
+        ('bauchi', 'Bauchi'),
+        ('bayelsa', 'Bayelsa'),
+        ('benue', 'Benue'),
+        ('borno', 'Borno'),
+        ('cross river', 'Cross River'),
+        ('delta', 'Delta'),
+        ('ebonyi', 'Ebonyi'),
+        ('edo', 'Edo'),
+        ('ekiti', 'Ekiti'),
+        ('enugu', 'Enugu'),
+        ('gombe', 'Gombe'),
+        ('imo', 'Imo'),
+        ('jigawa', 'Jigawa'),
+        ('kaduna', 'Kaduna'),
+        ('kano', 'Kano'),
+        ('katsina', 'Katsina'),
+        ('kebbi', 'Kebbi'),
+        ('kogi', 'Kogi'),
+        ('kwara', 'Kwara'),
+        ('lagos', 'Lagos'),
+        ('nasarawa', 'Nasarawa'),
+        ('niger', 'Niger'),
+        ('ogun', 'Ogun'),
+        ('ondo', 'Ondo'),
+        ('osun', 'Osun'),
+        ('oyo', 'Oyo'),
+        ('plateau', 'Plateau'),
+        ('rivers', 'Rivers'),
+        ('sokoto', 'Sokoto'),
+        ('taraba', 'Taraba'),
+        ('yobe', 'Yobe'),
+        ('zamfara', 'Zamfara')
+    ]
 
-    for state in data['data']:
-        STATE_CHOICE.append((state['alias'], state['name'].capitalize()))
+
+    # url = "https://locus.fkkas.com/api/states"
+    # res = requests.get(url)
+    # data = res.json()
+    # for state in data['data']:
+    #     print(state['alias'], state['alias'].capitalize())
+    #     STATE_CHOICE.append((state['alias'], state['alias'].capitalize()))
 
     CATEGORY_CHOICES = createCategory()
 
@@ -49,7 +89,7 @@ class Vendor(models.Model):
     state = models.CharField(max_length=100, choices=STATE_CHOICE, default='abia')
     min_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
     max_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to='images/')
     banner_image = models.ImageField(null=True, blank=True)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
 

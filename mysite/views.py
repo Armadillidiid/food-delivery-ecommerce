@@ -12,6 +12,7 @@ from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from PIL import Image
 from .modules.helpers import get_details, sort_location, getOpenHour
+from phonenumber_field.phonenumber import PhoneNumber
 import datetime
 import json
 import uuid
@@ -21,6 +22,7 @@ import os
 # Make sure API key is set
 if not os.environ.get("MAP_API_KEY"):
     raise RuntimeError('MAP_API_KEY not exist')
+
 
 @login_required(login_url='login')
 def home(request):
@@ -35,10 +37,28 @@ def home(request):
     except:
         category = []
         print(sys.exc_info()[1])
+
+    try:
+        location = request.GET.get('location')
+        print('Default location is: ', location)
+        map_location = sort_location(location)
+    except:
+        map_location = {}
+        print("No Map location was detected")
+
     if category == []:
-        vendors = Vendor.objects.all().order_by('name')
+        if map_location == {}:
+                vendors = Vendor.objects.all().order_by('name')
+        else:
+            vendors = Vendor.objects.filter(state=map_location['state'].lower()).order_by('name')
+            print(vendors)
     else:
-        vendors = Vendor.objects.filter(category__in=category).order_by('name')
+        if map_location == {}:
+                vendors = Vendor.objects.filter(category__in=category).order_by('name')
+        else:
+            print(category, map_location['state'])
+            vendors = Vendor.objects.filter(category__in=category, state=map_location['state'].lower()).order_by('name')
+            print("Didn't work did it?")
     # size = (360, 200)
     # for vendor in vendors:
     #     try:
@@ -47,12 +67,6 @@ def home(request):
     #         continue
     #     image.thumbnail(size)
     #     image.save(vendor.image.path)
-    try:
-        location = request.GET.get('location')
-        map_location = sort_location(location)
-    except:
-        map_location = {}
-        print("No Map location was detected")
     customer = request.user
     orders = Order.objects.filter(customer=customer, is_complete=False)
     items = {}
@@ -434,7 +448,7 @@ def registerVendor(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
             print('User is auth')
-            form = registerVendorForm(request.POST)
+            form = registerVendorForm(request.POST, request.FILES)
             if form.is_valid():
                 print('Form is valid')
                 unsaved_form = form.save(commit=False)
