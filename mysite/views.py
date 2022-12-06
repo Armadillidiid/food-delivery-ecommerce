@@ -119,23 +119,6 @@ def logoutUser(request):
     return redirect('index')
 
 
-def index(request):
-    """First view function."""
-    return render(request, 'index.html')
-
-
-def about(request):
-    return render(request, 'about.html')
-
-
-def contact(request):
-    return render(request, 'contact.html')
-
-
-def faqs(request):
-    return render(request, 'faqs.html')
-
-
 def register(request):
     if request.method == "POST":
         # Populate form using submitted data

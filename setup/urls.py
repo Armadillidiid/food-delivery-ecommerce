@@ -18,13 +18,14 @@ from django.urls import path
 from mysite import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index , name='index'),
-    path('about/', views.about, name='about-us'),
-    path('contact/', views.contact, name='contact-us'),
-    path('faqs/', views.faqs, name='faqs'),
+    path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('about/', TemplateView.as_view(template_name='about.html'), name='about-us'),
+    path('contact/', TemplateView.as_view(template_name='contact.html'), name='contact-us'),
+    path('faqs/', TemplateView.as_view(template_name='faqs.html'), name='faqs'),
     path('register/', views.register, name='register'),
     path('login/', views.loginPage, name='login'),
     path('loutout/', views.logoutUser, name='logout'),
