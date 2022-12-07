@@ -118,9 +118,9 @@ class Vendor(models.Model):
         if self.image:
             img = Image.open(self.image.path)
             # if img.width > 200 or img.height > 360:
-            output_size = (360, 200)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+            output_size = (300, 200)
+            new_img = img.resize(output_size)
+            new_img.save(self.image.path)
 
 
 class ProductCategory(models.Model):

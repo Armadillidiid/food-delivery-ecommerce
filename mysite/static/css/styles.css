@@ -186,7 +186,8 @@ ul li {
 }
 
 .offcanvas {
-  max-width: 18vw;
+  max-width: 350px;
+  min-width: 288px;
 }
 
 .offcanvas-cart {
@@ -405,7 +406,19 @@ ul li {
   max-width: 368px;
 }
 
+#searchBoxForm div {
+  min-width: 140px !important;
+}
+
+#searchBar {
+  width: auto !important;
+}
   
+#navbar-placeholder {
+  height: 40px;
+}
+
+
   @media only screen and (max-width: 1270px) {
     .offcanvas {
       max-width: 30vw;
@@ -426,7 +439,8 @@ ul li {
   }
 
   .offcanvas {
-    max-width: 75vw;
+    /* max-width: 18vw; */
+    min-width: 288px;
   }
 
   .offcanvas-cart {
@@ -438,3 +452,17 @@ ul li {
   }
 }
 
+@media only screen and (max-width: 576px) {
+  #searchBar {
+    width: 100% !important;
+  }
+
+  #navbar-placeholder {
+    height: 70px;
+  }
+
+  .vendor-col {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}

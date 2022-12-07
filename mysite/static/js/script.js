@@ -55,3 +55,24 @@ function hideUserForeignkey() {
   const userLabel = document.querySelector('#div_id_user')
   userLabel.classList.add('visually-hidden')
 }
+
+// Auto-hide searchbar thingis
+const cartLogoutBtn = document.querySelector('#cart-logout-btn')
+const navBrand = document.querySelector('#nav-brand')
+if (cartLogoutBtn && navBrand) {
+  let lastScrollY = window.scrollY;
+  let height = 110;
+
+  window.addEventListener("scroll", function () {
+    let width = window.innerWidth
+    if (lastScrollY < window.scrollY && lastScrollY > height && width < 576) {
+      cartLogoutBtn.classList.add("visually-hidden");
+      navBrand.classList.add("visually-hidden");
+    } else {
+      cartLogoutBtn.classList.remove("visually-hidden");
+      navBrand.classList.remove("visually-hidden");
+    }
+
+    lastScrollY = window.scrollY;
+  });
+}
