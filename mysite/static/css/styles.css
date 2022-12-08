@@ -366,14 +366,13 @@ ul li {
 
 .merchant-background {
   background: url(../images/pexels-andrea-piacquadio-927451-edited.jpg);
-  /* filter: brightness(80%); */
   background-size: cover;
   height: 90vh;
 }
 
-#merchant-left-panel span:first-child{
-  font-size: 54px;
-}
+/* #merchant-left-panel span:first-child{
+  font-size: 54px !important;
+} */
 
 #merchant-left-panel {
   max-width: 30%;
@@ -432,6 +431,10 @@ ul li {
   width: 25% !important;
 }
 
+#merchant-left-panel-headline {
+  font-size: calc(1rem * 3.25);
+}
+
   @media only screen and (max-width: 1270px) {
     .offcanvas {
       max-width: 30vw;
@@ -475,6 +478,30 @@ ul li {
 
   .gray-page-background {
     background-color: #f1f1f1 !important;
+  }
+
+  #merchant-left-panel {
+    max-width: 100%;
+  }
+  
+  #merchant-right-panel {
+    max-width: 100%;
+  }
+
+  #merchant-left-panel-headline {
+    font-size: calc(1rem * 2.2);
+  }
+
+  .merchant-background {
+    background: url(../images/pexels-andrea-piacquadio-927451-edited.jpg);
+    background-size: cover;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .py-6 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
   }
 }
 
