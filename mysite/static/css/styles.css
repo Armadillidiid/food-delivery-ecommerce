@@ -99,7 +99,7 @@
 .segment-1 {
   background: url("../images/pexels-horizon-content-3763816.jpg");
   background-size: cover;
-  height: 92vh;
+  height: 94vh;
   width: auto;
 }
 
@@ -511,7 +511,7 @@ ul li {
   }
 
   #navbar-placeholder {
-    height: 70px;
+    height: 100px;
   }
 
   .vendor-col {
