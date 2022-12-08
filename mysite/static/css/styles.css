@@ -311,6 +311,12 @@ ul li {
   width: 125px;
 }
 
+.image-cart-min {
+  min-height: 80px !important;
+  min-width: 80px !important;
+
+}
+
 .custom-border-cart {                    
   border-top: 1px solid #E2E2E2;
 }
@@ -418,6 +424,13 @@ ul li {
   height: 40px;
 }
 
+.profile-form {
+  max-width: 300px;
+}
+
+#profile-sidenav {
+  width: 25% !important;
+}
 
   @media only screen and (max-width: 1270px) {
     .offcanvas {
@@ -450,6 +463,19 @@ ul li {
   #blank-row {
     display: block !important;
   }
+
+  #profile-order-price {
+    width: auto;
+    align-self: center;
+  }
+
+  #profile-order-description {
+    width: 100%;
+  }
+
+  .gray-page-background {
+    background-color: #f1f1f1 !important;
+  }
 }
 
 @media only screen and (max-width: 576px) {
@@ -464,5 +490,14 @@ ul li {
   .vendor-col {
     margin-left: auto !important;
     margin-right: auto !important;
+  }
+
+  #profile-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #profile-sidenav {
+    width: 100% !important;
   }
 }

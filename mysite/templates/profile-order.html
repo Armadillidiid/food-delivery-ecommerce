@@ -13,47 +13,47 @@ Home page | Rumble
 
 {% block main %}
 <div class="container-fluid p-0 gray-page-background">
-    <div class="container d-flex pt-3 px-0 gap-4">
-        <div class="w-25" id="profile-sidenav" data-route="{{ route }}">
-            <div class="row py-3 bg-white" id="overview">
+    <div class="container d-flex pt-3 px-md-0 gap-4" id="profile-container">
+        <div class="" id="profile-sidenav" data-route="{{ route }}">
+            <div class="px-2 py-3 bg-white" id="overview">
                 <a href="{% url 'profile-overview' %}" class="remove-link-style">
                     <span class="fw-bold">Account Overview</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="vendor">
+            <div class="px-2 py-3 bg-white" id="vendor">
                 <a href="{% url 'profile-vendor' %}" class="remove-link-style">
                     <span class="fw-bold">Vendor Management</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="orders">
+            <div class="px-2 py-3 bg-white" id="orders">
                 <a href="{% url 'profile-order' %}" class="remove-link-style">
                     <span class="fw-bold">Orders</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="vouchers">
+            <div class="px-2 py-3 bg-white" id="vouchers">
                 <a href="{% url 'profile-voucher' %}" class="remove-link-style">
                     <span class="fw-bold">Vouchers</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="favourites">
+            <div class="px-2 py-3 bg-white" id="favourites">
                 <a href="{% url 'profile-favourite' %}" class="remove-link-style">
                     <span class="fw-bold">Favourites</span>
                 </a>
             </div>
         </div>
-        <div class="w-100">
+        <div class="w-100 mb-4">
             {% if orders %}
             {% for order in orders %}
             <div class="p-3 bg-white w-100 mb-3">
                 <div class="row mb">
                     <div class="row pb-2">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex align-items-center">
+                        <div class="d-flex justify-content-between flex-column flex-md-row">
+                            <div class="align-self-start">
                                 <span class="fw-bold">{{ order.vendor.name }}</span>
                             </div>
-                            <div class="d-flex flex-column align-items-end">
-                                <span class="row fs-7">Order date: {{ order.date_order|date:"M d, Y, P" }}</span>
-                                <span class="row fs-7">Order ID: {{ order.transaction_id }}</span>
+                            <div class="d-flex flex-column align-items-start align-items-md-end">
+                                <span class="w-100 fs-7">Order date: {{ order.date_order|date:"M d, Y, P" }}</span>
+                                <span class="w-100 fs-7">Order ID: {{ order.transaction_id }}</span>
                             </div>
                         </div>
                     </div>
@@ -61,19 +61,19 @@ Home page | Rumble
                     {% for key, order_items in items.items %}
                     {% if key == order %}
                     {% for item in order_items %}
-                    <div class="row">
-                        <div class="col-2">
-                            <img class="image-cart-lg" src="{{ item.product.imageURL }}" alt="">
+                    <div class="row flex-column flex-md-row mb-4 mb-md-3 mb-lg-0">
+                        <div class="col-4 col-md-2 align-self-center align-self-md-start">
+                            <img class="img-fluid image-cart-min" src="{{ item.product.imageURL }}" alt="">
                         </div>
-                        <div class="col-8 d-flex flex-column justify-content-center">
+                        <div class="col-6 col-lg-7 col-xl-8 d-flex flex-column justify-content-center align-items-center align-items-md-start" id="profile-order-description">
                             <span class="row fw-bold mx-0 mb-1">{{ item.product.name }}</span>
-                            <span class="row mx-0 mb-1 text-secondary">{{ item.product.description }}</span>
+                            <span class="row mx-0 mb-1 text-secondary text-center text-md-start">{{ item.product.description }}</span>
                             <div class="row mx-0 mb-1">
                                 <span class="w-auto p-0">US ${{ item.product.price }}</span>
                                 <span class="w-auto text-secondary">x{{ item.quantity }}</span>
                             </div>
                         </div>
-                        <div class="col-2 d-flex flex-column justify-content-center text-center">
+                        <div class="col-4 col-lg-3 col-xl-2 center d-flex flex-column justify-content-center text-center" id="profile-order-price">
                             <span class="fw-bold mb-1">Total: US ${{ item.product.price | mul:item.quantity }}</span>
                             <button class="btn btn-danger w-auto rounded-pill fw-bold"> View details</button>
                         </div>

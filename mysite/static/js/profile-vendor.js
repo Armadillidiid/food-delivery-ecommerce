@@ -135,6 +135,11 @@ function disableDeleteBtn(model_id, weekday) {
   })
 }
 
+const formInputs = document.querySelectorAll('#vendor-form div')
+for (let input of formInputs) {
+  console.log(input)
+  input.classList.add('profile-form')
+}
 
 // function convertTime12f(time) {
 //   let hours = time.getHours()

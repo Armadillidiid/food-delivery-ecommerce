@@ -13,8 +13,8 @@ Home page | Rumble
 
 {% block main %}
 <div class="container-fluid p-0 gray-page-background">
-    <div class="container d-flex pt-3 px-0 gap-4">
-        <div class="w-25" id="profile-sidenav" data-route="{{ route }}">
+    <div class="container d-flex pt-3 px-md-0 gap-4" id="profile-container">
+        <div class="" id="profile-sidenav" data-route="{{ route }}">
             <div class="px-2 py-3 bg-white" id="overview">
                 <a href="{% url 'profile-overview' %}" class="remove-link-style">
                     <span class="fw-bold">Account Overview</span>
@@ -48,8 +48,8 @@ Home page | Rumble
         </div>
         {% if vendor %}
 
-        <div class="p-3 bg-white w-100" id="page-board">
-            <form action="{% url 'profile-vendor' %}" method="post">
+        <div class="p-3 bg-white w-100 mb-4" id="page-board">
+            <form action="{% url 'profile-vendor' %}" method="post" id="vendor-form">
                 {% csrf_token %}
                 <div class="row ms-0 mb-4 fs-7">
                     <label for="name" class="fw-bold ps-1 mb-2">Vendor name</label>
@@ -100,13 +100,13 @@ Home page | Rumble
         </div>
 
         <div class="p-3 bg-white w-100 row mx-0 visually-hidden w-auto" id="page-board-open-hour">
-            <div class="col-6 px-0">
+            <div class="col-12 px-0">
                 <div class="mb-3">
                     <span class="fw-bold fs-5">Delivery Hours:</span>
                 </div>
                 {% for day in weekday %}
                 <div class="row mb-3">
-                    <div class="col-6">
+                    <div class="col-8 col-sm-7 col-md-5 col-lg-4">
                         <div class="w-auto d-flex justify-content-between align-items-center">
                             <span class="fw-bold fs-7">{{ day.0 }}:</span>
                             <div>
@@ -125,7 +125,7 @@ Home page | Rumble
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 d-flex justify-content-center" id="showOpenHour{{ day.0 }}">
+                    <div class="col-4 d-flex justify-content-center" id="showOpenHour{{ day.0 }}">
                         {% if day.1 == "" %}
                         <span>None</span>
                         {% else %}
@@ -178,7 +178,7 @@ Home page | Rumble
                 </div>
                 {% endfor %}
             </div>
-            <div class="col-6 px-0">
+            <!-- <div class="col-6 px-0"> -->
 
             </div>
         </div>

@@ -12,35 +12,35 @@ Home page | Rumble
 
 {% block main %}
 <div class="container-fluid p-0 gray-page-background">
-    <div class="container d-flex pt-3 px-0 gap-4">
-        <div class="w-25" id="profile-sidenav" data-route="{{ route }}">
-            <div class="row py-3 bg-white" id="overview">
+    <div class="container d-flex pt-3 px-md-0 gap-4" id="profile-container">
+        <div class="" id="profile-sidenav" data-route="{{ route }}">
+            <div class="px-2 py-3 bg-white" id="overview">
                 <a href="{% url 'profile-overview' %}" class="remove-link-style">
                     <span class="fw-bold">Account Overview</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="vendor">
+            <div class="px-2 py-3 bg-white" id="vendor">
                 <a href="{% url 'profile-vendor' %}" class="remove-link-style">
                     <span class="fw-bold">Vendor Management</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="orders">
+            <div class="px-2 py-3 bg-white" id="orders">
                 <a href="{% url 'profile-order' %}" class="remove-link-style">
                     <span class="fw-bold">Orders</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="vouchers">
+            <div class="px-2 py-3 bg-white" id="vouchers">
                 <a href="{% url 'profile-voucher' %}" class="remove-link-style">
                     <span class="fw-bold">Vouchers</span>
                 </a>
             </div>
-            <div class="row py-3 bg-white" id="favourites">
+            <div class="px-2 py-3 bg-white" id="favourites">
                 <a href="{% url 'profile-favourite' %}" class="remove-link-style">
                     <span class="fw-bold">Favourites</span>
                 </a>
             </div>
         </div>
-        <div class="p-3 bg-white w-100">
+        <div class="p-3 bg-white w-100 mb-4">
             <form action="{% url 'profile-overview' %}" method="post">
                 {% csrf_token %}
                 <input class="visually-hidden" type="text" name="id" value="{{ customer.id }}">
