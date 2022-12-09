@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout-index.html" %}
 
 {% block title %}
 Rumble | Food Delivery & Takeout
@@ -19,14 +19,15 @@ Rumble | Food Delivery & Takeout
 {% block script %}
 <script type="module" src="{% static 'node_modules/js-cookie/dist/js.cookie.mjs' %}"></script>
 <script type="module" src="{% static 'js/map.js' %}"></script>
+<script src="{% static 'js/index.js' %}"></script>
 {% endblock %}
 
 {% block main %}
 <section>
     <div class="segment-1 container-fluid d-flex flex-column flex-wrap justify-content-center align-items-center">
         <div class="row bg-white rounded mx-1 mx-md-5 mb-5">
-            <span class="custom-font fw-bold text-black text-center fs-1 pt-1">Your favourite food,</span>
-            <span class="custom-font fw-bold text-black text-center fs-1 pb-2 "> delivered at your
+            <span class="custom-font fw-bold text-black text-center pt-1" id="headline-1">Your favourite food,</span>
+            <span class="custom-font fw-bold text-black text-center pb-2 " id="headline-2"> delivered at your
                 doorstep</span>
         </div>
         <div class="row p-2 mx-4 bg-light rounded " id="searching">
@@ -83,7 +84,7 @@ Rumble | Food Delivery & Takeout
 </section>
 <section>
     <div class="container mb-custom">
-        <div class="container row">
+        <div class="container row mx-0">
             <div class="col-12 col-md-4 d-flex align-items-center order-">
                 <div>
                     <div>
@@ -112,7 +113,7 @@ Rumble | Food Delivery & Takeout
 </section>
 <section>
     <div class="container mb-custom-1">
-        <div class="container row">
+        <div class="container row mx-0">
             <div class="col-12 col-md-8">
                 <img src="{% static 'images/pexels-polina-tankilevitch-4109084.jpg' %}" alt=""
                     class="float-start section3 img-fluid">

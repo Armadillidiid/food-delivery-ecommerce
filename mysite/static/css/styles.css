@@ -87,7 +87,7 @@
 }
 
 .offcanvas-btn-custom-1:hover {
-  background-color: rgb(220, 220, 220);
+  background-color: rgb(220, 220, 220) !important;
 }
 
 #logo-placeholder {
@@ -97,9 +97,9 @@
 }
 
 .segment-1 {
-  background: url("../images/pexels-horizon-content-3763816.jpg");
+  background: url("../images/pexels-ivan-samkov-8951558.jpg");
   background-size: cover;
-  height: 94vh;
+  height: 100vh;
   width: auto;
 }
 
@@ -121,6 +121,10 @@ body {
   border-width: 0;
   outline: none;
   box-shadow: none;
+}
+
+footer div {
+  background: #191919;
 }
 
 #searching {
@@ -245,7 +249,6 @@ ul li {
   display: inline !important;
 }
 
-
 .main-wrapper {
   height: 100vh;
 }
@@ -261,7 +264,7 @@ ul li {
 .sidenav-link-style,
 .sidenav-link-style:active,
 .sidenav-link-style:focus,
-.sidenav-link-style:hover { 
+.sidenav-link-style:hover {
   color: black;
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -298,7 +301,6 @@ ul li {
 .btn-cart:active {
   background-color: rgb(234, 234, 234);
   width: 55px;
-
 }
 
 .image-cart {
@@ -314,17 +316,15 @@ ul li {
 .image-cart-min {
   min-height: 80px !important;
   min-width: 80px !important;
-
 }
 
-.custom-border-cart {                    
-  border-top: 1px solid #E2E2E2;
+.custom-border-cart {
+  border-top: 1px solid #e2e2e2;
 }
 
 .checkout-card-background {
   background-color: white !important;
 }
-
 
 .dropdown-position {
   position: absolute !important;
@@ -382,7 +382,6 @@ ul li {
   max-width: 50%;
 }
 
-
 .merchant-panel-form {
   background-color: rgb(240, 240, 240);
 }
@@ -418,7 +417,7 @@ ul li {
 #searchBar {
   width: auto !important;
 }
-  
+
 #navbar-placeholder {
   height: 40px;
 }
@@ -435,11 +434,28 @@ ul li {
   font-size: calc(1rem * 3.25);
 }
 
-  @media only screen and (max-width: 1270px) {
-    .offcanvas {
-      max-width: 30vw;
-    }
+#navbar-signup-btn:hover {
+  background: rgb(224, 224, 224) !important;
+}
+
+#navbar-login-btn:hover {
+  background: #dc3546c2 !important;
+}
+
+.offcanvas-mobile-icon:hover {
+  background: #cccccc !important;
+}
+
+#headline-1,
+#headline-2 {
+  font-size: calc(1rem * 3.0);
+}
+
+@media only screen and (max-width: 1270px) {
+  .offcanvas {
+    max-width: 30vw;
   }
+}
 
 @media only screen and (max-width: 768px) {
   .mb-custom {
@@ -483,7 +499,7 @@ ul li {
   #merchant-left-panel {
     max-width: 100%;
   }
-  
+
   #merchant-right-panel {
     max-width: 100%;
   }
