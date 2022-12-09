@@ -61,12 +61,12 @@
                                     app.</span></div>
                         </div>
                         <div class="row p-0 m-0">
-                            <button class="btn light-gray col-5 p-0 p-2 rounded-pill text-black">
+                            <button class="btn light-gray border-0 offcanvas-mobile-icon col-5 p-0 p-2 rounded-pill text-black">
                                 <i class="fa-brands fa-android pe-1 text-black"></i>
                                 <span class="custom-font fw-bold ps-1" style="font-size: 0.85rem;">Android</span>
                             </button>
                             <div class="col-1"></div>
-                            <button class="btn light-gray col-5 p-0 p-2 rounded-pill text-black">
+                            <button class="btn light-gray border-0 offcanvas-mobile-icon col-5 p-0 p-2 rounded-pill text-black">
                                 <i class="bi bi-apple pe-1"></i>
                                 <span class="custom-font fw-bold ps-1" style="font-size: 0.85rem;">Apple</span>
                                 <div class="col-1"></div>
@@ -110,12 +110,12 @@
                                     app.</span></div>
                         </div>
                         <div class="row p-0 m-0">
-                            <button class="btn light-gray col-5 p-0 p-2 rounded-pill text-black">
+                            <button class="btn light-gray border-0 offcanvas-mobile-icon col-5 p-0 p-2 rounded-pill text-black">
                                 <i class="fa-brands fa-android pe-1 text-black"></i>
                                 <span class="custom-font fw-bold ps-1" style="font-size: 0.85rem;">Android</span>
                             </button>
                             <div class="col-1"></div>
-                            <button class="btn light-gray col-5 p-0 p-2 rounded-pill text-black">
+                            <button class="btn border-0 offcanvas-mobile-icon light-gray col-5 p-0 p-2 rounded-pill text-black">
                                 <i class="bi bi-apple pe-1"></i>
                                 <span class="custom-font fw-bold ps-1" style="font-size: 0.85rem;">Apple</span>
                                 <div class="col-1"></div>
@@ -128,18 +128,23 @@
             <div class="d-flex justify-content-end gap-2 gap-md-3">
                 {% if request.user.is_authenticated %}
                 <a href="{% url 'logout' %}">
-                    <button class="btn bg-danger custom-font fw-bold text-white rounded-pill" type="button">
+                    <button class="btn bg-danger custom-font fw-bold text-white rounded-pill shadow border-0" id="navbar-logout-btn" type="button">
                         Log out
                     </button>
                 </a>
                 {% else %}
-                <a href="{% url 'register' %}">
-                    <button class="btn custom-font fw-bold text-danger rounded-pill" id="nav-btn-1" type="button">Sign
-                        up</button></a>
                 <a href="{% url 'login' %}">
-                    <button class="btn bg-danger custom-font fw-bold text-white rounded-pill" type="button">Log
+                    <button class="btn bg-danger custom-font fw-bold text-white rounded-pill shadow border-0"
+                        id="navbar-login-btn" type="button">
+                        <i class="bi bi-person-fill"></i>Log
                         in</button>
                 </a>
+                <a href="{% url 'register' %}">
+                    <button class="btn order-first bg-white text-black fw-bold rounded-pill shadow border-0" id="navbar-signup-btn"
+                        type="button">
+                        Sign
+                        up</button>
+                    </a>
                 {% endif %}
             </div>
         </div>

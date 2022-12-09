@@ -21,3 +21,9 @@ try {
 catch(err) {
   console.log(err)
 }
+
+const storeBanner = document.querySelector('#store-banner')
+const availability = document.querySelector('#store-banner div')
+if (availability == null) {
+  storeBanner.classList.add('brightness-50')
+}

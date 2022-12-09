@@ -15,18 +15,22 @@ Store Page | Rumble
 {% load static %}
 
 {% block main %}
-<div class="container-fluid bg-secondary" style="height: 250px;">
-    <div class="d-flex justify-content-center align-items-center text-center">
-        {% for open_hour in open_hours %}
-        {% if open_hour.weekday == current_day %}
-        {% if not current_time > open_time and current_time < close_time %} <span class="fs-1 fw-bold">Closed</span>
-            {% endif %}
-            {% endif %}
-            {% endfor %}
-            {% if is_open == False %}
-            <span class="fs-1 fw-bold">Closed</span>
-            {% endif %}
-    </div>
+<div class="container-fluid bg-secondary px-0 d-flex justify-content-center align-items-center" 
+     style="height: 200px; background: url('{{ vendor.bannerURL }}'); width: 100%; background-size: cover; background-position: center;"
+     id="store-banner">
+    {% for open_hour in open_hours %}
+    {% if open_hour.weekday == current_day %}
+    {% if not current_time > open_time and current_time < close_time %}
+        <span class="fs-1 fw-bold" data-availability="closed">Closed</span>
+    {% else %}
+        <!-- <img src="{{ vendor.bannerURL }}" alt="" class="img-fluid"> -->
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+
+    {% if is_open == False %}
+    <span class="fs-2 fw-bold">Closed</span>
+    {% endif %}
 </div>
 <div class="container-fluid p-4">
     <h2 class="fs-2 fw-bold">{{ vendor.name }}</h2>
@@ -73,8 +77,8 @@ Store Page | Rumble
                     <div class="row" id="productImageContainer">
                         <img src="{{ product.imageURL }}" alt="">
                         <button class="btn store-button border-0">
-                            <i class="fs-3 bi bi-plus-circle-fill add-to-cart" data-product="{{ product.id }}" data-vendor="{{ vendor.id }}"
-                                data-action="add"></i>
+                            <i class="fs-3 bi bi-plus-circle-fill add-to-cart" data-product="{{ product.id }}"
+                                data-vendor="{{ vendor.id }}" data-action="add"></i>
                         </button>
                     </div>
                     <div class="row">

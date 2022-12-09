@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Change footer black
 function changeFooterBackground() {
   const footer = document.querySelector("footer div");
-    footer.classList.remove('bg-dark');
+    footer.classList.remove('dark-footer-bg');
     footer.classList.add('bg-black');
 }
 

@@ -54,12 +54,11 @@ class registerVendorForm(ModelForm):
             'max_delivery_time': forms.NumberInput(attrs={'class': 'form-control merchant-panel-form border-0 w-100'}),
             'category': forms.Select(attrs={'class': 'form-control merchant-panel-form border-0 w-100'}),
             'image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0 w-100'}),
-            'banner_image': forms.FileInput(attrs={'class': 'form-control merchant-panel-form border-0 w-100'}),
         }
-        fields = ['name', 'location', 'state', 'min_delivery_time', 'max_delivery_time', 'category', 'image', 'banner_image', 'user']
+        fields = ['name', 'location', 'state', 'min_delivery_time', 'max_delivery_time', 'category', 'image', 'user']
 
 
-class selectCategory(ModelForm):
+class selectCategory(ModelForm):    
     class Meta:
         model = Vendor
         widgets = {

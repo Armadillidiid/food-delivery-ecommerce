@@ -130,7 +130,7 @@
             <div class="d-flex justify-content-end gap-2 gap-md-3">
                 {% if request.user.is_authenticated %}
                 <a href="{% url 'logout' %}">
-                    <button class="btn bg-danger custom-font fw-bold text-white rounded-pill" type="button">
+                    <button class="btn bg-danger custom-font fw-bold text-white rounded-pill shadow border-0" id="navbar-logout-btn" type="button">
                         Log out
                     </button>
                 </a>

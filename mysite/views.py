@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from PIL import Image
 from .modules.helpers import get_details, sort_location, getOpenHour
 from phonenumber_field.phonenumber import PhoneNumber
+from random import uniform
 import datetime
 import json
 import uuid
@@ -434,8 +435,13 @@ def registerVendor(request):
             form = registerVendorForm(request.POST, request.FILES)
             if form.is_valid():
                 print('Form is valid')
-                unsaved_form = form.save(commit=False)
+                unsaved_form = form.save(commit=False)  
+                unsaved_form.banner_image = unsaved_form.image
+
+                # Randomize ratings 
+                unsaved_form.ratings= round(uniform(0, 5), 2)
                 unsaved_form.user = request.user
+
                 try:
                     unsaved_form.save()
                     messages.success(

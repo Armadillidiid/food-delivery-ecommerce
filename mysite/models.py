@@ -84,13 +84,13 @@ class Vendor(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
     name = models.CharField(max_length=200, unique=True) 
-    ratings = models.FloatField(default=0)
+    ratings = models.FloatField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
     location = models.CharField(max_length=200)
     state = models.CharField(max_length=100, choices=STATE_CHOICE, default='abia')
     min_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
     max_delivery_time = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(60)], null=True)
-    image = models.ImageField(null=True, blank=True, upload_to='images/')
-    banner_image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to='image/')
+    banner_image = models.ImageField(null=True, blank=True, upload_to='banner/')
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
 
 
@@ -115,12 +115,28 @@ class Vendor(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+        # Resize image 
         if self.image:
             img = Image.open(self.image.path)
             # if img.width > 200 or img.height > 360:
             output_size = (300, 200)
             new_img = img.resize(output_size)
             new_img.save(self.image.path)
+
+        # Resize banner image
+        if self.banner_image:
+            banner_img = Image.open(self.banner_image.path)
+            aspect_ratio = 9.6
+            width = banner_img.width
+            height = banner_img.width / aspect_ratio
+            y_axis_center = banner_img.height / 2
+
+            x1 = 0
+            y1 = y_axis_center - (height / 2)
+            x2 = width
+            y2 = y_axis_center + (height / 2)
+            new_img = banner_img.crop((x1, y1, x2, y2))
+            new_img.save(self.banner_image.path)    
 
 
 class ProductCategory(models.Model):
@@ -132,7 +148,7 @@ class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)  
     price = models.FloatField()
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to='product/')
     description = models.TextField()
 
     def __str__(self):
