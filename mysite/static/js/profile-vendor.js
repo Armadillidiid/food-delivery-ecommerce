@@ -141,6 +141,22 @@ for (let input of formInputs) {
   input.classList.add('profile-form')
 }
 
+// Submit product form on clicking save
+const productSubmitBtn = document.querySelector('#productSubmitBtn')
+productSubmitBtn.addEventListener('click', function() {
+  console.log('hreyyy')
+  let productForm = document.querySelector('#productForm')
+  productForm.submit()
+})
+
+// Submit category form on clicking save
+const categorySubmitBtn = document.querySelector('#categorySubmitBtn')
+categorySubmitBtn.addEventListener('click', function() {
+  let categoryForm = document.querySelector('#categoryForm')
+  categoryForm.submit()
+})
+
+
 // function convertTime12f(time) {
 //   let hours = time.getHours()
 //   let AmOrPm = hours >= 12 ? 'pm' : 'am';

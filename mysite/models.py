@@ -18,7 +18,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from PIL import Image
 from sqlalchemy import null
 import requests
-from .modules.helpers import createCategory
+from .modules.helpers import createVendorCategoryChoices
 
 # Create your models here.
 
@@ -80,7 +80,7 @@ class Vendor(models.Model):
     #     print(state['alias'], state['alias'].capitalize())
     #     STATE_CHOICE.append((state['alias'], state['alias'].capitalize()))
 
-    CATEGORY_CHOICES = createCategory()
+    CATEGORY_CHOICES = createVendorCategoryChoices()
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
     name = models.CharField(max_length=200, unique=True) 
@@ -147,9 +147,9 @@ class Product(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)  
-    price = models.FloatField()
-    image = models.ImageField(null=True, blank=True, upload_to='product/')
-    description = models.TextField()
+    price = models.FloatField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9999)])
+    image = models.ImageField(blank=True, upload_to='product/')
+    description = models.TextField(max_length=200)
 
     def __str__(self):
         return self.name
@@ -163,13 +163,22 @@ class Product(models.Model):
         return url
 
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Resize image
         if self.image:
-            super().save(*args, **kwargs)
             img = Image.open(self.image.path)
-            if img.width > 200 or img.height > 360:
-                output_size = (360, 200)
-                img.thumbnail(output_size)
-                img.save(self.image.path)
+            aspect_ratio = 1
+            y_axis_center = img.height / 2
+            x_axis_center = img.width / 2
+            width = img.width
+            height = width / aspect_ratio
+
+            x1 = 0
+            y1 = y_axis_center - (height / 2)
+            x2 = width
+            y2 = y_axis_center + (height / 2)
+            new_img = img.crop((x1, y1, x2, y2))
+            new_img.save(self.image.path)    
 
                 
 class ShippingAddress(models.Model):

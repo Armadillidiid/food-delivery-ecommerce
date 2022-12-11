@@ -82,7 +82,7 @@ def sort_location(location):
     return location
 
 
-def createCategory():
+def createVendorCategoryChoices():
     category = [
         ('african', 'African'),
         ('alcoholic drinks', 'Alcoholic Drinks'),
@@ -111,7 +111,6 @@ def getOpenHour(vendor):
     ]
     for day in weekday:
         try:
-            print(day)
             open_hour.append(mysite.models.OpenHour.objects.get(
                 vendor=vendor, weekday=day))
         except:

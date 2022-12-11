@@ -76,3 +76,25 @@ class OpenHourForm(ModelForm):
         'weekday': forms.Select(attrs={'class': 'form-control w-100 merchant-panel-form border-0'})
         }
         fields = ['open_time', 'close_time', 'weekday', 'vendor']
+
+
+class addProduct(ModelForm):
+    class Meta:
+        model = Product
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': '4'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+        fields = '__all__'
+        exclude = ['vendor', 'category']
+
+
+class addCategory(ModelForm):
+    class Meta:
+        model = ProductCategory
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'})
+        }
+        fields = ['name']

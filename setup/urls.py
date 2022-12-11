@@ -45,7 +45,9 @@ urlpatterns = [
     path('query-google-map/', views.queryGoogleMap, name='query-google-map'),
     path('create-update-open-hours/', views.createUpdateOpenHours, name='create-update-open-hours'),
     path('delete-open-hours/', views.deleteOpenHour, name='delete-open-hours'),
-    path('delete-user/', views.deleteUser, name="delete-user")
+    path('delete-user/', views.deleteUser, name="delete-user"),
+    path('create-product/', views.createProduct, name='create-product'),
+    path('create-category/', views.createCategory, name='create-category')
 
 ]
 

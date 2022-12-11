@@ -11,7 +11,7 @@ from .models import *
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from PIL import Image
-from .modules.helpers import get_details, sort_location, getOpenHour
+from .modules.helpers import get_details, sort_location, getOpenHour, createVendorCategoryChoices
 from phonenumber_field.phonenumber import PhoneNumber
 from random import uniform
 import datetime
@@ -29,7 +29,7 @@ if not os.environ.get("MAP_API_KEY"):
 def home(request):
     if request.method == "POST":
         pass
-    form = createCategory()
+    form = createVendorCategoryChoices()
     try:
         category = []
         for i in form:
@@ -383,7 +383,7 @@ def profileFavourite(request):
 def profileVendor(request):
     if request.method == 'POST':
         vendor = Vendor.objects.get(user=request.user)
-        form = registerVendorForm(request.POST, instance=vendor)
+        form = registerVendorForm(request.POST, request.FILES, instance=vendor)
         print(form)
         if form.is_valid():
             print('Form is valid')
@@ -400,12 +400,19 @@ def profileVendor(request):
         return redirect('profile-vendor')
 
     customer = request.user
+    vendor = Vendor.objects.get(user=customer)
+    try:
+        categories = ProductCategory.objects.filter(vendor=vendor)
+        products = Product.objects.filter(vendor=vendor)
+    except:
+        categories = None
+        products = None
     try:
         vendor = Vendor.objects.get(user=customer)
     except:
         vendor = None
         
-    
+    print(categories, products)
     open_hour = getOpenHour(vendor)
     weekday = [
         ('Sunday', open_hour[0]),
@@ -418,11 +425,17 @@ def profileVendor(request):
     ]
     form = registerVendorForm(instance=vendor)
     form_two = OpenHourForm()
+    form_three = addProduct()
+    form_four = addCategory()
     context = {
         'route': 'vendor',
         'vendor': vendor,
+        'categories': categories,
+        'products': products,
         'form': form,
         'form_two': form_two,
+        'form_three': form_three,
+        'form_four': form_four,
         'weekday': weekday
     }
     return render(request, 'profile-vendor.html', context)
@@ -526,3 +539,37 @@ def deleteUser(request):
     customer = request.user
     User.objects.get(id=customer.id).delete()
     return redirect('index')
+
+
+def createProduct(request):
+    if request.method == 'POST':
+        form = addProduct(request.POST, request.FILES)
+        category = request.POST.get('category')
+        if form.is_valid():
+            vendor = Vendor.objects.get(user=request.user)
+            unsaved_form = form.save(commit=False)
+            unsaved_form.category = ProductCategory.objects.get(name=category, vendor=vendor)
+            unsaved_form.vendor = vendor
+            unsaved_form.save()
+            try:    
+                messages.success(request, 'Product Created')
+            except:
+                messages.error(request, form.errors)
+
+    return redirect('profile-vendor')
+
+
+def createCategory(request):
+    if request.method == 'POST':
+        form = addCategory(request.POST)
+        if form.is_valid():
+            vendor = Vendor.objects.get(user=request.user)
+            unsaved_form = form.save(commit=False)
+            unsaved_form.vendor = vendor
+            try:
+                form.save()
+                messages.success(request, 'Category created')
+            except:
+                messages.error(request, form.errors)
+
+    return redirect('profile-vendor')
