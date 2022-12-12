@@ -56,8 +56,8 @@ Store Page | Rumble
         </div>
     </div>
 </div>
-<section class="container row mb-custom">
-    <div id="sidenav" class="col-3">
+<section class="container-fluid row mb-custom mx-0">
+    <div id="sidenav" class="col-12 col-sm-4 col-md-3 col-lg-2">
         {% for category in categories %}
         <ul class="list-group list-group-flush">
             <a href="#{{ category.name }}" class="remove-link-style sidenav">
@@ -66,16 +66,16 @@ Store Page | Rumble
         </ul>
         {% endfor %}
     </div>
-    <div class="col-9">
+    <div class="col-12 col-sm-8 col-md-9 col-lg-10">
         {% for category in categories %}
         <div class="row mb-4">
             <span class="fs-3 fw-bold" id="{{ category.name }}">{{ category.name }}</span>
-            <div class="row row-cols-3">
+            <div class="row gap-3 justify-content-center justify-content-md-start">
                 {% for product in products %}
                 {% if product.category == category %}
-                <div class="col">
+                <div class="col-3 w-auto">
                     <div class="row" id="productImageContainer">
-                        <img src="{{ product.imageURL }}" alt="">
+                        <img src="{{ product.imageURL }}" class="img-fluid zoom" alt="">
                         <button class="btn store-button border-0">
                             <i class="fs-3 bi bi-plus-circle-fill add-to-cart" data-product="{{ product.id }}"
                                 data-vendor="{{ vendor.id }}" data-action="add"></i>
