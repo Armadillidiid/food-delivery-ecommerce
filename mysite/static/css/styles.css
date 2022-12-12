@@ -195,7 +195,8 @@ ul li {
 }
 
 .offcanvas-cart {
-  max-width: 22vw;
+  /* max-width: 22vw !important; */
+  min-width: 288px;
 }
 
 .offcanvas-font {
@@ -330,8 +331,8 @@ ul li {
 .dropdown-position {
   position: absolute !important;
   top: 53px !important;
-  left: -205px !important;
-  width: 400px;
+  left: -152px !important;
+  width: 350px !important;
 }
 
 .dropdown-cart {
@@ -474,10 +475,9 @@ ul li {
   /* transition: transform .5s ease; */
 }
 
+
 @media only screen and (max-width: 1270px) {
-  .offcanvas {
-    max-width: 30vw;
-  }
+
 }
 
 @media only screen and (max-width: 992px) {
@@ -506,7 +506,8 @@ ul li {
   }
 
   .offcanvas-cart {
-    max-width: 75vw;
+    min-width: 288px !important;
+    /* max-width: 75vw !important; */
   }
 
   #blank-row {

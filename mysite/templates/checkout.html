@@ -124,15 +124,19 @@ Store Page | Rumble
 {% block main %}
 <div class="container-fluid gray-page-background p-0">
     <div class="container">
-        <div class="row mb-3 p-3">
-            <div class="col-6 p-3 me-2 rounded checkout-card-background shadow d-flex flex-column justify-content-between">
+        <div class="row mb-3 p-3 justify-content-evenly gap-3 gap-md-0">
+            <div class="col-12 col-md-6 p-3 rounded checkout-card-background shadow d-flex flex-column justify-content-between">
                 <div class="rounded checkout-card-background">
                     <div class="d-flex justify-content-between mb-2">
                         <span class="fw-bold fs-4">Shipping Information</span>
-                        <a href="" class="remove-link-style text-danger" data-bs-toggle="modal"
+                        <div class="align-self-center"><a href="" class="remove-link-style text-danger" data-bs-toggle="modal"
                             data-bs-target="#ModalOne">
-                            <span class="fs-6 fw-bold">Change</span></a>
-
+                            {% if shippingAddresses %}
+                            <span class="fs-6 fw-bold">Change</span>
+                            {% else %}
+                            <span class="fs-6 fw-bold">Add</span>
+                            {% endif %}
+                        </a></div>
                         <!-- Modal 1 -->
                         <div class="modal fade" id="ModalOne" data-bs-backdrop="static" tabindex="-1"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -148,13 +152,13 @@ Store Page | Rumble
                                     <div class="modal-body">
                                         <form action="">
                                         {% for address in shippingAddresses %}
-                                        <div class="row border mx-3 mb-3 p-3 rounded-3">
-                                            <div class="col-1 d-flex align-items-center justify-content-center">
+                                        <div class="row border mx-0 mx-md-3 mb-3 p-3 rounded-3">
+                                            <div class="col-1 d-flex align-self-center justify-content-center">
                                                 <div class="form-check">
                                                     <input type="radio" name="shippingAddresses" id="" class="form-check-input">
                                                 </div>
                                             </div>
-                                            <div class="col-9">
+                                            <div class="col-11 col-md-9 ps-1 ps-md-0 px-0 ">
                                                 <div class="row">
                                                     <span class="fw-bold">{{ address.contact_name }}</span>
                                                 </div>
@@ -166,7 +170,7 @@ Store Page | Rumble
                                                     <span class="text-secondary">{{ address.number }}</span>
                                                 </div>
                                             </div>
-                                            <div class="col-2 d-flex justify-content-end align-items-center">
+                                            <div class="col-12 col-md-2 d-flex justify-content-end align-items-center">
                                                 <a href="" class="remove-link-style p-0" data-bs-toggle="modal" data-bs-target="#ModalTwo">
                                                     <span class="text-primary fs-7 shippingAddressEditBtn">Edit</span>
                                                 </a>
@@ -176,7 +180,7 @@ Store Page | Rumble
                                     </form>
                                     </div>
                                     <div class="modal-footer border-0">
-                                        <button type="button" class="btn btn-danger w-100 mx-3 fw-bold" data-bs-toggle="modal" data-bs-target="#ModalTwo">Add New Address
+                                        <button type="button" class="btn btn-danger w-100 mx-0 mx-md-3 fw-bold" data-bs-toggle="modal" data-bs-target="#ModalTwo">Add New Address
                                             </button>
                                     </div>
                                 </div>
@@ -228,7 +232,7 @@ Store Page | Rumble
                                             </div>
                                         </div>
                                         <div class="row visually-hidden">
-                                            {{ form.db_id }}
+                                            <input type="text" name="db_id" id="db_id">
                                         </div>
                                     </form>
                                 </div>
@@ -262,10 +266,10 @@ Store Page | Rumble
                     <div id="paypal-button-container" class="visually-hidden"></div>
                 </div>
             </div>
-            <div class="col-5 p-3 rounded checkout-card-background shadow">
+            <div class="col-12 col-md-5 p-3 rounded checkout-card-background shadow">
                 {% for order in details.orders %}
                 {% if order.vendor.name == details.vendor.name %}
-                <div class="row">
+                <div class="row mx-0">
                     <span class="fw-bold fs-4">Order Summary: <a href="{% url 'store' details.vendor.name %}"
                             class="remove-link-style link-dark p-0">{{ details.vendor.name }}</a></span>
                 </div>
@@ -273,7 +277,7 @@ Store Page | Rumble
                 {% if key == order %}
                 {% for item in order_items %}
                 <div class="row my-3">
-                    <div class="col-4">
+                    <div class="col-3 col-md-4">
                         <img class="image-cart" src="{{ item.product.imageURL }}" alt="">
                     </div>
                     <div class="col-4">

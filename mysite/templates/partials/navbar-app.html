@@ -154,7 +154,7 @@
                         <span>{{ orders|length }} Cart</span>
                         {% endif %}
                     </button>
-                    <ul class="dropdown-menu dropdown-position p-0 border-0 rounded-1 shadow">
+                    <ul class="dropdown-menu dropdown-position p-0 border-0 rounded-1 shadow" id="cart-dropdown">
                         {% for order in orders %}
                         <li class="border-bottom"><a
                                 class="dropdown-item p-3 m-0 dropdown-cart row d-flex justify-content-between flex-row"
@@ -206,7 +206,7 @@
                                         class="fs-3 fw-bold px-2">{{ order.vendor.name }}</span></a>
                             </div>
                             <div class="row">
-                                <span class="fs-6 mb-3">Deliver in {{ vendor.max_delivery_time }} minutes</span>
+                                <span class="fs-6 mb-3">Deliver in {{ order.vendor.max_delivery_time }} minutes</span>
                             </div>
                             {% for key, order_items in items.items %}
                             {% if key == order %}

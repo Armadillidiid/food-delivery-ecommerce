@@ -23,8 +23,7 @@ class ShippingAddressForm(ModelForm):
             'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ikeja'}),
             'state': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Lagos'}),
             'zip_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '902100'}),
-            'number': PhoneNumberPrefixWidget(initial='NG', attrs={'class': 'form-control w-auto', 'placeholder': '8008008000'}),
-            'db_id': forms.TextInput()
+            'number': PhoneNumberPrefixWidget(initial='NG', attrs={'class': 'form-control', 'placeholder': '8008008000'}),
         }
         fields = '__all__'
         exclude = ['customer']

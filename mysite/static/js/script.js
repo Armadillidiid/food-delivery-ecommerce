@@ -59,6 +59,7 @@ function hideUserForeignkey() {
 // Auto-hide searchbar thingis
 const cartLogoutBtn = document.querySelector('#cart-logout-btn')
 const navBrand = document.querySelector('#nav-brand')
+const searchBarInput = document.querySelector('#searchBar')
 if (cartLogoutBtn && navBrand) {
   let lastScrollY = window.scrollY;
   let height = 110;
@@ -68,9 +69,11 @@ if (cartLogoutBtn && navBrand) {
     if (lastScrollY < window.scrollY && lastScrollY > height && width < 576) {
       cartLogoutBtn.classList.add("visually-hidden");
       navBrand.classList.add("visually-hidden");
+      searchBarInput.classList.remove("mt-2");
     } else {
       cartLogoutBtn.classList.remove("visually-hidden");
       navBrand.classList.remove("visually-hidden");
+      searchBarInput.classList.add('mt-2')
     }
 
     lastScrollY = window.scrollY;

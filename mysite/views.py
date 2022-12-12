@@ -187,25 +187,36 @@ def store(request,  name):
 @login_required(login_url='login')
 def checkout(request, name):
     if request.method == 'POST':
+        db_id =  request.POST.get('db_id')
         form = ShippingAddressForm(request.POST)
         messages.error(request, form.errors)
         if form.is_valid():
             raw_form = form.save(commit=False)
 
-            # Update or create new address
-            obj, created = ShippingAddress.objects.update_or_create(
-                id=raw_form.db_id,
-                defaults={
-                    'customer': request.user,
-                    'contact_name': raw_form.contact_name,
-                    'address': raw_form.address,
-                    'state': raw_form.state,
-                    'city': raw_form.city,
-                    'zip_code': raw_form.zip_code,
-                    'number': raw_form.number
-                }
-            )
-            obj.save()
+            if (db_id == ''):
+                ShippingAddress.objects.create(
+                    customer=request.user,
+                    contact_name=raw_form.contact_name,
+                    address=raw_form.address,
+                    state=raw_form.state,
+                    city=raw_form.city,
+                    zip_code=raw_form.zip_code,
+                    number=raw_form.number
+                )
+            else:
+                # Update or create new address
+                obj, created = ShippingAddress.objects.update_or_create(
+                    id=db_id,
+                    defaults={
+                        'customer': request.user,
+                        'contact_name': raw_form.contact_name,
+                        'address': raw_form.address,
+                        'state': raw_form.state,
+                        'city': raw_form.city,
+                        'zip_code': raw_form.zip_code,
+                        'number': raw_form.number
+                    }
+                )
 
             messages.success(request, "Address created successfully")
 
@@ -220,6 +231,7 @@ def checkout(request, name):
     paymentOrder = Order.objects.get(
         customer=details['customer'], vendor=details['vendor'], is_complete=False)
     shippingAddresses = ShippingAddress.objects.filter(customer=request.user)
+    print(shippingAddresses)
 
     context = {
         'details': details,
