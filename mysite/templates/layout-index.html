@@ -37,7 +37,7 @@
         {% if messages %}
         {% for message in messages %}
         {% if message.tags == "error" %}
-        <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show mx-5" role="alert">
+        <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show mx-5" role="alert" id="navbar-alert">
             <div>
                 {{ message }}
             </div>

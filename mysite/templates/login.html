@@ -6,7 +6,8 @@ Testing Registration
 
 {% block script %}
 <script>
-  document.querySelector('footer').classList.add('visually-hidden')
+  document.querySelector('footer').classList.add('visually-hidden');
+  document.querySelector('#navbar-alert').classList.add('visually-hidden');
 </script>
 {% endblock %}
 
@@ -54,7 +55,9 @@ Testing Registration
                     <input type="password" name="password" id="inputPassword" class="form-control">
                 </div>
             </div>
-            <input type="submit" value="Login" class="btn btn-danger mb-3 fw-bold">
+            <div class="d-flex justify-content-center">
+                <input type="submit" value="Login" class="btn btn-danger mb-3 fw-bold">
+            </div>
         </form>
     </div>
 </div>
