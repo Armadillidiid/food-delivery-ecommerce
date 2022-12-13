@@ -98,9 +98,12 @@ Food Delivery & Takeout | Rumble
                             restaurants, nearby grocery
                             and convenience stores, and more.</span>
                     </div>
-                    <div class="row px-2 my-4">
-                        <button class="btn btn-danger rounded-pill fw-bold px-3" style="max-width: fit-content">Get the
-                            app</button>
+                    <div class="row px-0 my-4">
+                        <a href="{% url 'home' %}" class="remove-link-style">
+                            <button class="btn btn-danger rounded-pill fw-bold px-3" style="max-width: fit-content">
+                                Visit web app
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -132,9 +135,11 @@ Food Delivery & Takeout | Rumble
                             platform, you can satisfy customers with the food they want—when and where they want
                             it.</span>
                     </div>
-                    <div class="row px-2 my-4">
-                        <button class="btn btn-danger rounded-pill fw-bold" style="width: fit-content;">Add your
-                            restaurant</button>
+                    <div class="row px-0 my-4">
+                        <a href="{% url 'register-vendor' %}" class="remove-link-style">
+                            <button class="btn btn-danger rounded-pill fw-bold" style="width: fit-content;">Add your
+                                restaurant</button>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -290,7 +290,7 @@ ul li {
 }
 
 #productImageContainer button i:hover {
-  opacity: 60%;
+  color: rgb(70, 70, 70) !important;
 }
 
 #offcanvasRight {
