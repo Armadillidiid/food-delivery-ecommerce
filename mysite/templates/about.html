@@ -5,6 +5,12 @@ About Us | Rumble
 {% endblock %}
 
 {% load static %}
+
+{% block script %}
+<script>
+    changeFooterBackground();
+</script>
+{% endblock %}
 {% block main %}
 <section>
     <div class="container-fluid about-background py-6 px-5">
@@ -93,7 +99,7 @@ About Us | Rumble
     </div>
 </section>
 <section>
-    <div class="container p-5">
+    <div class="container p-5 py-6">
         <div class="row mb-5">
             <span class="fw-bold fs-1 mb-3 text-center">Rumble Newletter</span>
             <p class="fs-5 p-0 text-center text-md-start">For the latest news and company information, please visit the
