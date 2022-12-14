@@ -124,8 +124,8 @@ Checkout Menu| Rumble
 {% block main %}
 <div class="container-fluid gray-page-background p-0">
     <div class="container">
-        <div class="row mb-3 p-3 justify-content-evenly gap-3 gap-md-0">
-            <div class="col-12 col-md-6 p-3 rounded checkout-card-background shadow d-flex flex-column justify-content-between">
+        <div class="row mb-3 p-3 justify-content-evenly gap-3 gap-lg-0">
+            <div class="col-12 col-lg-6 p-3 rounded checkout-card-background shadow d-flex flex-column justify-content-between">
                 <div class="rounded checkout-card-background">
                     <div class="d-flex justify-content-between mb-2">
                         <span class="fw-bold fs-4">Shipping Information</span>
@@ -266,7 +266,7 @@ Checkout Menu| Rumble
                     <div id="paypal-button-container" class="visually-hidden"></div>
                 </div>
             </div>
-            <div class="col-12 col-md-5 p-3 rounded checkout-card-background shadow">
+            <div class="col-12 col-lg-5 p-3 rounded checkout-card-background shadow">
                 {% for order in details.orders %}
                 {% if order.vendor.name == details.vendor.name %}
                 <div class="row mx-0">
@@ -276,34 +276,34 @@ Checkout Menu| Rumble
                 {% for key, order_items in details.items.items %}
                 {% if key == order %}
                 {% for item in order_items %}
-                <div class="row my-3">
-                    <div class="col-3 col-md-4">
+                <div class="row my-3 mx-0 justify-content-between">
+                    <div class="col-3 col-md-3 col-xl-4 px-0 px-md-2">
                         <img class="image-cart" src="{{ item.product.imageURL }}" alt="">
                     </div>
-                    <div class="col-4">
-                        <span>{{ item.product.name }} {{ name }}</span>
+                    <div class="col-4 ps-0 ps-md-auto">
+                        <span class="">{{ item.product.name }} {{ name }}</span>
                     </div>
-                    <div class="col-2">
-                        <span>x{{ item.quantity }}</span>
+                    <div class="col-2 ps-0 ps-md-auto">
+                        <span class="">x{{ item.quantity }}</span>
                     </div>
-                    <div class="col-2">
-                        <span>${{ item.product.price | mul:item.quantity }}</span>
+                    <div class="col-2 ps-0 ps-md-auto">
+                        <span class="">${{ item.product.price | mul:item.quantity }}</span>
                     </div>
                 </div>
                 {% endfor %}
                 {% endif %}
                 {% endfor %}
-                <div class="row mt-3 p-1">
-                    <span class="w-50 custom-border-cart pt-2">Subtotal</span>
-                    <span class="w-50 text-end custom-border-cart pt-2">${{ order.get_cart_price }}</span>
+                <div class="row mt-3 p-1 mx-0">
+                    <span class="w-50 custom-border-cart pt-2 px-0 px-md-1">Subtotal</span>
+                    <span class="w-50 text-end custom-border-cart pt-2 px-0 px-md-1">${{ order.get_cart_price }}</span>
                 </div>
-                <div class="row p-1">
-                    <span class="w-50">Delivery Fee</span>
-                    <span class="w-50 text-end">$1.0</span>
+                <div class="row p-1 mx-0">
+                    <span class="w-50 px-0 px-md-1">Delivery Fee</span>
+                    <span class="w-50 text-end px-0 px-md-1">$1.0</span>
                 </div>
-                <div class="row p-1 mt-1">
-                    <span class="w-50 fs-5 fw-bold custom-border-cart">Total</span>
-                    <span class="w-50 fs-5 text-end fw-bold custom-border-cart">$
+                <div class="row p-1 mt-1 mx-0">
+                    <span class="w-50 fs-5 fw-bold custom-border-cart px-0 px-md-1">Total</span>
+                    <span class="w-50 fs-5 text-end fw-bold custom-border-cart px-0 px-md-1">$
                         {{ order.get_cart_price | add:1}}</span>
                 </div>
                 {% endif %}

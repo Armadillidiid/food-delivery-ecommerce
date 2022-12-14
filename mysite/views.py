@@ -412,7 +412,10 @@ def profileVendor(request):
         return redirect('profile-vendor')
 
     customer = request.user
-    vendor = Vendor.objects.get(user=customer)
+    try:
+        vendor = Vendor.objects.get(user=customer)
+    except:
+        vendor = None
     try:
         categories = ProductCategory.objects.filter(vendor=vendor)
         products = Product.objects.filter(vendor=vendor)
