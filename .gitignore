@@ -1,4 +1,5 @@
 .env
+environ-variable.py
 .vscode
 node_modules
 *__pycache__*
