@@ -1,4 +1,4 @@
-import Cookies from "/static/node_modules/js-cookie/dist/js.cookie.js";
+import Cookies from "/static/node_modules/js-cookie/dist/js.cookie.mjs";
 const csrftoken = Cookies.get("csrftoken");
 
 // Query server
