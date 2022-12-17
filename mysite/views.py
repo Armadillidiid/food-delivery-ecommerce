@@ -463,8 +463,9 @@ def registerVendor(request):
             form = registerVendorForm(request.POST, request.FILES)
             if form.is_valid():
                 print('Form is valid')
-                unsaved_form = form.save(commit=False)  
-                unsaved_form.banner_image = unsaved_form.image
+                unsaved_form = form.save(commit=False) 
+                image = request.FILES.get('image')
+                unsaved_form.banner_image = image
 
                 # Randomize ratings 
                 unsaved_form.ratings= round(uniform(0, 5), 2)

@@ -129,8 +129,7 @@ class Vendor(models.Model):
             y2 = y_axis_center + (height / 2)
             new_img =img.crop((x1, y1, x2, y2))
             new_img = img.resize((300, 200))
-            new_img.save(self.image.path)    
-
+            new_img.save(self.image.path) 
 
         # Resize banner image
         if self.banner_image:
