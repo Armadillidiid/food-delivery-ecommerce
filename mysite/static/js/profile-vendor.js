@@ -1,4 +1,3 @@
-import Cookies from "/static/node_modules/js-cookie/dist/js.cookie.mjs";
 const csrftoken = Cookies.get("csrftoken");
 const openHourOpenTime = document.querySelectorAll(".openHourOpenTime");
 const openHourCloseTime = document.querySelectorAll(".openHourCloseTime");

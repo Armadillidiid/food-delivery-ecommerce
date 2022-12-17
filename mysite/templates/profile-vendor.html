@@ -7,6 +7,7 @@ Vendor Management | Rumble
 {% load static %}
 
 {% block script %}
+<script type="module" src="{% static 'node_modules/js-cookie/dist/js.cookie.min.js' %}"></script>
 <script src="{% static 'js/profile.js' %}"></script>
 <script type="module" src="{% static 'js/profile-vendor.js' %}"></script>
 {% endblock %}
