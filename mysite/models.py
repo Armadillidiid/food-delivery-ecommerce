@@ -118,10 +118,19 @@ class Vendor(models.Model):
         # Resize image 
         if self.image:
             img = Image.open(self.image.path)
-            # if img.width > 200 or img.height > 360:
-            output_size = (300, 200)
-            new_img = img.resize(output_size)
-            new_img.save(self.image.path)
+            aspect_ratio = 1.5
+            width =img.width
+            height =img.width / aspect_ratio
+            y_axis_center = img.height / 2
+
+            x1 = 0
+            y1 = y_axis_center - (height / 2)
+            x2 = width
+            y2 = y_axis_center + (height / 2)
+            new_img =img.crop((x1, y1, x2, y2))
+            new_img = img.resize((300, 200))
+            new_img.save(self.image.path)    
+
 
         # Resize banner image
         if self.banner_image:
