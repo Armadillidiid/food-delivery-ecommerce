@@ -134,7 +134,13 @@ def register(request):
 
             # Add user to database
             user.save()
-            messages.success(request, "ACCOUNT WAS CREATED SUCCESSFULLY")
+            messages.success(request, "Thanks for registering. You are now logged in.")
+
+            # Login user
+            user = authenticate(request, email=form.cleaned_data['email'], password=form.cleaned_data['password'])
+            login(request, user)
+            return redirect('home')
+
 
     # Create empty form
     form = MyUserCreationForm()
