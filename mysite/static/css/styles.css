@@ -355,9 +355,9 @@ ul li {
 
 .gray-page-background {
   background-color: #f1f1f1 !important;
-  height: 100vh;
+  min-height: 100vh;
 }
-
+  
 .remove-border {
   border: none !important;
 }
