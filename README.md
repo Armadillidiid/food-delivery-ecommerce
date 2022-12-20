@@ -12,7 +12,7 @@
 <p>You can view a live demo by clicking <a href="https://rumble-eats.live/">HERE</a></p>
 
 ## Features ✨   
-<p>One of the standout features of Rumble is the ability for users to sign up as an independent vendor and list their food menus. This means that even small, locally-owned restaurants can get in on the action and reach a wider audience of potential customers. This not only helps these small businesses thrive, but it also gives customers more options when it comes to finding the perfect meal.</p>
+<p>One of the standout features of Rumble is the ability for users to sign up as an independent vendor and list their food menus. This means that even small, locally-owned restaurants can get in on the action and reach a wider audience of potential customers. This not only helps these small businesses thrive, but it also gives customers more options when it comes to finding the perfect meal. Below are some more aspects.</p>
 
 - Create customer account   
 - Add to cart asynchronously while in page and order
