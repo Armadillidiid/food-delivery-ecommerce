@@ -31,11 +31,22 @@ let searchBox = document.querySelector("#searchBox");
 let string = "";
 let url = searchBox.dataset.url;
 
-searchBox.addEventListener("keyup", function () {
+const debounce = (func, delay) => {
+  let timeoutId;
+  return function (...args) {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+};
+
+searchBox.addEventListener("keyup", debounce(function () {
   string = this.value;
-  console.log(string);
-  queryGoogleMap(url, string);
-});
+  queryGoogleMap(url, string.trim());
+}, 300));
 
 // Filter array & display location autocomplete
 function displayLocation(data) {
