@@ -1,4 +1,6 @@
-const csrftoken = Cookies.get("csrftoken");
+import getCookie from './getCookie.js'
+
+const csrftoken = getCookie('csrftoken');
 
 // Query server
 async function queryGoogleMap(url, string) {

@@ -1,4 +1,6 @@
-const csrftoken = Cookies.get("csrftoken");
+import getCookie from './getCookie.js'
+
+const csrftoken = getCookie('csrftoken')
 const openHourOpenTime = document.querySelectorAll(".openHourOpenTime");
 const openHourCloseTime = document.querySelectorAll(".openHourCloseTime");
 const submitWeekdayBtn = document.querySelectorAll(".weekdaySubmitBtn");
