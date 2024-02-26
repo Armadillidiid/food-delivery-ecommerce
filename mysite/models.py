@@ -5,8 +5,6 @@ from enum import unique
 from hashlib import blake2b
 from random import choices
 from statistics import mode
-from tkinter import CASCADE
-from tkinter.ttk import Widget
 from unicodedata import category
 from unittest.util import _MAX_LENGTH
 from wsgiref.validate import validator
