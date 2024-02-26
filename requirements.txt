@@ -61,7 +61,6 @@ msrest==0.7.1
 oauthlib==3.2.0
 paramiko==2.11.0
 passlib==1.7.4
-pgadmin4==6.12
 phonenumberslite==8.12.54
 Pillow==9.2.0
 portalocker==2.5.1
