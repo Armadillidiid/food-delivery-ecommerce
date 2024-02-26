@@ -7,8 +7,12 @@ services:
     container_name: rumble
     ports:
       - "3556:3556"
+    volumes:
+      - .:/app
     command: >
-      sh -c "python3 manage.py migrate &&
+      sh -c "python manage.py makemigrations mysite
+             python3 manage.py migrate --noinput && 
+             python3 manage.py collectstatic --noinput &&
              python3 manage.py runserver 0.0.0.0:3556"
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
