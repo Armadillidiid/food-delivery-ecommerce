@@ -1,19 +1,17 @@
-version: "3.9"
+version: "3.8"
 
 services:
   app:
     build: .
     restart: always
     container_name: rumble
-    ports:
-      - "3556:3556"
     volumes:
       - .:/app
     command: >
       sh -c "python manage.py makemigrations mysite
              python3 manage.py migrate --noinput && 
              python3 manage.py collectstatic --noinput &&
-             python3 manage.py runserver 0.0.0.0:3556"
+             gunicorn setup.wsgi --bind 0.0.0.0:8000 --workers 1 --timeout 30"
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -41,6 +39,21 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  web-server:
+    image: nginx:1.25.4
+    container_name: nginx
+    ports:
+      - "80:80"
+    environment:
+      - APP_HOST=app
+      - APP_PORT=8000
+    volumes:
+      - ./nginx/proxy_params:/etc/nginx/proxy_params
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+      - ./staticfiles/:/app/staticfiles
+    depends_on:
+      - app
 
 volumes:
   db-data:
