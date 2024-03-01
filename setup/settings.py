@@ -150,7 +150,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = [
     ("node_modules", os.path.join(BASE_DIR, "node_modules/")),
-    os.path.join(BASE_DIR, "static"),
 ]
 
 MEDIA_URL = "/media/"
