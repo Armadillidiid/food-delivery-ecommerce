@@ -97,7 +97,7 @@
 }
 
 .segment-1 {
-  background: url("../images/pexels-ivan-samkov-8951558.jpg");
+  background: url("../images/pexels-ivan-samkov-8951558.webp");
   background-size: cover;
   height: 100vh;
   width: auto;
@@ -213,7 +213,7 @@ ul li {
 }
 
 .about-background {
-  background-image: url("../images/Aglow.png");
+  background-image: url("../images/Aglow.webp");
   background-size: cover;
 }
 
@@ -367,7 +367,7 @@ ul li {
 }
 
 .merchant-background {
-  background: url(../images/pexels-andrea-piacquadio-927451-edited.jpg);
+  background: url(../images/pexels-andrea-piacquadio-927451-edited.webp);
   background-size: cover;
   height: 94vh;
 }
@@ -541,7 +541,7 @@ ul li {
   }
 
   .merchant-background {
-    background: url(../images/pexels-andrea-piacquadio-927451-edited.jpg);
+    background: url(../images/pexels-andrea-piacquadio-927451-edited.webp);
     background-size: cover;
     max-width: 100%;
     height: auto;

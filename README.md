@@ -1,6 +1,6 @@
 <h1 align="center">🛒Rumble - Food Delivery Ecommerce</h1>
 
-![alt text](/mysite/static/images/showcase.png)
+![alt text](/mysite/static/images/showcase.webp)
 
 <p align="center">Food delivery has become an increasingly popular option in recent years, with many people opting for the convenience of having their favorite meals delivered straight to their door. With the rise of food delivery apps like Grubhub, Uber Eats, and DoorDash, it's never been easier to get a quick and delicious meal without having to leave the comfort of your own home.</p>
 
