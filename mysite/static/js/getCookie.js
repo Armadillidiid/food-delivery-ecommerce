@@ -3,13 +3,13 @@
  * @param {string} name - The name of the cookie to retrieve.
  * @returns {string|null} The value of the specified cookie if found; otherwise, null.
  */
-function getCookie(name) {
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        let cookie = cookies[i].trim();
-        if (cookie.startsWith(name + '=')) {
-            return cookie.substring(name.length + 1);
-        }
+export default function getCookie(name) {
+  const cookies = document.cookie.split(";");
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.startsWith(name + "=")) {
+      return cookie.substring(name.length + 1);
     }
-    return null;
+  }
+  return null;
 }
