@@ -39,3 +39,20 @@ jobs:
           docker compose build
           docker tag $ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      # - name: Push artifact to server instance
+      #   uses: easingthemes/ssh-deploy@main
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ env.EC2_SSH_KEY }}
+      #     REMOTE_HOST: ${{ env.HOST_DNS }} # ec2-xx-xxx-xxx-xxx.us-west-2.compute.amazonaws.com
+      #     REMOTE_USER: ${{ env.USERNAME }} # ubuntu
+      #     TARGET: ${{ secrets.TARGET_DIR }} # e.g., ./path/to/directory/payout
+      #     SCRIPT_BEFORE: mkdir -p ${{ secrets.TARGET_DIR }}
+      #     SCRIPT_AFTER: |
+      #       sudo systemctl restart nginx
+      #       # aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+      #       docker pull your-account-id.dkr.ecr.your-region.amazonaws.com/your-repository:latest
+      #       docker stop your-container-name
+      #       docker rm your-container-name
+      #       cd ${{ secrets.TARGET_DIR}} && docker compose up
+      #
