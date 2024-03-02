@@ -5,12 +5,14 @@ services:
     build: .
     restart: always
     container_name: rumble
+    image: rumble:latest
     volumes:
-      - .:/app
+      - static-data:/app/staticfiles
+      - media-data:/app/staticfiles
     command: >
       sh -c "python manage.py makemigrations mysite
-             python3 manage.py migrate --noinput && 
-             python3 manage.py collectstatic --noinput &&
+             python manage.py migrate --noinput && 
+             python manage.py collectstatic --noinput &&
              gunicorn setup.wsgi --bind 0.0.0.0:8000 --workers 1 --timeout 30"
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
@@ -51,9 +53,12 @@ services:
     volumes:
       - ./nginx/proxy_params:/etc/nginx/proxy_params
       - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
-      - ./staticfiles/:/app/staticfiles
+      - static-data:/app/staticfiles
+      - media-data:/app/staticfiles
     depends_on:
       - app
 
 volumes:
   db-data:
+  static-data:
+  media-data:
