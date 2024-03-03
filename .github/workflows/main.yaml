@@ -58,8 +58,6 @@ jobs:
           SCRIPT_BEFORE: mkdir -p ${{ secrets.TARGET_DIR }}
           SCRIPT_AFTER: |
             aws ecr get-login-password --region "${{ secrets.AWS_REGION }}" | docker login --username AWS --password-stdin "${{ steps.login-ecr.outputs.registry }}"
-            docker stop rumble
-            docker rm rumble
             cat `
               export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
               export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
@@ -74,4 +72,6 @@ jobs:
               export ECR_REPOSITORY=${{ env.ECR_REPOSITORY }}
               export IMAGE_TAG=${{ env.IMAGE_TAG }}
             ` > export-ecr
+            docker stop rumble
+            docker rm rumble
             cd "${{ secrets.TARGET_DIR }}" && docker compose up
