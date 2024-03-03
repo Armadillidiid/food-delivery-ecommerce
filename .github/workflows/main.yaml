@@ -39,7 +39,6 @@ jobs:
         run: |
           docker compose build
           docker images
-          docker tag food-delivery-ecommerce-app $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Set Docker Pull Image Environment Variable
@@ -57,9 +56,8 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
           SCRIPT_BEFORE: mkdir -p ${{ secrets.TARGET_DIR }}
           SCRIPT_AFTER: |
-            echo "${{ steps.login-ecr.outputs.registry }}"
             aws ecr get-login-password --region "${{ secrets.AWS_REGION }}" | docker login --username AWS --password-stdin "${{ steps.login-ecr.outputs.registry }}"
-            docker pull ${{ env.DOCKER_PULL_IMAGE }}
-            # docker stop rumble
-            # docker rm rumble
-            # cd "${{ secrets.TARGET_DIR }}" && docker compose up
+            # docker pull ${{ env.DOCKER_PULL_IMAGE }}
+            docker stop rumble
+            docker rm rumble
+            cd "${{ secrets.TARGET_DIR }}" && docker compose up
