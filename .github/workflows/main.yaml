@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ECR_REPOSITORY: rumble
-      IMAGE_TAG: ${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+      # IMAGE_TAG: ${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+      IMAGE_TAG: $(git rev-parse --short ${{ github.sha }})-${{ github.run_attempt }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -46,9 +47,9 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }} # ec2-xx-xxx-xxx-xxx.us-west-2.compute.amazonaws.com
-          REMOTE_USER: ${{ secrets.USERNAME }} # ubuntu
-          TARGET: ${{ secrets.TARGET_DIR }} # e.g., ./path/to/directory/payout
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}
           SCRIPT_BEFORE: mkdir -p ${{ secrets.TARGET_DIR }}
           SCRIPT_AFTER: |
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
