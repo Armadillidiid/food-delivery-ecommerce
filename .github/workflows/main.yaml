@@ -28,7 +28,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: rumble
-          IMAGE_TAG: latest
+          IMAGE_TAG: run-${{ github.run_id }}-num-${{ github.run_number }}-attempt-${{ github.run_attempt }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
