@@ -37,10 +37,9 @@ jobs:
           MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         run: |
-          echo "ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}" >> $GITHUB_ENV
           docker compose build
-          docker tag $ECR_REPOSITORY:latest ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag $ECR_REPOSITORY:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Push artifact to server instance
         uses: easingthemes/ssh-deploy@main
@@ -51,8 +50,8 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
           SCRIPT_BEFORE: mkdir -p ${{ secrets.TARGET_DIR }}
           SCRIPT_AFTER: |
-            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
-            docker pull ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG
+            aws ecr get-login-password --region "${{ secrets.AWS_REGION }}" | docker login --username AWS --password-stdin "${{ secrets.ECR_REGISTRY }}"
+            docker pull "${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG"
             docker stop rumble
             docker rm rumble
-            cd ${{ secrets.TARGET_DIR }} && docker compose up
+            cd "${{ secrets.TARGET_DIR }}" && docker compose up
