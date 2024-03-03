@@ -71,6 +71,7 @@ jobs:
             echo 'export ECR_REPOSITORY="${{ env.ECR_REPOSITORY }}"' >> export-ecr
             echo 'export IMAGE_TAG="${{ env.IMAGE_TAG }}"' >> export-ecr
 
+            source ~/.bash_profile
             docker stop rumble
             docker rm rumble
             cd "${{ secrets.TARGET_DIR }}" && docker compose up
