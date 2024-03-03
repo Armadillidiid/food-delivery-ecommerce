@@ -38,10 +38,16 @@ jobs:
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         run: |
           docker compose build
+          docker tag food-delivery-ecommerce-app $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Set Docker Pull Image Environment Variable
         run: echo "DOCKER_PULL_IMAGE=${{ steps.login-ecr.outputs.registry }}/${ECR_REPOSITORY}:${IMAGE_TAG}" >> $GITHUB_ENV
+
+      - name: Set Docker Export Environment Variable
+        run: |
+          echo "ECR_REPOSITORY=${ECR_REPOSITORY}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
 
       - name: Push artifact to server instance
         uses: easingthemes/ssh-deploy@main
@@ -53,7 +59,20 @@ jobs:
           SCRIPT_BEFORE: mkdir -p ${{ secrets.TARGET_DIR }}
           SCRIPT_AFTER: |
             aws ecr get-login-password --region "${{ secrets.AWS_REGION }}" | docker login --username AWS --password-stdin "${{ steps.login-ecr.outputs.registry }}"
-            # docker pull ${{ env.DOCKER_PULL_IMAGE }}
             docker stop rumble
             docker rm rumble
+            cat `
+              export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+              export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+              export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+              export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+              export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+              export DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
+              export GOOGLE_MAP_API_KEY=${{ secrets.GOOGLE_MAP_API_KEY }}
+            ` > export-env
+            cat `
+              export ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+              export ECR_REPOSITORY=${{ env.ECR_REPOSITORY }}
+              export IMAGE_TAG=${{ env.IMAGE_TAG }}
+            ` > export-ecr
             cd "${{ secrets.TARGET_DIR }}" && docker compose up
