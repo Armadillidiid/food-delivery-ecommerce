@@ -12,11 +12,6 @@ jobs:
       ECR_REPOSITORY: rumble
       IMAGE_TAG: ${{ github.run_id }}.${{ github.run_number }}.${{ github.run_attempt }}
     steps:
-      - name: Test
-        run: |
-          echo $IMAGE_TAG
-          exit 1
-      
       - name: Checkout
         uses: actions/checkout@v3
 
