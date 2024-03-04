@@ -8,7 +8,7 @@ services:
     image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
     volumes:
       - static-data:/app/staticfiles
-      - media-data:/app/staticfiles
+      - media-data:/app/media
     command: >
       sh -c "python manage.py makemigrations mysite
              python manage.py migrate --noinput && 
@@ -54,7 +54,7 @@ services:
       - ./nginx/proxy_params:/etc/nginx/proxy_params
       - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
       - static-data:/app/staticfiles
-      - media-data:/app/staticfiles
+      - media-data:/app/media
     depends_on:
       - app
 
