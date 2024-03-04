@@ -22,6 +22,7 @@ services:
       - POSTGRES_PORT=5432
       - MAP_API_KEY=${GOOGLE_MAP_API_KEY}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
     depends_on:
       - db
 
