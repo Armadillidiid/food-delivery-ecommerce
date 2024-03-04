@@ -75,4 +75,4 @@ jobs:
             source ~/.bash_profile
             docker stop rumble
             docker rm rumble
-            cd "${{ secrets.TARGET_DIR }}" && docker compose up
+            cd "${{ secrets.TARGET_DIR }}" && docker compose up -d
