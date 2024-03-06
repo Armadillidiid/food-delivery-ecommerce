@@ -76,3 +76,4 @@ jobs:
             docker stop rumble
             docker rm rumble
             cd "${{ secrets.TARGET_DIR }}" && docker compose up -d
+            docker system prune -a
