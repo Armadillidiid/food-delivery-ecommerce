@@ -46,7 +46,6 @@ services:
   web-server:
     image: nginx:1.25.4
     container_name: nginx
-    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
     ports:
       - "80:80"
     environment:
