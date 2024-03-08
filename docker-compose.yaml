@@ -51,6 +51,7 @@ services:
     environment:
       - APP_HOST=app
       - APP_PORT=8000
+      - SERVER_NAME=${SERVER_NAME}
     volumes:
       - ./nginx/proxy_params:/etc/nginx/proxy_params
       - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template

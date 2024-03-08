@@ -67,6 +67,7 @@ jobs:
             echo 'export DJANGO_SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}"' >> export-env
             echo 'export GOOGLE_MAP_API_KEY="${{ secrets.GOOGLE_MAP_API_KEY }}"' >> export-env
             echo 'export DJANGO_ALLOWED_HOSTS="${{ secrets.DJANGO_ALLOWED_HOSTS }}"' >> export-env
+            echo 'export SERVER_NAME="${{ secrets.SERVER_NAME }}"' >> export-env
 
             echo 'export ECR_REGISTRY="${{ steps.login-ecr.outputs.registry }}"' > export-ecr
             echo 'export ECR_REPOSITORY="${{ env.ECR_REPOSITORY }}"' >> export-ecr
