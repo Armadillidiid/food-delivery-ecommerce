@@ -67,6 +67,7 @@ jobs:
             echo 'export DJANGO_SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}"' >> export-env
             echo 'export GOOGLE_MAP_API_KEY="${{ secrets.GOOGLE_MAP_API_KEY }}"' >> export-env
             echo 'export DJANGO_ALLOWED_HOSTS="${{ secrets.DJANGO_ALLOWED_HOSTS }}"' >> export-env
+            echo 'export DJANGO_CSRF_TRUSTED_ORIGINS="${{ secrets.DJANGO_CSRF_TRUSTED_ORIGINS }}"' >> export-env
             echo 'export SERVER_NAME="${{ vars.SERVER_NAME }}"' >> export-env
             echo 'export CERTBOT_EMAIL="${{ secrets.CERTBOT_EMAIL }}"' >> export-env
 
