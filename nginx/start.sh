@@ -35,7 +35,7 @@ docker compose run --rm --entrypoint "\
 echo
 
 echo "### Starting nginx ..."
-docker compose up --force-recreate -d web-server
+docker compose up -d web-server
 echo
 
 echo "### Deleting dummy certificate for $domains ..."
