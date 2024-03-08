@@ -32,7 +32,7 @@ docker compose run --rm --entrypoint "\
 echo
 
 echo "### Starting nginx ..."
-docker compose up --force-recreate -d nginx
+docker compose up --force-recreate -d web-server
 echo
 
 echo "### Deleting dummy certificate for $domains ..."
@@ -68,5 +68,5 @@ docker compose run --rm --entrypoint "\
     --force-renewal" certbot
 echo
 
-# Reload nginx every 6 hours
-'/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload ; done;"'''
+echo "### Reloading nginx ..."
+docker compose exec web-server nginx -s reload
