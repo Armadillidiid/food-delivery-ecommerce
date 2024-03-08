@@ -56,6 +56,7 @@ services:
     volumes:
       - ./nginx/proxy_params:/etc/nginx/proxy_params
       - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+      - ./nginx/start.sh:/docker-entrypoint.d/nginx-start.sh
       - static-data:/app/staticfiles
       - media-data:/app/media
       - ./data/certbot/conf:/etc/letsencrypt
