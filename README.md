@@ -9,7 +9,7 @@
 <p>Rumble is a new food delivery web app that aims to make the process of ordering food even more convenient for customers. Built with Python, Django, and PostgreSQL, Rumble connects customers with local restaurants, making it easy to discover new and exciting cuisines in your area. It was designed to be user-friendly and easy to navigate, with a clean and intuitive interface. Customers can easily browse menus, place orders, and track their deliveries all from the same app. And with the option to pay directly through the app, there's no need to worry about carrying cash or trying to split the bill with friends.</p>
 
 ##  Live Demo 🔴
-<p>You can view a live demo by clicking <a href="https://rumble-eats.live/">HERE</a></p>
+<p>You can view a live demo by clicking <a href="https://rumble-eat.xyz/">HERE</a></p>
 
 ## Features ✨   
 <p>One of the standout features of Rumble is the ability for users to sign up as an independent vendor and list their food menus. This means that even small, locally-owned restaurants can get in on the action and reach a wider audience of potential customers. This not only helps these small businesses thrive, but it also gives customers more options when it comes to finding the perfect meal. Below are some more aspects.</p>
