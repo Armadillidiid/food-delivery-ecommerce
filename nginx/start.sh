@@ -1,6 +1,6 @@
 #!/bin/bash
 
-domains=($SERVER_NAME www.$SERVER_NAME)
+domains=($SERVER_NAME)
 rsa_key_size=4096
 data_path="./data/certbot"
 email=$CERTBOT_EMAIL
@@ -69,4 +69,4 @@ docker compose run --rm --entrypoint "\
 echo
 
 # Reload nginx every 6 hours
-'/bin/sh -c ''while :; do sleep 6h & wait $${!}; docker compose exec nginx nginx -s reload ; done;"'''
+'/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload ; done;"'''
