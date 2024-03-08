@@ -52,6 +52,7 @@ services:
       - APP_HOST=app
       - APP_PORT=8000
       - SERVER_NAME=${SERVER_NAME}
+      - CERTBOT_EMAIL=${CERTBOT_EMAIL}
     volumes:
       - ./nginx/proxy_params:/etc/nginx/proxy_params
       - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
@@ -62,7 +63,6 @@ services:
       - ./data/certbot/www:/var/www/certbot
     depends_on:
       - app
-      - certbot
 
   certbot:
     image: certbot/certbot:v2.9.0
