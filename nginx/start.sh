@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source ../../export.env
-source ../../.env
+source ../../export-env
+source ../../.export-ecr
 
 domains=($SERVER_NAME)
 rsa_key_size=4096
