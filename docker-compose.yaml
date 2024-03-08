@@ -46,6 +46,7 @@ services:
   web-server:
     image: nginx:1.25.4
     container_name: nginx
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
     ports:
       - "80:80"
     environment:
@@ -57,8 +58,17 @@ services:
       - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
       - static-data:/app/staticfiles
       - media-data:/app/media
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     depends_on:
       - app
+
+  certbot:
+    image: certbot/certbot:v2.9.0
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
 
 volumes:
   db-data:
