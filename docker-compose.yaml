@@ -45,13 +45,15 @@ services:
       retries: 5
 
   web-server:
-    build: ./nginx/
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+      args:
+        - IS_SSL_ACQUIRED=${IS_SSL_ACQUIRED}
     container_name: nginx
     ports:
       - "80:80"
       - "443:443"
-    args:
-      - IS_SSL_ACQUIRED=${IS_SSL_ACQUIRED}
     environment:
       - APP_HOST=app
       - APP_PORT=8000
