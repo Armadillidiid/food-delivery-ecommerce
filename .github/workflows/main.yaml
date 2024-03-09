@@ -70,6 +70,7 @@ jobs:
             echo 'export DJANGO_CSRF_TRUSTED_ORIGINS="${{ secrets.DJANGO_CSRF_TRUSTED_ORIGINS }}"' >> export-env
             echo 'export SERVER_NAME="${{ vars.SERVER_NAME }}"' >> export-env
             echo 'export CERTBOT_EMAIL="${{ secrets.CERTBOT_EMAIL }}"' >> export-env
+            echo 'export IS_SSL_ACQUIRED="${{ vars.IS_SSL_ACQUIRED }}"' >> export-env
 
             echo 'export ECR_REGISTRY="${{ steps.login-ecr.outputs.registry }}"' > export-ecr
             echo 'export ECR_REPOSITORY="${{ env.ECR_REPOSITORY }}"' >> export-ecr
