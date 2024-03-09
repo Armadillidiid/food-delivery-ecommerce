@@ -46,7 +46,7 @@ services:
 
   web-server:
     build:
-      context: .
+      context: ./nginx
       dockerfile: ./nginx/Dockerfile
       args:
         - IS_SSL_ACQUIRED=${IS_SSL_ACQUIRED}
