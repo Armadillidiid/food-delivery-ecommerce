@@ -17,10 +17,14 @@ ARG IS_SSL_ACQUIRED
 RUN mkdir -p /etc/nginx/templates
 
 # Copy template file based on SSL certificate acquisition
+COPY ./default.conf.template /etc/nginx/templates/default.conf.template
+COPY ./default.staging.conf.template /etc/nginx/templates/default.staging.conf.template
+
+# Copy template file based on SSL certificate acquisition
 RUN if [ "$IS_SSL_ACQUIRED" = "true" ]; then \
-  cp ./default.conf.template /etc/nginx/templates/default.conf.template; \
+  rm /etc/nginx/templates/default.staging.conf.template; \
   else \
-  cp ./default.staging.conf.template /etc/nginx/templates/default.conf.template; \
+  rm /etc/nginx/templates/default.conf.template; \
   fi
 
 # COPY proxy params
