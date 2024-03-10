@@ -1,5 +1,8 @@
 FROM nginx:1.25.4
 
+# Set the working directory
+WORKDIR /
+
 # Add cron job to reload nginx every 24 hours
 RUN echo "0 0 * * * root docker exec -it nginx nginx -s reload" > /etc/cron.d/nginx-job
 
@@ -9,6 +12,9 @@ RUN curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-ngi
 
 # Set the default environment variable
 ARG IS_SSL_ACQUIRED
+
+# Create a directory for template files
+RUN mkdir -p /etc/nginx/templates
 
 # Copy template file based on SSL certificate acquisition
 RUN if [ "$IS_SSL_ACQUIRED" = "true" ]; then \
