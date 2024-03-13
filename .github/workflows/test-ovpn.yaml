@@ -24,7 +24,7 @@ jobs:
         with:
           config_file: ./client.ovpn
           client_key: ${{ secrets.OVPN_CLIENT_KEY }}
-          tls_auth_key: ${{ secrets.OVPN_TLS_AUTH_KEY }}
+          tls_crypt_key: ${{ secrets.OVPN_TLS_CRYPT_KEY }}
 
       - name: Test VPN connection
         timeout-minutes: 1
