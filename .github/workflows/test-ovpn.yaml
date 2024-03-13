@@ -28,4 +28,4 @@ jobs:
 
       - name: Test VPN connection
         timeout-minutes: 1
-        run: until ping -c1 ${{ secrets.SERVER_IP_ADDRESS }}; do sleep 2; done
+        run: until ping -c1 ${{ secrets.SERVER_PRIVATE_IP }}; do sleep 2; done
