@@ -1,0 +1,31 @@
+name: OpenVPN
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Connect to OpenVPN
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install OpenVPN
+        run: |
+          sudo apt update
+          sudo apt install -y openvpn openvpn-systemd-resolved
+
+      - name: Create OpenVPN config
+        run: |
+          echo "${{ secrets.OPENVPN_CONFIG }}" > ./client.ovpn
+
+      - name: Connect to VPN
+        uses: "kota65535/github-openvpn-connect-action@v2"
+        with:
+          config_file: ./client.ovpn
+          client_key: ${{ secrets.OVPN_CLIENT_KEY }}
+          tls_auth_key: ${{ secrets.OVPN_TLS_AUTH_KEY }}
+
+      - name: Test VPN connection
+        timeout-minutes: 1
+        run: until ping -c1 ${{ secrets.SERVER_IP_ADDRESS }}; do sleep 2; done
