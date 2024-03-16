@@ -120,4 +120,3 @@ volumes:
   html:
   certs:
   acme:
-  docker exec -it nginx-proxy /bin/bash
