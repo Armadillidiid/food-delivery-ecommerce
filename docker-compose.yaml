@@ -26,7 +26,6 @@ services:
       - DJANGO_CSRF_TRUSTED_ORIGINS=${DJANGO_CSRF_TRUSTED_ORIGINS}
     depends_on:
       - db
-      - web-server
 
   db:
     image: postgres:15.1-alpine
