@@ -55,10 +55,10 @@ services:
     volumes:
       - static-data:/app/staticfiles
       - media-data:/app/media
-      - ./nginx/proxy_params:/etc/nginx/proxy_params
-      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
-      - ./nginx/ssl-dhparams.pem:/etc/nginx/ssl-dhparams.pem
-      - ./nginx/options-ssl-nginx.conf:/etc/nginx/options-ssl-nginx.conf
+      - certs:/etc/nginx/certs
+      # - ./nginx/proxy_params:/etc/nginx/proxy_params
+      # - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+      # - ./nginx/options-ssl-nginx.conf:/etc/nginx/options-ssl-nginx.conf
     depends_on:
       - app
       - nginx-proxy
@@ -120,3 +120,4 @@ volumes:
   html:
   certs:
   acme:
+  docker exec -it nginx-proxy /bin/bash
