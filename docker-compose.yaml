@@ -98,6 +98,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - acme:/etc/acme.sh
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs
     environment:
       - NGINX_DOCKER_GEN_CONTAINER=nginx-proxy-gen
       - DEFAULT_EMAIL=${CERTBOT_EMAIL}
