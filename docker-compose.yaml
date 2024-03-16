@@ -57,8 +57,6 @@ services:
       - media-data:/app/media
       - certs:/etc/nginx/certs
       - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
-      # - ./nginx/proxy_params:/etc/nginx/proxy_params
-      # - ./nginx/options-ssl-nginx.conf:/etc/nginx/options-ssl-nginx.conf
     depends_on:
       - app
       - nginx-proxy
