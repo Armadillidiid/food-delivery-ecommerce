@@ -80,5 +80,5 @@ jobs:
             cd "${{ secrets.TARGET_DIR }}"
             docker compose pull app
             docker compose stop app
-            docker compose up -d app
+            docker compose up -d 
             # docker system prune -af
