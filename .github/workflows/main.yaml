@@ -81,4 +81,4 @@ jobs:
             docker compose pull app
             docker compose stop app
             docker compose up -d app
-            docker system prune -af
+            # docker system prune -af
