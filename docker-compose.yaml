@@ -5,7 +5,7 @@ services:
     build: .
     restart: always
     container_name: rumble
-    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
+    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG:-latest}
     volumes:
       - static-data:/app/staticfiles
       - media-data:/app/media
@@ -111,8 +111,3 @@ volumes:
   html:
   certs:
   acme:
-
-networks:
-  default:
-    name: nginx-proxy
-    external: true
