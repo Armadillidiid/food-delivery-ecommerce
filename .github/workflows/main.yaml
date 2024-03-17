@@ -83,8 +83,8 @@ jobs:
 
             source ~/.bash_profile
             cd "${{ secrets.TARGET_DIR }}"
-            docker compose pull app
-            docker compose stop app
+            docker compose pull
+            docker compose down
             docker compose up -d 
             rm -f local_ssh_script-before-*.sh
             docker system prune -af
