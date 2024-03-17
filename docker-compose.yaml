@@ -53,6 +53,7 @@ services:
     environment:
       - APP_HOST=app
       - APP_PORT=8000
+      - SERVER_NAME=${SERVER_NAME}
       - VIRTUAL_HOST=${SERVER_NAME},www.${SERVER_NAME}
       - LETSENCRYPT_HOST=${SERVER_NAME}
     volumes:
