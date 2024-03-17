@@ -83,4 +83,5 @@ jobs:
             docker compose pull app
             docker compose stop app
             docker compose up -d 
+            rm -f local_ssh_script-before-*.sh
             # docker system prune -af
