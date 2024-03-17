@@ -5,7 +5,7 @@ services:
     build: .
     restart: always
     container_name: rumble
-    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG:-latest}
+    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:app-${IMAGE_TAG:-latest}
     volumes:
       - static-data:/app/staticfiles
       - media-data:/app/media
@@ -44,8 +44,8 @@ services:
       timeout: 5s
       retries: 5
 
-  web-server:
-    image: nginx:1.25.4
+  nginx:
+    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:nginx-${IMAGE_TAG:-latest}
     container_name: nginx
     environment:
       - APP_HOST=app
@@ -63,18 +63,21 @@ services:
       - nginx-proxy-gen
       - nginx-proxy-acme
 
+  
   nginx-proxy-gen:
     image: nginxproxy/docker-gen
     container_name: nginx-proxy-gen
     volumes:
-      - ./nginx/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - conf:/etc/nginx/conf.d
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - certs:/etc/nginx/certs
-    command: -notify-sighup nginx-proxy -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    command: >
+      sh -c "curl https://raw.githubusercontent.com/nginx-proxy/nginx-proxy/main/nginx.tmpl > /etc/docker-gen/templates/nginx.tmpl &&
+      docker-gen -notify-sighup nginx-proxy -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf"
     restart: always
+
 
   nginx-proxy:
     image: nginx
