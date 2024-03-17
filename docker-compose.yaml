@@ -76,7 +76,7 @@ services:
       - certs:/etc/nginx/certs
     command: >
       sh -c "mkdir -p /etc/docker-gen/templates/ &&
-      curl https://raw.githubusercontent.com/nginx-proxy/nginx-proxy/main/nginx.tmpl > /etc/docker-gen/templates/nginx.tmpl &&
+      wget -O /etc/docker-gen/templates/nginx.tmpl https://raw.githubusercontent.com/nginx-proxy/nginx-proxy/main/nginx.tmpl &&
       docker-gen -notify-sighup nginx-proxy -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf"
     restart: always
 
