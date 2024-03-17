@@ -38,7 +38,8 @@ jobs:
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         run: |
           docker compose build
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:app-$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:nginx-$IMAGE_TAG
 
       - name: Set Docker Pull Image Environment Variable
         run: echo "DOCKER_PULL_IMAGE=${{ steps.login-ecr.outputs.registry }}/${ECR_REPOSITORY}:${IMAGE_TAG}" >> $GITHUB_ENV
@@ -55,7 +56,13 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
-          SCRIPT_BEFORE: mkdir -p ${{ secrets.TARGET_DIR }}
+          SOURCE: "docker-compose.yaml"
+          SCRIPT_BEFORE: |
+            mkdir -p ${{ secrets.TARGET_DIR }}
+            if ! grep -q "source export-env" ~/.bash_profile; then
+                echo "source export-env" >> ~/.bash_profile
+            fi
+            touch export-env
           SCRIPT_AFTER: |
             aws ecr get-login-password --region "${{ secrets.AWS_REGION }}" | docker login --username AWS --password-stdin "${{ steps.login-ecr.outputs.registry }}"
 
@@ -70,14 +77,14 @@ jobs:
             echo 'export DJANGO_CSRF_TRUSTED_ORIGINS="${{ secrets.DJANGO_CSRF_TRUSTED_ORIGINS }}"' >> export-env
             echo 'export SERVER_NAME="${{ vars.SERVER_NAME }}"' >> export-env
             echo 'export CERTBOT_EMAIL="${{ secrets.CERTBOT_EMAIL }}"' >> export-env
-            echo 'export IS_SSL_ACQUIRED="${{ vars.IS_SSL_ACQUIRED }}"' >> export-env
-
-            echo 'export ECR_REGISTRY="${{ steps.login-ecr.outputs.registry }}"' > export-ecr
-            echo 'export ECR_REPOSITORY="${{ env.ECR_REPOSITORY }}"' >> export-ecr
-            echo 'export IMAGE_TAG="${{ env.IMAGE_TAG }}"' >> export-ecr
+            echo 'export ECR_REGISTRY="${{ steps.login-ecr.outputs.registry }}"' >> export-env
+            echo 'export ECR_REPOSITORY="${{ env.ECR_REPOSITORY }}"' >> export-env
+            echo 'export IMAGE_TAG="${{ env.IMAGE_TAG }}"' >> export-env
 
             source ~/.bash_profile
-            docker stop rumble
-            docker rm rumble
-            cd "${{ secrets.TARGET_DIR }}" && docker compose up -d
-            docker system prune -a
+            cd "${{ secrets.TARGET_DIR }}"
+            docker compose pull
+            docker compose down
+            docker compose up -d 
+            rm -f local_ssh_script-before-*.sh
+            docker system prune -af

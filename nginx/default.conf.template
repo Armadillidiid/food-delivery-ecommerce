@@ -1,26 +1,14 @@
 server {
-  listen 80;
-  server_name ${SERVER_NAME};
+    listen 80;
+    server_name www.${SERVER_NAME};
 
-  location /.well-known/acme-challenge/ {
-    root /var/www/certbot;
-  }
-
-  location / {
-      return 301 https://$host$request_uri;
-  }
+    # Redirect www to non-www over HTTPS
+    return 301 https://${SERVER_NAME}$request_uri;
 }
 
 server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
+    listen 80;
     server_name ${SERVER_NAME};
-
-    ssl_certificate /etc/letsencrypt/live/${SERVER_NAME}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/${SERVER_NAME}/privkey.pem;
-
-    include /options-ssl-nginx.conf;
-    ssl_dhparam /ssl-dhparams.pem;
 
     location /static {
         alias /app/staticfiles/;
@@ -31,7 +19,6 @@ server {
     }
 
     location / {
-      proxy_pass      http://${APP_HOST}:${APP_PORT};
-      include /etc/nginx/proxy_params;
+        proxy_pass http://${APP_HOST}:${APP_PORT};
     }
 }
