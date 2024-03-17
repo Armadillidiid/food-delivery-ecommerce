@@ -58,7 +58,6 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
           SOURCE: "docker-compose.yaml"
           SCRIPT_BEFORE: |
-            mkdir -p ${{ secrets.TARGET_DIR }}
             if ! grep -q "source export-env" ~/.bash_profile; then
                 echo "source export-env" >> ~/.bash_profile
             fi
