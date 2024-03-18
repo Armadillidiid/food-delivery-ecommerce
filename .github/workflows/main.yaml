@@ -57,6 +57,8 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
           SOURCE: "docker-compose.yaml"
+          SCRIPT_BEFORE: |
+            mkdir -p ${{ secrets.TARGET_DIR }}
           SCRIPT_AFTER: |
             aws ecr get-login-password --region "${{ secrets.AWS_REGION }}" | docker login --username AWS --password-stdin "${{ steps.login-ecr.outputs.registry }}"
             cd "${{ secrets.TARGET_DIR }}"
@@ -79,5 +81,5 @@ jobs:
             docker compose pull
             docker compose down
             docker compose up -d
-            # rm -f local_ssh_script-before-*.sh
+            rm -f local_ssh_script-before-*.sh
             docker system prune -af
